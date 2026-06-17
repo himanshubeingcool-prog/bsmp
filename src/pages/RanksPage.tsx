@@ -226,15 +226,15 @@ export function RanksPage() {
             <h2 className="text-xl font-heading font-bold text-white">Rank Comparison</h2>
             <p className="text-sm text-gray-400 mt-1">Compare features across all ranks</p>
           </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+          <div className="overflow-x-auto -mx-4 sm:-mx-6 px-4 sm:px-6">
+            <table className="w-full text-sm min-w-[600px]">
               <thead>
                 <tr className="border-b border-stone-800">
-                  <th className="text-left p-3 sm:p-4 text-gray-500 font-medium sticky left-0 bg-stone-950 z-10 min-w-[160px]">Feature</th>
+                  <th className="text-left p-3 sm:p-4 text-gray-500 font-medium sticky left-0 bg-stone-950 z-10 min-w-[140px] sm:min-w-[160px]">Feature</th>
                   {RANKS.filter(r => r.price > 0).map(rank => (
-                    <th key={rank.id} className="p-3 sm:p-4 text-center min-w-[100px]">
-                      <span className="font-heading font-bold" style={{ color: rank.color }}>{rank.name}</span>
-                      <div className="text-xs text-gray-500 mt-0.5">${rank.price.toFixed(2)}</div>
+                    <th key={rank.id} className="p-2 sm:p-4 text-center min-w-[80px] sm:min-w-[100px]">
+                      <span className="font-heading font-bold text-xs sm:text-sm" style={{ color: rank.color }}>{rank.name}</span>
+                      <div className="text-[10px] sm:text-xs text-gray-500 mt-0.5">${rank.price.toFixed(2)}</div>
                     </th>
                   ))}
                 </tr>
@@ -242,22 +242,22 @@ export function RanksPage() {
               <tbody>
                 {COMPARE_FEATURES.map((feature, fi) => (
                   <tr key={fi} className="border-b border-stone-800/50 hover:bg-stone-900/30 transition-colors">
-                    <td className="p-3 sm:p-4 text-gray-400 sticky left-0 bg-stone-950 z-10">{feature}</td>
+                    <td className="p-3 sm:p-4 text-gray-400 sticky left-0 bg-stone-950 z-10 text-xs sm:text-sm">{feature}</td>
                     {RANKS.filter(r => r.price > 0).map(rank => {
                       const value = getPerkValue(rank.name, feature)
                       const hasIt = hasPerk(rank.name, feature)
                       const isCurrent = CURRENT_RANK.name === rank.name
 
                       return (
-                        <td key={rank.id} className={`p-3 sm:p-4 text-center ${isCurrent ? 'bg-green-900/10' : ''}`}>
+                        <td key={rank.id} className={`p-2 sm:p-4 text-center ${isCurrent ? 'bg-green-900/10' : ''}`}>
                           {hasIt ? (
                             value === 'true' || value === '' ? (
-                              <Check className="w-4 h-4 text-green-400 mx-auto" />
+                              <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-green-400 mx-auto" />
                             ) : (
-                              <span className="text-green-400 font-medium">{value}</span>
+                              <span className="text-green-400 font-medium text-xs sm:text-sm">{value}</span>
                             )
                           ) : (
-                            <span className="text-gray-600">—</span>
+                            <span className="text-gray-600 text-xs sm:text-sm">—</span>
                           )}
                         </td>
                       )

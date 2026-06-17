@@ -205,23 +205,23 @@ export function HeroSection() {
           </Button>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1 }}
-          className="flex items-center justify-center gap-6 sm:gap-8 text-sm text-muted"
-        >
-          {[
-            { label: '1.21.x Compatible', color: 'bg-green-500' },
-            { label: 'Premium Survival', color: 'bg-gold-500' },
-            { label: 'Active Community', color: 'bg-green-500' },
-          ].map(item => (
-            <div key={item.label} className="flex items-center gap-2 hover:text-gray-300 transition-colors cursor-default">
-              <span className={`w-1.5 h-1.5 rounded-full ${item.color}`} />
-              <span>{item.label}</span>
-            </div>
-          ))}
-        </motion.div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 1 }}
+            className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs sm:text-sm text-muted"
+          >
+            {[
+              { label: '1.21.x Compatible', color: 'bg-green-500' },
+              { label: 'Premium Survival', color: 'bg-gold-500' },
+              { label: 'Active Community', color: 'bg-green-500' },
+            ].map(item => (
+              <div key={item.label} className="flex items-center gap-2 hover:text-gray-300 transition-colors cursor-default whitespace-nowrap">
+                <span className={`w-1.5 h-1.5 rounded-full ${item.color} shrink-0`} />
+                <span>{item.label}</span>
+              </div>
+            ))}
+          </motion.div>
       </div>
 
       <motion.div

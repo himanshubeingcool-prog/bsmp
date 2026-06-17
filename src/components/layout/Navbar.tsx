@@ -65,9 +65,9 @@ export function Navbar() {
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3">
-            <Link to="/store" className="relative p-2 text-gray-400 hover:text-green-400 transition-colors">
-              <ShoppingCart className="w-5 h-5" />
-              <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-green-500 rounded-full text-[10px] font-bold flex items-center justify-center text-stone-950">3</span>
+            <Link to="/store" className="relative p-1.5 sm:p-2 text-gray-400 hover:text-green-400 transition-colors">
+              <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 sm:w-4 sm:h-4 bg-green-500 rounded-full text-[9px] sm:text-[10px] font-bold flex items-center justify-center text-stone-950">3</span>
             </Link>
 
             {isAuthenticated ? (
@@ -112,7 +112,7 @@ export function Navbar() {
                 )}
               </div>
             ) : (
-              <Link to="/login" className="bg-green-600 hover:bg-green-500 text-white text-sm font-medium px-4 py-2 rounded-lg transition-all shadow-lg shadow-green-600/20">
+              <Link to="/login" className="bg-green-600 hover:bg-green-500 text-white text-xs sm:text-sm font-medium px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg transition-all shadow-lg shadow-green-600/20">
                 Login
               </Link>
             )}

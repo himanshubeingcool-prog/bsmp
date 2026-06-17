@@ -93,15 +93,15 @@ export function StorePage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-stone-950 via-stone-900 to-stone-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-3xl sm:text-4xl font-heading font-bold text-white">Store</h1>
-            <p className="text-gray-400 mt-1">Premium perks, keys, crates and more</p>
+        <div className="flex items-start sm:items-center justify-between gap-3 mb-6 sm:mb-8">
+          <div className="min-w-0">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-heading font-bold text-white">Store</h1>
+            <p className="text-xs sm:text-sm text-gray-400 mt-0.5 sm:mt-1 truncate">Premium perks, keys, crates and more</p>
           </div>
-          <Button variant="primary" size="lg" icon={<ShoppingCart className="w-5 h-5" />} onClick={() => setCartOpen(true)} className="relative">
-            Cart
+          <Button variant="primary" size="md" icon={<ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5" />} onClick={() => setCartOpen(true)} className="relative shrink-0 sm:size-lg">
+            <span className="hidden sm:inline">Cart</span>
             {cartCount > 0 && (
-              <span className="absolute -top-2 -right-2 bg-gold-500 text-stone-950 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+              <span className="absolute -top-2 -right-2 bg-gold-500 text-stone-950 text-[10px] sm:text-xs font-bold rounded-full w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center">
                 {cartCount}
               </span>
             )}

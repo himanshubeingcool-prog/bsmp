@@ -144,9 +144,9 @@ export function RegisterPage() {
               />
               <span className="text-xs text-muted leading-relaxed">
                 I agree to the{' '}
-                <Link to="/rules" className="text-green-400 hover:text-green-300">Terms of Service</Link>
+                <Link to="/terms" className="text-green-400 hover:text-green-300">Terms of Service</Link>
                 {' '}and{' '}
-                <Link to="/rules" className="text-green-400 hover:text-green-300">Privacy Policy</Link>
+                <Link to="/privacy" className="text-green-400 hover:text-green-300">Privacy Policy</Link>
               </span>
             </label>
 

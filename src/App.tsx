@@ -20,6 +20,8 @@ import { NotFoundPage } from '@/pages/NotFoundPage';
 import { AdminPage } from '@/pages/AdminPage';
 import { RulesPage } from '@/pages/RulesPage';
 import { AppealPage } from '@/pages/AppealPage';
+import { PrivacyPage } from '@/pages/PrivacyPage';
+import { TermsPage } from '@/pages/TermsPage';
 
 export function App() {
   return (
@@ -40,6 +42,8 @@ export function App() {
         <Route path="/support" element={<SupportPage />} />
         <Route path="/rules" element={<RulesPage />} />
         <Route path="/appeal" element={<AppealPage />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/terms" element={<TermsPage />} />
 
         {/* Auth required - username not needed */}
         <Route

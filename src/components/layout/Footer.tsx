@@ -51,6 +51,8 @@ export function Footer() {
                 { label: 'Support', path: '/support' },
                 { label: 'FAQ', path: '/support' },
                 { label: 'Rules', path: '/rules' },
+                { label: 'Privacy Policy', path: '/privacy' },
+                { label: 'Terms of Service', path: '/terms' },
               ].map(link => (
                 <li key={link.path}>
                   <Link to={link.path} className="text-sm text-muted hover:text-green-400 transition-colors">{link.label}</Link>
@@ -91,10 +93,12 @@ export function Footer() {
 
         <div className="border-t border-border mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-muted">&copy; {new Date().getFullYear()} BhukkadSMP. All rights reserved. Not affiliated with Mojang Studios.</p>
-          <div className="flex items-center gap-4">
-            <Link to="/rules" className="text-xs text-muted hover:text-green-400 transition-colors">Rules</Link>
-            <Link to="/support" className="text-xs text-muted hover:text-green-400 transition-colors">Privacy Policy</Link>
-            <Link to="/support" className="text-xs text-muted hover:text-green-400 transition-colors">Terms of Service</Link>
+          <div className="flex items-center gap-3 sm:gap-5">
+            <Link to="/rules" className="text-sm text-gray-400 hover:text-green-400 transition-colors font-medium">Rules</Link>
+            <span className="text-border text-xs">|</span>
+            <Link to="/privacy" className="text-sm text-gray-400 hover:text-green-400 transition-colors font-medium">Privacy Policy</Link>
+            <span className="text-border text-xs">|</span>
+            <Link to="/terms" className="text-sm text-gray-400 hover:text-green-400 transition-colors font-medium">Terms of Service</Link>
           </div>
         </div>
       </div>

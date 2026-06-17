@@ -201,10 +201,13 @@ create index if not exists idx_profiles_role on public.profiles (role);
 --    - Discord: enable, enter Client ID + Secret from Discord Developer Portal
 --
 -- 2. Authentication → URL Configuration
---    - Site URL: http://localhost:5173
+--    - Site URL: https://bhukkadsmp.fun (or http://localhost:5173 for dev)
 --    - Redirect URLs:
+--      https://bhukkadsmp.fun/auth/callback
 --      http://localhost:5173/auth/callback
---      https://yourdomain.com/auth/callback
+--    NOTE: The frontend already sends dynamic redirectTo using
+--    window.location.origin, so it works in both local and production.
+--    The Site URL is used as fallback for flows without explicit redirectTo.
 --
 -- 3. Authentication → Settings
 --    - Make sure "Confirm email" is ON for email signups (recommended)

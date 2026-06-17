@@ -45,8 +45,8 @@ const stats = [
 
 export function ServerStats() {
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 -mt-20 relative z-20">
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 -mt-16 sm:-mt-20 relative z-20">
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         {stats.map((stat, i) => {
           const Icon = stat.icon;
           return (
@@ -61,14 +61,14 @@ export function ServerStats() {
                 <div className={`inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-green-500/10 mb-3 ${stat.color}`}>
                   <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
-                <p className={`text-2xl sm:text-3xl font-heading font-bold ${stat.color} mb-1`}>
+                <p className={`text-xl xs:text-2xl sm:text-3xl font-heading font-bold ${stat.color} mb-1`}>
                   <StatCounter
                     end={stat.value}
                     suffix={stat.label === 'Server TPS' ? '' : '+'}
                     decimals={stat.decimals ?? 0}
                   />
                 </p>
-                <p className="text-xs sm:text-sm text-muted">{stat.label}</p>
+                <p className="text-[11px] xs:text-xs sm:text-sm text-muted">{stat.label}</p>
               </Card>
             </motion.div>
           );

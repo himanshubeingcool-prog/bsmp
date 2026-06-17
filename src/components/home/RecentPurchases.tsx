@@ -48,17 +48,17 @@ export function RecentPurchases() {
               </div>
 
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-gray-200 truncate">
-                    {purchase.username}
-                  </span>
-                  <span className="text-xs text-muted hidden sm:inline">
-                    purchased
-                  </span>
-                </div>
-                <p className="text-xs sm:text-sm text-gray-300 truncate">
-                  {purchase.item}
-                </p>
+                  <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                    <span className="text-sm font-medium text-gray-200 truncate max-w-[120px] sm:max-w-none">
+                      {purchase.username}
+                    </span>
+                    <span className="text-[11px] sm:text-xs text-muted">
+                      purchased
+                    </span>
+                  </div>
+                  <p className="text-xs sm:text-sm text-gray-300 truncate max-w-[160px] sm:max-w-none">
+                    {purchase.item}
+                  </p>
               </div>
 
               <div className="text-right shrink-0">
