@@ -21,11 +21,14 @@ export function AuthCallbackPage() {
           .eq('id', data.session.user.id)
           .single();
 
+        const returnTo = localStorage.getItem('auth_redirect');
+        localStorage.removeItem('auth_redirect');
+
         const p = profile as { minecraft_username: string | null } | null;
         if (p && !p.minecraft_username) {
           navigate('/setup-username', { replace: true });
         } else {
-          navigate('/dashboard', { replace: true });
+          navigate(returnTo || '/dashboard', { replace: true });
         }
       } else {
         navigate('/login', { replace: true });

@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState, useCallback, type ReactNode } from 'react';
 import { supabase, type Profile } from '@/lib/supabase';
 import type { User as SupabaseUser } from '@supabase/supabase-js';
+import { getRedirectUrl } from '@/lib/redirect';
 
 interface AuthContextType {
   supabaseUser: SupabaseUser | null;
@@ -76,7 +77,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const { error } = await supabase.auth.signUp({
       email,
       password,
-      options: { emailRedirectTo: `${window.location.origin}/auth/callback` },
+      options: { emailRedirectTo: getRedirectUrl('/auth/callback') },
     });
     return { error: error?.message ?? null };
   }, []);
@@ -84,14 +85,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const loginWithGoogle = useCallback(async () => {
     await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: `${window.location.origin}/auth/callback` },
+      options: { redirectTo: getRedirectUrl('/auth/callback') },
     });
   }, []);
 
   const loginWithDiscord = useCallback(async () => {
     await supabase.auth.signInWithOAuth({
       provider: 'discord',
-      options: { redirectTo: `${window.location.origin}/auth/callback` },
+      options: { redirectTo: getRedirectUrl('/auth/callback') },
     });
   }, []);
 
@@ -103,7 +104,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const resetPassword = useCallback(async (email: string) => {
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/auth/callback?type=recovery`,
+      redirectTo: getRedirectUrl('/auth/callback?type=recovery'),
     });
     return { error: error?.message ?? null };
   }, []);

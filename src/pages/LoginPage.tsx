@@ -30,10 +30,12 @@ export function LoginPage() {
   };
 
   const handleGoogleLogin = async () => {
+    localStorage.setItem('auth_redirect', from);
     await loginWithGoogle();
   };
 
   const handleDiscordLogin = async () => {
+    localStorage.setItem('auth_redirect', from);
     await loginWithDiscord();
   };
 
