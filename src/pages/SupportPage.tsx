@@ -67,6 +67,9 @@ export function SupportPage() {
   const [contactForm, setContactForm] = useState({ name: '', email: '', subject: '', message: '' });
   const [contactLoading, setContactLoading] = useState(false);
   const [ticketSubject, setTicketSubject] = useState('');
+  const [ticketDescription, setTicketDescription] = useState('');
+
+  const TICKET_CHANNEL_URL = 'https://discord.com/channels/1376377359359410337/1455976745592160470';
 
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -81,13 +84,17 @@ export function SupportPage() {
     setContactForm({ name: '', email: '', subject: '', message: '' });
   };
 
-  const handleTicketCreate = async () => {
+  const handleOpenDiscordTicket = () => {
     if (!ticketSubject) {
       addToast('error', 'Please enter a ticket subject');
       return;
     }
-    addToast('success', `Ticket "${ticketSubject}" created successfully`);
+    const message = `**Subject:** ${ticketSubject}${ticketDescription ? `\n**Description:** ${ticketDescription}` : ''}`;
+    navigator.clipboard.writeText(message);
+    window.open(TICKET_CHANNEL_URL, '_blank', 'noopener');
+    addToast('success', 'Discord opened! Your message was copied — paste it in the ticket.');
     setTicketSubject('');
+    setTicketDescription('');
   };
 
   const TabIcon = TABS.find(t => t.id === activeTab)!.icon;
@@ -167,15 +174,27 @@ export function SupportPage() {
 
             {activeTab === 'tickets' && (
               <div className="space-y-6 max-w-lg mx-auto">
-                <div className="flex gap-3">
+                <div className="space-y-4">
                   <Input
-                    placeholder="Enter ticket subject..."
+                    placeholder="Ticket subject (e.g., I need help with...)"
                     value={ticketSubject}
                     onChange={e => setTicketSubject(e.target.value)}
-                    className="flex-1"
                   />
-                  <Button onClick={handleTicketCreate} icon={<Ticket className="w-4 h-4" />}>
-                    Create
+                  <div className="w-full">
+                    <label className="block text-sm font-medium text-gray-300 mb-1.5">Description (optional)</label>
+                    <textarea
+                      className="w-full bg-surface border border-border rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-green-500 resize-y min-h-[100px]"
+                      placeholder="Describe your issue..."
+                      value={ticketDescription}
+                      onChange={e => setTicketDescription(e.target.value)}
+                    />
+                  </div>
+                  <Button
+                    fullWidth
+                    icon={<Ticket className="w-4 h-4" />}
+                    onClick={handleOpenDiscordTicket}
+                  >
+                    Open Ticket in Discord
                   </Button>
                 </div>
 
