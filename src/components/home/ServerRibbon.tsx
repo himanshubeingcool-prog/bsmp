@@ -1,7 +1,10 @@
+import { useDiscordStatus } from '@/hooks/useDiscordStatus'
 import { InfiniteRibbon } from '@/components/ui/infinite-ribbon'
 
 export function ServerRibbon() {
-  const text = ' BhukkadSMP — Asia\'s First CPvP Battle Royale — play.bhukkadsmp.fun — 1,247 Players Online — Custom Arenas • Practice PvP • Ranks • Crates '
+  const { onlineCount, loading } = useDiscordStatus()
+  const count = loading ? '...' : onlineCount.toLocaleString()
+  const text = ` BhukkadSMP — Asia's First CPvP Battle Royale — play.bhukkadsmp.fun — ${count} Online on Discord — Custom Arenas • Practice PvP • Ranks • Crates `
 
   return (
     <div className="relative -mt-px">

@@ -16,11 +16,10 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
 }
 
 export function UsernameRequiredRoute({ children }: ProtectedRouteProps) {
-  const { isAuthenticated, isLoading, needsUsername } = useAuth();
+  const { isAuthenticated, isLoading } = useAuth();
   const location = useLocation();
 
   if (isLoading) return <LoadingScreen />;
   if (!isAuthenticated) return <Navigate to="/login" state={{ from: location }} replace />;
-  if (needsUsername) return <Navigate to="/setup-username" replace />;
   return <>{children}</>;
 }

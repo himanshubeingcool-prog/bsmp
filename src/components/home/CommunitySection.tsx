@@ -2,8 +2,10 @@ import { motion } from 'framer-motion';
 import { MessageCircle, ExternalLink, Users, Signal } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { DiscordIcon } from '@/components/ui/SocialIcons';
+import { useDiscordStatus } from '@/hooks/useDiscordStatus';
 
 export function CommunitySection() {
+  const { memberCount, onlineCount, loading } = useDiscordStatus();
   return (
     <section className="relative py-16 sm:py-24 overflow-hidden">
       <div
@@ -46,18 +48,18 @@ export function CommunitySection() {
                 />
                 <div>
                   <h3 className="text-lg sm:text-xl font-heading font-bold text-white">Discord Server</h3>
-                  <p className="text-xs sm:text-sm text-muted mt-1">Join 869 members</p>
+                  <p className="text-xs sm:text-sm text-muted mt-1">{loading ? '-' : `Join ${memberCount.toLocaleString()} members`}</p>
                 </div>
               </div>
 
               <div className="flex flex-wrap gap-4 sm:gap-6 mb-6">
                 <div className="flex items-center gap-2">
                   <Users className="w-4 h-4 text-green-400" />
-                  <span className="text-sm text-gray-300">869 Members</span>
+                  <span className="text-sm text-gray-300">{loading ? '-' : `${memberCount.toLocaleString()} Members`}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Signal className="w-4 h-4 text-green-400" />
-                  <span className="text-sm text-gray-300">105 Online</span>
+                  <span className="text-sm text-gray-300">{loading ? '-' : `${onlineCount.toLocaleString()} Online`}</span>
                 </div>
               </div>
 
@@ -99,7 +101,7 @@ export function CommunitySection() {
               </div>
               <div className="flex items-center justify-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse-glow" />
-                <span className="text-xs sm:text-sm text-green-400">105 online on Discord</span>
+                <span className="text-xs sm:text-sm text-green-400">{loading ? '-' : `${onlineCount.toLocaleString()} online on Discord`}</span>
               </div>
             </div>
 

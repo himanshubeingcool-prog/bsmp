@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState, useCallback, type React
 import { supabase, type Profile } from '@/lib/supabase';
 import type { User as SupabaseUser } from '@supabase/supabase-js';
 import { getRedirectUrl } from '@/lib/redirect';
+import { UsernameSetupModal } from '@/components/auth/UsernameSetupModal';
 
 interface AuthContextType {
   supabaseUser: SupabaseUser | null;
@@ -143,6 +144,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }}
     >
       {children}
+      <UsernameSetupModal />
     </AuthContext.Provider>
   );
 }

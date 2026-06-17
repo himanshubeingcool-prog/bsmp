@@ -1,25 +1,23 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
-  User, Swords, Clock, Wallet, Trophy, Medal,
-  Users, ShoppingBag, Shield, Settings, Bell,
-  Eye, EyeOff, Key, LogOut, Save, Edit3,
-  CheckCircle, X, Palette, Mail,
-  Disc3, Globe, Hash, Lock, Calendar,
+  User, Swords, Clock, Wallet, Trophy,
+  Users, ShoppingBag, Shield, Settings,
+  Key, LogOut, Save, Edit3,
+  CheckCircle, Calendar,
+  Disc3, Globe, Mail,
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/contexts/ToastContext';
-import { MOCK_USER } from '@/lib/mock-data';
 import {
   formatNumber, formatPlaytime, formatDate,
-  formatRelativeTime, getRankColor, getRankGradient, cn
+  formatRelativeTime, getRankGradient, cn
 } from '@/lib/utils';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Input } from '@/components/ui/Input';
 import { Avatar } from '@/components/ui/Avatar';
-import type { User as UserType } from '@/types';
 
 type ProfileTab = 'profile' | 'edit' | 'settings';
 
@@ -29,9 +27,10 @@ const AVATAR_COLORS = [
 ];
 
 export function ProfilePage() {
-  const { supabaseUser, profile, isAuthenticated, logout } = useAuth();
+  const { supabaseUser, profile, isAuthenticated, isLoading, logout } = useAuth();
   const { addToast } = useToast();
   const navigate = useNavigate();
+  const { username } = useParams();
 
   const [activeTab, setActiveTab] = useState<ProfileTab>('profile');
   const [editUsername, setEditUsername] = useState('');
@@ -39,27 +38,36 @@ export function ProfilePage() {
   const [avatarColor, setAvatarColor] = useState('#22c55e');
   const [showPasswordForm, setShowPasswordForm] = useState(false);
   const [passwords, setPasswords] = useState({ current: '', new: '', confirm: '' });
-  const [privacy, setPrivacy] = useState(MOCK_USER?.privacySettings ?? {
+  const [privacy, setPrivacy] = useState({
     showStats: true, showActivity: true, showPurchases: false, allowFriendRequests: true,
   });
-  const [notifications, setNotifications] = useState(MOCK_USER?.notificationSettings ?? {
+  const [notifications, setNotifications] = useState({
     emailNotifications: true, discordNotifications: true, purchaseAlerts: true,
     rankUpdates: true, teamInvites: true, promotionalEmails: false,
   });
 
-  const profileUser = MOCK_USER;
+  const displayName = profile?.minecraft_username || profile?.display_name || supabaseUser?.email || 'User';
+  const avatarUrl = profile?.avatar_url || supabaseUser?.user_metadata?.avatar_url || supabaseUser?.user_metadata?.picture || undefined;
+  const joinDate = profile?.created_at || supabaseUser?.created_at || new Date().toISOString();
+  const email = supabaseUser?.email || '';
+  const rank = profile?.rank || 'Player';
+  const balance = profile?.balance ?? 0;
 
   useEffect(() => {
-    if (MOCK_USER) {
-      setEditUsername(MOCK_USER.username);
-      setPrivacy(MOCK_USER.privacySettings);
-      setNotifications(MOCK_USER.notificationSettings);
+    if (!isLoading && !isAuthenticated) {
+      navigate('/login');
     }
-  }, []);
+  }, [isLoading, isAuthenticated, navigate]);
+
+  useEffect(() => {
+    if (profile) {
+      setEditUsername(profile.minecraft_username || profile.display_name || '');
+    }
+  }, [profile]);
+
+  const isOwner = !username || username === displayName;
 
   const handleSaveProfile = () => {
-    const newAvatar = `https://api.dicebear.com/7.x/initials/svg?seed=${editUsername}&backgroundColor=${avatarColor.replace('#', '')}`;
-    addToast('success', 'Updated successfully');
     addToast('success', 'Profile updated successfully');
   };
 
@@ -78,44 +86,43 @@ export function ProfilePage() {
   };
 
   const togglePrivacy = (key: keyof typeof privacy) => {
-    const next = { ...privacy, [key]: !privacy[key] };
-    setPrivacy(next);
-    addToast('success', 'Updated successfully');
+    setPrivacy(prev => ({ ...prev, [key]: !prev[key] }));
     addToast('success', 'Privacy settings updated');
   };
 
   const toggleNotification = (key: keyof typeof notifications) => {
-    const next = { ...notifications, [key]: !notifications[key] };
-    setNotifications(next);
-    addToast('success', 'Updated successfully');
+    setNotifications(prev => ({ ...prev, [key]: !prev[key] }));
     addToast('success', 'Notification settings updated');
   };
 
-  const isOwner = isAuthenticated && supabaseUser?.id === profileUser.id;
+  if (isLoading) {
+    return (
+      <div className="min-h-screen pt-24 pb-16 px-4 flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-green-500 border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   const renderProfile = () => (
     <div className="space-y-6">
       <Card variant="gradient" padding="lg" className="text-center sm:text-left">
         <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5">
-          <Avatar src={profileUser.avatar} alt={profileUser.username} size="xl" status="online" />
+          <Avatar src={avatarUrl} alt={displayName} size="xl" status="online" />
           <div className="flex-1">
             <div className="flex items-center gap-3 justify-center sm:justify-start">
-              <h1 className="text-2xl sm:text-3xl font-heading font-bold">{profileUser.username}</h1>
-              <span className={`inline-block px-3 py-0.5 text-xs font-bold rounded-full bg-gradient-to-r ${getRankGradient(profileUser.rank)}`}>
-                {profileUser.rank}
+              <h1 className="text-2xl sm:text-3xl font-heading font-bold">{displayName}</h1>
+              <span className={`inline-block px-3 py-0.5 text-xs font-bold rounded-full bg-gradient-to-r ${getRankGradient(rank)}`}>
+                {rank}
               </span>
             </div>
             <p className="text-muted mt-1 flex items-center gap-1.5 justify-center sm:justify-start">
               <Calendar className="w-3.5 h-3.5" />
-              Member since {formatDate(profileUser.joinDate)}
+              Member since {formatDate(joinDate)}
             </p>
             <div className="flex items-center gap-3 mt-2 justify-center sm:justify-start">
               <Badge variant="success" size="sm">
                 <CheckCircle className="w-3 h-3" /> Online
               </Badge>
-              {profileUser.verified && (
-                <Badge variant="info" size="sm">Verified</Badge>
-              )}
             </div>
           </div>
         </div>
@@ -125,91 +132,40 @@ export function ProfilePage() {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           <Card variant="default" padding="md" className="text-center">
             <Swords className="w-5 h-5 text-green-400 mx-auto mb-2" />
-            <p className="text-xl font-bold font-heading">{formatNumber(profileUser.stats?.kills ?? 0)}</p>
+            <p className="text-xl font-bold font-heading">0</p>
             <p className="text-xs text-muted">Kills</p>
           </Card>
           <Card variant="default" padding="md" className="text-center">
             <Clock className="w-5 h-5 text-gold-400 mx-auto mb-2" />
-            <p className="text-xl font-bold font-heading">{formatPlaytime(profileUser.stats?.playtime ?? 0)}</p>
+            <p className="text-xl font-bold font-heading">0h</p>
             <p className="text-xs text-muted">Playtime</p>
           </Card>
           <Card variant="default" padding="md" className="text-center">
             <Trophy className="w-5 h-5 text-blue-400 mx-auto mb-2" />
-            <p className="text-xl font-bold font-heading">{formatNumber(profileUser.stats?.wins ?? 0)}</p>
+            <p className="text-xl font-bold font-heading">0</p>
             <p className="text-xs text-muted">Wins</p>
           </Card>
           <Card variant="default" padding="md" className="text-center">
             <Wallet className="w-5 h-5 text-purple-400 mx-auto mb-2" />
-            <p className="text-xl font-bold font-heading">${profileUser.balance.toLocaleString()}</p>
+            <p className="text-xl font-bold font-heading">${balance.toLocaleString()}</p>
             <p className="text-xs text-muted">Balance</p>
           </Card>
         </div>
       )}
 
-      {profileUser.team && (
-        <Card variant="default" padding="md" hover className="cursor-pointer" onClick={() => navigate('/teams')}>
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-xl bg-card border border-border overflow-hidden shrink-0">
-              <img src={profileUser.team.logo} alt={profileUser.team.name} className="w-full h-full object-cover" />
-            </div>
-            <div className="flex-1">
-              <div className="flex items-center gap-2">
-                <h3 className="font-heading font-bold">{profileUser.team.name}</h3>
-                <Badge variant="default" size="sm">[{profileUser.team.tag}]</Badge>
-              </div>
-              <div className="flex items-center gap-4 mt-1 text-xs text-muted">
-                <span className="flex items-center gap-1"><Users className="w-3 h-3" />{profileUser.team.members} members</span>
-                <span className="flex items-center gap-1"><Medal className="w-3 h-3" />#{profileUser.team.rank} ranked</span>
-                <span className="flex items-center gap-1"><Swords className="w-3 h-3" />{profileUser.team.wins}W / {profileUser.team.losses}L</span>
-              </div>
-            </div>
-            <Shield className="w-5 h-5 text-muted shrink-0" />
+      <Card variant="default" padding="md">
+        <h3 className="font-heading font-bold text-sm mb-3">Activity</h3>
+        <div className="space-y-2">
+          <div className="flex justify-between text-sm">
+            <span className="text-muted">Last Login</span>
+            <span>{formatRelativeTime(joinDate)}</span>
           </div>
-        </Card>
-      )}
-
-      {privacy.showPurchases && profileUser.purchases.length > 0 && (
-        <Card variant="default" padding="md">
-          <h3 className="font-heading font-bold text-sm mb-3">Recent Purchases</h3>
-          <div className="space-y-2">
-            {profileUser.purchases.slice(0, 5).map((p, i) => (
-              <div key={p.id} className="flex items-center justify-between py-2 border-b border-border/50 last:border-0">
-                <div className="flex items-center gap-3">
-                  <ShoppingBag className="w-4 h-4 text-muted" />
-                  <span className="text-sm">{p.productName}</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="text-sm text-muted">{formatDate(p.date)}</span>
-                  <span className="text-sm font-medium">${p.amount.toFixed(2)}</span>
-                  <Badge variant={p.status === 'completed' ? 'success' : p.status === 'pending' ? 'warning' : 'danger'} size="sm">
-                    {p.status}
-                  </Badge>
-                </div>
-              </div>
-            ))}
+          <div className="flex justify-between text-sm">
+            <span className="text-muted">Status</span>
+            <Badge variant="success" size="sm">Online</Badge>
           </div>
-        </Card>
-      )}
-
-      {privacy.showActivity && (
-        <Card variant="default" padding="md">
-          <h3 className="font-heading font-bold text-sm mb-3">Activity</h3>
-          <div className="space-y-2">
-            <div className="flex justify-between text-sm">
-              <span className="text-muted">Last Login</span>
-              <span>{formatRelativeTime(profileUser.lastLogin)}</span>
-            </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-muted">Status</span>
-              <Badge variant="success" size="sm">Online</Badge>
-            </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-muted">Games Played</span>
-              <span>{formatNumber(profileUser.stats?.gamesPlayed ?? 0)}</span>
-            </div>
-          </div>
-        </Card>
-      )}
+        </div>
+      </Card>
     </div>
   );
 
@@ -237,8 +193,8 @@ export function ProfilePage() {
         </div>
         <div className="mt-4 flex items-center gap-3">
           <Avatar
-            src={`https://api.dicebear.com/7.x/initials/svg?seed=${editUsername || profileUser.username}&backgroundColor=${avatarColor.replace('#', '')}`}
-            alt={editUsername || profileUser.username}
+            src={`https://api.dicebear.com/7.x/initials/svg?seed=${editUsername || displayName}&backgroundColor=${avatarColor.replace('#', '')}`}
+            alt={editUsername || displayName}
             size="lg"
           />
           <span className="text-sm text-muted">Preview</span>
@@ -383,7 +339,7 @@ export function ProfilePage() {
                 </div>
                 <div>
                   <h4 className="font-heading font-bold text-sm">Password</h4>
-                  <p className="text-xs text-muted">Last changed 30 days ago</p>
+                  <p className="text-xs text-muted">Secure your account</p>
                 </div>
               </div>
               <Button variant="secondary" size="sm" onClick={() => setShowPasswordForm(true)}>
@@ -418,7 +374,7 @@ export function ProfilePage() {
         <div className="flex items-center gap-3 mb-8">
           <User className="w-6 h-6 text-green-400" />
           <h1 className="text-3xl font-heading font-bold bg-gradient-to-r from-green-400 to-gold-400 bg-clip-text text-transparent">
-            {isOwner ? 'My Profile' : `${profileUser.username}'s Profile`}
+            {isOwner ? 'My Profile' : `${displayName}'s Profile`}
           </h1>
         </div>
 

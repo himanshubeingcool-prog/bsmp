@@ -1,9 +1,10 @@
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { useState, useEffect, useRef, lazy, Suspense } from 'react';
-import { Copy, Check, Play, MessageCircle, MousePointer2 } from 'lucide-react';
+import { Copy, Check, Play, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { copyToClipboard } from '@/lib/utils';
 import { useMousePosition } from '@/hooks/useMousePosition';
+import { useDiscordStatus } from '@/hooks/useDiscordStatus';
 
 const MinecraftHero3D = lazy(() =>
   import('@/components/home/3d/MinecraftHero3D').then(m => ({ default: m.MinecraftHero3D }))
@@ -103,6 +104,7 @@ function ParticleField() {
 export function HeroSection() {
   const [copied, setCopied] = useState(false);
   const mouse = useMousePosition();
+  const { onlineCount, loading, guildName } = useDiscordStatus();
 
   const handleCopy = async () => {
     await copyToClipboard(SERVER_IP);
@@ -155,7 +157,7 @@ export function HeroSection() {
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-green-500/10 border border-green-500/20 mb-6 sm:mb-8 hover:border-green-500/40 transition-colors duration-300 group">
             <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse-glow" />
             <span className="text-xs sm:text-sm font-medium text-green-400 group-hover:text-green-300 transition-colors">
-              <span className="tabular-nums">1,247</span> Players Online
+              <span className="tabular-nums">{loading ? '...' : onlineCount.toLocaleString()}</span> {loading ? '' : 'Online on Discord'}
             </span>
           </div>
         </motion.div>

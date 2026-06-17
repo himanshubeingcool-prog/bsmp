@@ -3,7 +3,7 @@ import { motion, useInView } from 'framer-motion';
 import { Users, TrendingUp, UserPlus, Activity } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
 import { formatNumber } from '@/lib/utils';
-import { SERVER_STATS } from '@/lib/mock-data';
+import { useDiscordStatus } from '@/hooks/useDiscordStatus';
 
 interface StatCounterProps {
   end: number;
@@ -36,19 +36,22 @@ function StatCounter({ end, suffix = '', decimals = 0, duration = 2 }: StatCount
   return <span ref={ref}>{display}{suffix}</span>;
 }
 
-const stats = [
-  { icon: Users, label: 'Online Players', value: SERVER_STATS.onlinePlayers, color: 'text-green-400', border: 'border-green-500/30' },
-  { icon: TrendingUp, label: 'Peak Players', value: SERVER_STATS.peakPlayers, color: 'text-gold-400', border: 'border-gold-500/30' },
-  { icon: UserPlus, label: 'Total Registered', value: SERVER_STATS.totalRegistered, color: 'text-blue-400', border: 'border-blue-500/30' },
-  { icon: Activity, label: 'Server TPS', value: Math.round(SERVER_STATS.tps * 10) / 10, suffix: '', decimals: 1, color: 'text-purple-400', border: 'border-purple-500/30' },
-];
-
 export function ServerStats() {
+  const { onlineCount, loading } = useDiscordStatus();
+
+  const stats = [
+    { icon: Users, label: 'Online on Discord', value: onlineCount, color: 'text-green-400', border: 'border-green-500/30' },
+    { icon: TrendingUp, label: 'Peak Players', value: 0, color: 'text-gold-400', border: 'border-gold-500/30' },
+    { icon: UserPlus, label: 'Total Registered', value: 0, color: 'text-blue-400', border: 'border-blue-500/30' },
+    { icon: Activity, label: 'Server TPS', value: 0, suffix: '', decimals: 1, color: 'text-purple-400', border: 'border-purple-500/30' },
+  ];
+
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 -mt-16 sm:-mt-20 relative z-20">
       <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         {stats.map((stat, i) => {
           const Icon = stat.icon;
+          const isZero = stat.value === 0 && stat.label !== 'Online on Discord';
           return (
             <motion.div
               key={stat.label}
@@ -62,11 +65,17 @@ export function ServerStats() {
                   <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
                 <p className={`text-xl xs:text-2xl sm:text-3xl font-heading font-bold ${stat.color} mb-1`}>
-                  <StatCounter
-                    end={stat.value}
-                    suffix={stat.label === 'Server TPS' ? '' : '+'}
-                    decimals={stat.decimals ?? 0}
-                  />
+                  {isZero ? (
+                    <span>—</span>
+                  ) : stat.label === 'Online on Discord' && loading ? (
+                    <span className="animate-pulse">...</span>
+                  ) : (
+                    <StatCounter
+                      end={stat.value}
+                      suffix={stat.label === 'Online on Discord' ? '' : '+'}
+                      decimals={stat.decimals ?? 0}
+                    />
+                  )}
                 </p>
                 <p className="text-[11px] xs:text-xs sm:text-sm text-muted">{stat.label}</p>
               </Card>

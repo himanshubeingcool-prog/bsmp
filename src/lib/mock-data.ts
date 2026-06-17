@@ -1,74 +1,9 @@
 import {
-  User, Rank, Product, Team, LeaderboardEntry, Crate, CrateReward,
+  Rank, Product, Team, LeaderboardEntry, Crate, CrateReward,
   KeyBundle, FAQItem, ServerStats, Purchase, PlayerStats
 } from '@/types';
 
-export const MOCK_USER: User = {
-  id: '1',
-  username: 'xBlaze_Knight',
-  email: 'blaze@example.com',
-  avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Blaze&backgroundColor=ffd700',
-  rank: 'MVP+',
-  balance: 15250,
-  coins: 34200,
-  gems: 1280,
-  stats: {
-    kills: 2847,
-    deaths: 1532,
-    kdr: 1.86,
-    playtime: 1248,
-    wins: 342,
-    losses: 189,
-    gamesPlayed: 531,
-    blocksPlaced: 45231,
-    blocksBroken: 38912,
-    mobsKilled: 12453,
-    distanceTraveled: 84521,
-  },
-  team: {
-    id: 't1',
-    name: 'Phoenix Rising',
-    tag: 'PHNX',
-    logo: 'https://api.dicebear.com/7.x/shapes/svg?seed=Phoenix&backgroundColor=ff6b35',
-    description: 'A competitive team focused on PvP and survival excellence.',
-    members: 42,
-    leader: 'xBlaze_Knight',
-    wins: 156,
-    losses: 89,
-    points: 12450,
-    rank: 3,
-    createdDate: '2024-06-15',
-    recruiting: true,
-    requirements: ['1.5+ KDR', '100+ hours playtime', 'Discord required'],
-  },
-  discordLinked: true,
-  googleLinked: false,
-  discordId: '123456789012345678',
-  joinDate: '2024-03-12',
-  lastLogin: new Date().toISOString(),
-  verified: true,
-  purchases: [
-    { id: 'p1', productId: 'rank-mvp', productName: 'MVP Rank', amount: 29.99, date: '2024-08-15T10:30:00', status: 'completed', paymentMethod: 'Discord' },
-    { id: 'p2', productId: 'key-bundle-1', productName: 'Legendary Key Bundle', amount: 19.99, date: '2024-09-01T14:20:00', status: 'completed', paymentMethod: 'Google Pay' },
-    { id: 'p3', productId: 'crate-mythic', productName: 'Mythic Crate', amount: 49.99, date: '2024-09-10T08:45:00', status: 'completed', paymentMethod: 'Card' },
-    { id: 'p4', productId: 'coins-5000', productName: '5000 Coins Pack', amount: 9.99, date: '2024-09-18T16:00:00', status: 'completed', paymentMethod: 'Discord' },
-    { id: 'p5', productId: 'booster-xp', productName: '2x XP Booster (7d)', amount: 14.99, date: '2024-09-25T12:15:00', status: 'pending', paymentMethod: 'Card' },
-  ],
-  privacySettings: {
-    showStats: true,
-    showActivity: true,
-    showPurchases: false,
-    allowFriendRequests: true,
-  },
-  notificationSettings: {
-    emailNotifications: true,
-    discordNotifications: true,
-    purchaseAlerts: true,
-    rankUpdates: true,
-    teamInvites: true,
-    promotionalEmails: false,
-  },
-};
+export const MOCK_USER = null;
 
 export const RANKS: Rank[] = [
   { id: 'rank-voter', name: 'Voter', price: 0, color: '#22c55e', description: 'Free rank for voting on server lists.', perks: ['/fly in spawn', '2x vote rewards', 'Green name color', 'Access to vote-only rewards'], badge: 'V', popular: false },
@@ -104,89 +39,9 @@ export const PRODUCTS: Product[] = [
   { id: 'token-500', name: '500 Server Tokens', description: 'Bundle of tokens for active event participants.', category: 'tokens', price: 39.99, image: '🪙', features: ['Best token value', 'Event priority access'], inStock: true, popular: true },
 ];
 
-export const LEADERBOARD_DATA: Record<string, LeaderboardEntry[]> = {
-  kills: [
-    { rank: 1, username: 'xBlaze_Knight', avatar: '', value: 2847, change: 'up', tier: 'MVP+' },
-    { rank: 2, username: 'ShadowStrike_', avatar: '', value: 2654, change: 'up', tier: 'Elite' },
-    { rank: 3, username: 'NightHawk42', avatar: '', value: 2431, change: 'down', tier: 'Immortal' },
-    { rank: 4, username: 'DragonSlayer99', avatar: '', value: 2189, change: 'same', tier: 'Legend' },
-    { rank: 5, username: 'PixelWarrior', avatar: '', value: 1987, change: 'up', tier: 'MVP+' },
-    { rank: 6, username: 'CyberWolf_X', avatar: '', value: 1756, change: 'down', tier: 'MVP' },
-    { rank: 7, username: 'IcePhoenix_', avatar: '', value: 1543, change: 'up', tier: 'Elite' },
-    { rank: 8, username: 'ThunderBolt7', avatar: '', value: 1321, change: 'same', tier: 'VIP' },
-    { rank: 9, username: 'FrostByte_OG', avatar: '', value: 1189, change: 'down', tier: 'VIP' },
-    { rank: 10, username: 'Arcane_Mage', avatar: '', value: 987, change: 'up', tier: 'Voter' },
-  ],
-  deaths: [
-    { rank: 1, username: 'NoobSlayer99', avatar: '', value: 3421, change: 'up', tier: 'Player' },
-    { rank: 2, username: 'FellOffCliff', avatar: '', value: 2876, change: 'up', tier: 'Voter' },
-    { rank: 3, username: 'LavaDiver_', avatar: '', value: 2543, change: 'down', tier: 'Player' },
-    { rank: 4, username: 'CreeperFood', avatar: '', value: 2198, change: 'same', tier: 'Player' },
-    { rank: 5, username: 'BedExploder', avatar: '', value: 1876, change: 'up', tier: 'VIP' },
-    { rank: 6, username: 'xBlaze_Knight', avatar: '', value: 1532, change: 'down', tier: 'MVP+' },
-    { rank: 7, username: 'ShadowStrike_', avatar: '', value: 1421, change: 'up', tier: 'Elite' },
-    { rank: 8, username: 'NightHawk42', avatar: '', value: 1287, change: 'same', tier: 'Immortal' },
-    { rank: 9, username: 'DragonSlayer99', avatar: '', value: 1109, change: 'down', tier: 'Legend' },
-    { rank: 10, username: 'PixelWarrior', avatar: '', value: 987, change: 'up', tier: 'MVP+' },
-  ],
-  kdr: [
-    { rank: 1, username: 'DragonSlayer99', avatar: '', value: 5.42, change: 'up', tier: 'Legend' },
-    { rank: 2, username: 'NightHawk42', avatar: '', value: 4.87, change: 'down', tier: 'Immortal' },
-    { rank: 3, username: 'xBlaze_Knight', avatar: '', value: 3.86, change: 'up', tier: 'MVP+' },
-    { rank: 4, username: 'ShadowStrike_', avatar: '', value: 3.54, change: 'same', tier: 'Elite' },
-    { rank: 5, username: 'Arcane_Mage', avatar: '', value: 3.12, change: 'up', tier: 'Voter' },
-    { rank: 6, username: 'PixelWarrior', avatar: '', value: 2.87, change: 'down', tier: 'MVP+' },
-    { rank: 7, username: 'CyberWolf_X', avatar: '', value: 2.54, change: 'up', tier: 'MVP' },
-    { rank: 8, username: 'ThunderBolt7', avatar: '', value: 2.21, change: 'same', tier: 'VIP' },
-    { rank: 9, username: 'IcePhoenix_', avatar: '', value: 1.98, change: 'down', tier: 'Elite' },
-    { rank: 10, username: 'FrostByte_OG', avatar: '', value: 1.76, change: 'up', tier: 'VIP' },
-  ],
-  playtime: [
-    { rank: 1, username: 'DragonSlayer99', avatar: '', value: 2847, change: 'up', tier: 'Legend' },
-    { rank: 2, username: 'NightHawk42', avatar: '', value: 2654, change: 'same', tier: 'Immortal' },
-    { rank: 3, username: 'xBlaze_Knight', avatar: '', value: 1248, change: 'up', tier: 'MVP+' },
-    { rank: 4, username: 'ShadowStrike_', avatar: '', value: 1187, change: 'down', tier: 'Elite' },
-    { rank: 5, username: 'PixelWarrior', avatar: '', value: 1098, change: 'up', tier: 'MVP+' },
-    { rank: 6, username: 'CyberWolf_X', avatar: '', value: 987, change: 'same', tier: 'MVP' },
-    { rank: 7, username: 'IcePhoenix_', avatar: '', value: 876, change: 'down', tier: 'Elite' },
-    { rank: 8, username: 'FrostByte_OG', avatar: '', value: 765, change: 'up', tier: 'VIP' },
-    { rank: 9, username: 'ThunderBolt7', avatar: '', value: 654, change: 'up', tier: 'VIP' },
-    { rank: 10, username: 'Arcane_Mage', avatar: '', value: 543, change: 'down', tier: 'Voter' },
-  ],
-  balance: [
-    { rank: 1, username: 'DragonSlayer99', avatar: '', value: 284700, change: 'up', tier: 'Legend' },
-    { rank: 2, username: 'NightHawk42', avatar: '', value: 195400, change: 'same', tier: 'Immortal' },
-    { rank: 3, username: 'xBlaze_Knight', avatar: '', value: 152500, change: 'down', tier: 'MVP+' },
-    { rank: 4, username: 'ShadowStrike_', avatar: '', value: 124800, change: 'up', tier: 'Elite' },
-    { rank: 5, username: 'PixelWarrior', avatar: '', value: 98700, change: 'up', tier: 'MVP+' },
-    { rank: 6, username: 'CyberWolf_X', avatar: '', value: 85400, change: 'down', tier: 'MVP' },
-    { rank: 7, username: 'IcePhoenix_', avatar: '', value: 72300, change: 'same', tier: 'Elite' },
-    { rank: 8, username: 'ThunderBolt7', avatar: '', value: 61200, change: 'up', tier: 'VIP' },
-    { rank: 9, username: 'FrostByte_OG', avatar: '', value: 54800, change: 'down', tier: 'VIP' },
-    { rank: 10, username: 'Arcane_Mage', avatar: '', value: 43200, change: 'up', tier: 'Voter' },
-  ],
-  wins: [
-    { rank: 1, username: 'DragonSlayer99', avatar: '', value: 892, change: 'up', tier: 'Legend' },
-    { rank: 2, username: 'NightHawk42', avatar: '', value: 756, change: 'up', tier: 'Immortal' },
-    { rank: 3, username: 'xBlaze_Knight', avatar: '', value: 342, change: 'same', tier: 'MVP+' },
-    { rank: 4, username: 'ShadowStrike_', avatar: '', value: 298, change: 'down', tier: 'Elite' },
-    { rank: 5, username: 'PixelWarrior', avatar: '', value: 254, change: 'up', tier: 'MVP+' },
-    { rank: 6, username: 'IcePhoenix_', avatar: '', value: 198, change: 'up', tier: 'Elite' },
-    { rank: 7, username: 'CyberWolf_X', avatar: '', value: 176, change: 'down', tier: 'MVP' },
-    { rank: 8, username: 'ThunderBolt7', avatar: '', value: 154, change: 'same', tier: 'VIP' },
-    { rank: 9, username: 'FrostByte_OG', avatar: '', value: 132, change: 'up', tier: 'VIP' },
-    { rank: 10, username: 'Arcane_Mage', avatar: '', value: 98, change: 'down', tier: 'Voter' },
-  ],
-};
+export const LEADERBOARD_DATA: Record<string, LeaderboardEntry[]> = {};
 
-export const TEAMS: Team[] = [
-  { id: 't1', name: 'Phoenix Rising', tag: 'PHNX', logo: 'https://api.dicebear.com/7.x/shapes/svg?seed=Phoenix&backgroundColor=ff6b35', description: 'A competitive team focused on PvP and survival excellence. We dominate the leaderboards and build massive bases.', members: 42, leader: 'xBlaze_Knight', wins: 156, losses: 89, points: 12450, rank: 3, createdDate: '2024-06-15', recruiting: true, requirements: ['1.5+ KDR', '100+ hours playtime', 'Discord required'] },
-  { id: 't2', name: 'Shadow Legion', tag: 'SHDW', logo: 'https://api.dicebear.com/7.x/shapes/svg?seed=Shadow&backgroundColor=6b21a8', description: 'Elite PvP squad. We strike from the shadows and claim victory.', members: 28, leader: 'NightHawk42', wins: 234, losses: 67, points: 15230, rank: 1, createdDate: '2024-04-20', recruiting: false, requirements: ['2.5+ KDR', '500+ kills', 'Must have MVP+ or higher'] },
-  { id: 't3', name: 'Crystal Guild', tag: 'CRYS', logo: 'https://api.dicebear.com/7.x/shapes/svg?seed=Crystal&backgroundColor=06b6d4', description: 'Builders and traders. We focus on economy, building, and community projects.', members: 56, leader: 'PixelWarrior', wins: 98, losses: 112, points: 8760, rank: 5, createdDate: '2024-03-10', recruiting: true, requirements: ['Active on Discord', 'Builder rank or higher'] },
-  { id: 't4', name: 'Dragon Empire', tag: 'DRGN', logo: 'https://api.dicebear.com/7.x/shapes/svg?seed=Dragon&backgroundColor=dc2626', description: 'The most powerful force on the server. We bow to no one.', members: 15, leader: 'DragonSlayer99', wins: 312, losses: 23, points: 18900, rank: 2, createdDate: '2024-01-05', recruiting: false, requirements: ['Legend rank only', 'Invite only', '4.0+ KDR'] },
-  { id: 't5', name: 'Frost Wolves', tag: 'FROST', logo: 'https://api.dicebear.com/7.x/shapes/svg?seed=Frost&backgroundColor=0891b2', description: 'Survival specialists who thrive in the harshest conditions.', members: 34, leader: 'IcePhoenix_', wins: 187, losses: 76, points: 11100, rank: 4, createdDate: '2024-05-01', recruiting: true, requirements: ['1.0+ KDR', 'Discord required', 'Team oriented'] },
-  { id: 't6', name: 'Storm Breakers', tag: 'STOR', logo: 'https://api.dicebear.com/7.x/shapes/svg?seed=Storm&backgroundColor=ca8a04', description: 'New team looking to make a name. Fast rising through the ranks.', members: 23, leader: 'ThunderBolt7', wins: 67, losses: 54, points: 5430, rank: 6, createdDate: '2024-08-01', recruiting: true, requirements: ['Any rank welcome', 'Active player', 'Willing to learn'] },
-];
+export const TEAMS: Team[] = [];
 
 export const CRATES: Crate[] = [
   {
@@ -260,24 +115,9 @@ export const FAQ_DATA: FAQItem[] = [
   { id: 'faq11', question: 'How do I report a player?', answer: 'Use /report <player> <reason> in-game or open a Support ticket on our website. Include evidence like screenshots for faster processing.', category: 'Rules' },
 ];
 
-export const SERVER_STATS: ServerStats = {
-  onlinePlayers: 1247,
-  peakPlayers: 3421,
-  totalRegistered: 84721,
-  totalServers: 7,
-  uptime: 99.8,
-  tps: 19.8,
-};
+export const SERVER_STATS: ServerStats | null = null;
 
-export const RECENT_PURCHASES = [
-  { username: 'xBlaze_Knight', item: 'MVP+ Rank', amount: 34.99, date: new Date(Date.now() - 300000).toISOString(), avatar: '' },
-  { username: 'ShadowStrike_', item: 'Mythic Crate', amount: 59.99, date: new Date(Date.now() - 600000).toISOString(), avatar: '' },
-  { username: 'PixelWarrior', item: '25,000 Coins Pack', amount: 49.99, date: new Date(Date.now() - 1200000).toISOString(), avatar: '' },
-  { username: 'IcePhoenix_', item: 'Ultimate Booster Pack', amount: 34.99, date: new Date(Date.now() - 1800000).toISOString(), avatar: '' },
-  { username: 'FrostByte_OG', item: 'Legendary Key Bundle', amount: 19.99, date: new Date(Date.now() - 2400000).toISOString(), avatar: '' },
-  { username: 'Arcane_Mage', item: 'VIP Rank', amount: 9.99, date: new Date(Date.now() - 3600000).toISOString(), avatar: '' },
-  { username: 'ThunderBolt7', item: 'Cosmetic Pet Bundle', amount: 24.99, date: new Date(Date.now() - 4800000).toISOString(), avatar: '' },
-];
+export const RECENT_PURCHASES: any[] = [];
 
 export const CATEGORY_ICONS: Record<string, string> = {
   ranks: '⭐',
