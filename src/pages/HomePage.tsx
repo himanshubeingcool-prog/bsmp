@@ -6,12 +6,14 @@ import { CommunitySection } from '@/components/home/CommunitySection';
 import { RecentPurchases } from '@/components/home/RecentPurchases';
 import { TopPlayers } from '@/components/home/TopPlayers';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
+import { ServerRibbon } from '@/components/home/ServerRibbon';
 
 export function HomePage() {
   return (
     <div>
       <HeroSection />
       <ScrollReveal direction="up"><ServerStats /></ScrollReveal>
+      <ServerRibbon />
       <ScrollReveal direction="up" delay={0.1}><FeatureShowcase /></ScrollReveal>
       <ScrollReveal direction="left"><WhyChooseUs /></ScrollReveal>
       <div className="grid lg:grid-cols-2 gap-6 max-w-7xl mx-auto px-4 sm:px-6">

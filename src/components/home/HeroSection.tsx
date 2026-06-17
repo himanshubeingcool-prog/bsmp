@@ -1,9 +1,13 @@
 import { motion, useMotionValue, useSpring } from 'framer-motion';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { Copy, Check, Play, MessageCircle, MousePointer2 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { copyToClipboard } from '@/lib/utils';
 import { useMousePosition } from '@/hooks/useMousePosition';
+
+const MinecraftHero3D = lazy(() =>
+  import('@/components/home/3d/MinecraftHero3D').then(m => ({ default: m.MinecraftHero3D }))
+);
 
 const SERVER_IP = 'play.bhukkadsmp.com';
 
@@ -112,17 +116,17 @@ export function HeroSection() {
   const smoothY = useSpring(bgY, { stiffness: 50, damping: 30 });
 
   useEffect(() => {
-    bgX.set((mouse.x / window.innerWidth - 0.5) * 20);
-    bgY.set((mouse.y / window.innerHeight - 0.5) * 20);
+    bgX.set((mouse.x / window.innerWidth - 0.5) * 8);
+    bgY.set((mouse.y / window.innerHeight - 0.5) * 8);
   }, [mouse.x, mouse.y, bgX, bgY]);
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 bg-stone-950" />
       <div
-        className="absolute inset-0 opacity-30"
+        className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse at 50% 0%, rgba(34, 197, 94, 0.15) 0%, transparent 60%), radial-gradient(ellipse at 80% 50%, rgba(234, 179, 8, 0.08) 0%, transparent 50%), radial-gradient(ellipse at 20% 80%, rgba(34, 197, 94, 0.05) 0%, transparent 50%)',
+          background: 'radial-gradient(ellipse at 30% 25%, rgba(34, 197, 94, 0.10) 0%, transparent 50%), radial-gradient(ellipse at 70% 55%, rgba(234, 179, 8, 0.06) 0%, transparent 40%), radial-gradient(ellipse at 50% 85%, rgba(34, 197, 94, 0.04) 0%, transparent 50%)',
         }}
       />
 
@@ -130,18 +134,23 @@ export function HeroSection() {
         className="absolute inset-0"
         style={{ x: smoothX, y: smoothY }}
       >
-        <div className="absolute inset-0 grid-bg" />
+        <div className="absolute inset-0 grid-bg opacity-30" />
       </motion.div>
 
       <ParticleField />
 
-      <div className="absolute inset-0 bg-gradient-to-b from-stone-950/0 via-stone-950/30 to-stone-950 pointer-events-none" />
+      <Suspense fallback={null}>
+        <MinecraftHero3D />
+      </Suspense>
 
-      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <div className="absolute inset-0 bg-gradient-to-b from-stone-950/0 via-stone-950/40 to-stone-950 pointer-events-none" />
+
+      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center lg:text-left">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
+          className="lg:flex lg:justify-start"
         >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-green-500/10 border border-green-500/20 mb-6 sm:mb-8 hover:border-green-500/40 transition-colors duration-300 group">
             <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse-glow" />
@@ -155,7 +164,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-heading font-black mb-4 sm:mb-6 leading-tight"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-heading font-black mb-4 sm:mb-6 leading-tight"
         >
           <span className="text-gradient">Welcome to</span>
           <br />
@@ -166,7 +175,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-base sm:text-lg md:text-xl text-gray-400 mb-8 sm:mb-10 max-w-2xl mx-auto leading-relaxed"
+          className="text-base sm:text-lg md:text-xl text-gray-400 mb-8 sm:mb-10 max-w-xl lg:max-w-2xl mx-auto lg:mx-0 leading-relaxed"
         >
           Premium Minecraft Survival Experience. Build, explore, and conquer
           with thousands of players in the ultimate adventure.
@@ -176,7 +185,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 sm:mb-10"
+          className="flex flex-col sm:flex-row items-center sm:justify-center lg:justify-start gap-4 mb-8 sm:mb-10"
         >
           <div
             className="flex items-center gap-3 bg-card border border-border rounded-xl px-4 sm:px-6 py-3 hover:border-green-500/30 transition-all duration-300 group cursor-pointer active:scale-[0.98]"
@@ -209,7 +218,7 @@ export function HeroSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1 }}
-            className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs sm:text-sm text-muted"
+            className="flex flex-wrap items-center justify-center lg:justify-start gap-x-6 gap-y-2 text-xs sm:text-sm text-muted"
           >
             {[
               { label: '1.21.x Compatible', color: 'bg-green-500' },

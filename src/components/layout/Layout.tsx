@@ -5,6 +5,7 @@ import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { CursorGlow } from '@/components/ui/CursorGlow';
 import { ScrollToTop } from '@/components/ui/ScrollToTop';
+import { ShaderBackground } from '@/components/ui/shader-background';
 
 function ScrollToTopOnNav() {
   const { pathname } = useLocation();
@@ -34,6 +35,7 @@ export function Layout() {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <ShaderBackground />
       <CursorGlow />
       <ScrollToTopOnNav />
       <AnimatePresence mode="wait">
