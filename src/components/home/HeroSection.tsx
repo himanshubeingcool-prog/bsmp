@@ -209,7 +209,7 @@ export function HeroSection() {
             Play Now
           </Button>
 
-          <Button variant="secondary" size="lg" icon={<MessageCircle className="w-5 h-5" />}>
+          <Button variant="secondary" size="lg" icon={<MessageCircle className="w-5 h-5" />} onClick={() => window.open('https://discord.gg/s7CETJXYhf', '_blank', 'noopener')}>
             Join Discord
           </Button>
         </motion.div>

@@ -16,7 +16,7 @@ export function Footer() {
               Premium Minecraft Survival Experience. Join thousands of players in the ultimate adventure.
             </p>
             <div className="flex items-center gap-2">
-              <a href="https://discord.gg/bhukkadsmp" target="_blank" rel="noopener noreferrer" className="p-2 bg-[#5865F2]/10 hover:bg-[#5865F2]/20 rounded-lg text-[#5865F2] transition-colors">
+              <a href="https://discord.gg/s7CETJXYhf" target="_blank" rel="noopener noreferrer" className="p-2 bg-[#5865F2]/10 hover:bg-[#5865F2]/20 rounded-lg text-[#5865F2] transition-colors">
                 <DiscordIcon className="w-5 h-5" />
               </a>
               <a href="https://google.com" target="_blank" rel="noopener noreferrer" className="p-2 bg-white/5 hover:bg-white/10 rounded-lg text-gray-400 transition-colors">

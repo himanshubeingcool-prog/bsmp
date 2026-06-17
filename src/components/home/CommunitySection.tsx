@@ -39,23 +39,25 @@ export function CommunitySection() {
           >
             <div className="glass-card rounded-xl p-6 sm:p-8 border border-border hover:border-green-500/20 transition-colors h-full">
               <div className="flex items-start gap-4 sm:gap-5 mb-6">
-                <div className="w-12 h-12 rounded-xl bg-[#5865F2]/10 flex items-center justify-center text-[#5865F2] shrink-0">
-                  <DiscordIcon className="w-6 h-6" />
-                </div>
+                <img
+                  src="https://cdn.discordapp.com/icons/1376377359359410337/4dac34d8e38eb1aca70117a3602f6a7b.png?size=128"
+                  alt="BhukkadSMP Discord"
+                  className="w-12 h-12 rounded-xl shrink-0"
+                />
                 <div>
                   <h3 className="text-lg sm:text-xl font-heading font-bold text-white">Discord Server</h3>
-                  <p className="text-xs sm:text-sm text-muted mt-1">Join 12,847 members online</p>
+                  <p className="text-xs sm:text-sm text-muted mt-1">Join 869 members</p>
                 </div>
               </div>
 
               <div className="flex flex-wrap gap-4 sm:gap-6 mb-6">
                 <div className="flex items-center gap-2">
                   <Users className="w-4 h-4 text-green-400" />
-                  <span className="text-sm text-gray-300">12,847 Members</span>
+                  <span className="text-sm text-gray-300">869 Members</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Signal className="w-4 h-4 text-green-400" />
-                  <span className="text-sm text-gray-300">2,341 Online</span>
+                  <span className="text-sm text-gray-300">105 Online</span>
                 </div>
               </div>
 
@@ -75,7 +77,7 @@ export function CommunitySection() {
                 ))}
               </div>
 
-              <Button variant="primary" fullWidth icon={<MessageCircle className="w-4 h-4" />}>
+              <Button variant="primary" fullWidth icon={<MessageCircle className="w-4 h-4" />} onClick={() => window.open('https://discord.gg/s7CETJXYhf', '_blank', 'noopener')}>
                 Join Discord Server
               </Button>
             </div>
@@ -97,7 +99,7 @@ export function CommunitySection() {
               </div>
               <div className="flex items-center justify-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse-glow" />
-                <span className="text-xs sm:text-sm text-green-400">1,247 players online</span>
+                <span className="text-xs sm:text-sm text-green-400">105 online on Discord</span>
               </div>
             </div>
 
@@ -105,7 +107,7 @@ export function CommunitySection() {
               <h3 className="text-sm font-heading font-bold text-green-400 mb-4">Follow Us</h3>
               <div className="flex items-center justify-center gap-3">
                 <a
-                  href="https://discord.gg/bhukkadsmp"
+                  href="https://discord.gg/s7CETJXYhf"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-3 rounded-xl bg-[#5865F2]/10 hover:bg-[#5865F2]/20 text-[#5865F2] transition-all hover:scale-105"
