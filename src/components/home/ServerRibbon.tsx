@@ -1,7 +1,7 @@
 import { InfiniteRibbon } from '@/components/ui/infinite-ribbon'
 
 export function ServerRibbon() {
-  const text = ' BhukkadSMP — Premium Minecraft Survival — play.bhukkadsmp.com — 1,247 Players Online — Ranks • Keys • Crates • Custom Economy '
+  const text = ' BhukkadSMP — Asia\'s First CPvP Battle Royale — play.bhukkadsmp.fun — 1,247 Players Online — Custom Arenas • Practice PvP • Ranks • Crates '
 
   return (
     <div className="relative -mt-px">

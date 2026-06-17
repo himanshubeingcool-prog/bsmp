@@ -9,7 +9,7 @@ const MinecraftHero3D = lazy(() =>
   import('@/components/home/3d/MinecraftHero3D').then(m => ({ default: m.MinecraftHero3D }))
 );
 
-const SERVER_IP = 'play.bhukkadsmp.com';
+const SERVER_IP = 'play.bhukkadsmp.fun';
 
 function ParticleField() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -177,8 +177,8 @@ export function HeroSection() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-base sm:text-lg md:text-xl text-gray-400 mb-8 sm:mb-10 max-w-xl lg:max-w-2xl mx-auto lg:mx-0 leading-relaxed"
         >
-          Premium Minecraft Survival Experience. Build, explore, and conquer
-          with thousands of players in the ultimate adventure.
+          Asia's First CPvP Battle Royale. Practice PvP, compete in
+          custom arenas, and conquer the battleground.
         </motion.p>
 
         <motion.div
@@ -221,9 +221,9 @@ export function HeroSection() {
             className="flex flex-wrap items-center justify-center lg:justify-start gap-x-6 gap-y-2 text-xs sm:text-sm text-muted"
           >
             {[
-              { label: '1.21.x Compatible', color: 'bg-green-500' },
-              { label: 'Premium Survival', color: 'bg-gold-500' },
-              { label: 'Active Community', color: 'bg-green-500' },
+              { label: '1.21++ Compatible', color: 'bg-green-500' },
+              { label: 'CPvP Battle Royale', color: 'bg-gold-500' },
+              { label: 'Custom Arenas', color: 'bg-green-500' },
             ].map(item => (
               <div key={item.label} className="flex items-center gap-2 hover:text-gray-300 transition-colors cursor-default whitespace-nowrap">
                 <span className={`w-1.5 h-1.5 rounded-full ${item.color} shrink-0`} />

@@ -247,18 +247,17 @@ export const KEY_BUNDLES: KeyBundle[] = [
 ];
 
 export const FAQ_DATA: FAQItem[] = [
-  { id: 'faq1', question: 'How do I join BhukkadSMP?', answer: 'Open Minecraft, go to Multiplayer, click Add Server, enter the IP play.bhukkadsmp.com, and click Join. That\'s it!', category: 'Getting Started' },
+  { id: 'faq1', question: 'How do I join BhukkadSMP?', answer: 'Open Minecraft, go to Multiplayer, click Add Server, enter the IP play.bhukkadsmp.fun, and click Join.', category: 'Getting Started' },
   { id: 'faq2', question: 'Is BhukkadSMP free to play?', answer: 'Yes! BhukkadSMP is completely free to play. We offer optional ranks and store items that enhance your experience but are never required.', category: 'Getting Started' },
-  { id: 'faq3', question: 'What version of Minecraft does the server use?', answer: 'BhukkadSMP runs on Minecraft 1.21.4, but we support versions 1.18.x through 1.21.x via ViaVersion.', category: 'Getting Started' },
+  { id: 'faq3', question: 'What version of Minecraft does the server use?', answer: 'BhukkadSMP runs on Minecraft 1.21++.', category: 'Getting Started' },
   { id: 'faq4', question: 'How do I purchase a rank?', answer: 'Visit our Store page, select the rank you want, add it to your cart, and complete checkout. Ranks are delivered instantly to your account.', category: 'Purchases' },
   { id: 'faq5', question: 'My purchase is not showing up. What do I do?', answer: 'First, try rejoining the server. If it still hasn\'t arrived, contact Support through our website or Discord with your transaction ID.', category: 'Purchases' },
   { id: 'faq6', question: 'Can I get a refund?', answer: 'All purchases are final unless the product was not delivered. Please see our Refund Policy for full details.', category: 'Purchases' },
-  { id: 'faq7', question: 'How do I create a team?', answer: 'You can create a team from the Teams page or in-game using /team create. You need at least 3 members to form a team.', category: 'Teams' },
-  { id: 'faq8', question: 'How do leaderboards work?', answer: 'Leaderboards track various stats including kills, deaths, KDR, playtime, and balance. They reset monthly for the monthly leaderboard, with all-time stats always available.', category: 'Gameplay' },
-  { id: 'faq9', question: 'Is griefing allowed?', answer: 'No. BhukkadSMP has strict anti-griefing rules. Claims protect your builds. Use /claim to protect your area.', category: 'Rules' },
+  { id: 'faq7', question: 'What is CPvP Battle Royale?', answer: 'Asia\'s first CPvP Battle Royale mode. Drop into custom arenas, loot gear, and fight to be the last player standing.', category: 'Gameplay' },
+  { id: 'faq8', question: 'How do leaderboards work?', answer: 'Leaderboards track various stats including kills, wins, KDR, and playtime. Compete for the top spot on Asia\'s leaderboards.', category: 'Gameplay' },
+  { id: 'faq9', question: 'How do I practice PvP?', answer: 'Join our Practice PvP arenas to hone your skills. Use /practice to enter the practice mode with custom kits and arenas.', category: 'Gameplay' },
   { id: 'faq10', question: 'How do I link my Discord account?', answer: 'Go to your Profile page, click on Linked Accounts, and click the Discord button. You\'ll be redirected to authorize the connection.', category: 'Account' },
-  { id: 'faq11', question: 'What are Crates and Keys?', answer: 'Crates are loot boxes that contain random rewards. Keys are used to open them. You can earn free keys by voting or purchase them from the store.', category: 'Gameplay' },
-  { id: 'faq12', question: 'How do I report a player?', answer: 'Use /report <player> <reason> in-game or open a Support ticket on our website. Include evidence like screenshots for faster processing.', category: 'Rules' },
+  { id: 'faq11', question: 'How do I report a player?', answer: 'Use /report <player> <reason> in-game or open a Support ticket on our website. Include evidence like screenshots for faster processing.', category: 'Rules' },
 ];
 
 export const SERVER_STATS: ServerStats = {

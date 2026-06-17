@@ -25,7 +25,7 @@ export function CommunitySection() {
             <span className="text-gradient">Join Our Community</span>
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto text-sm sm:text-base">
-            Connect with thousands of players on Discord and in-game
+            Join Asia's first CPvP Battle Royale community
           </p>
         </motion.div>
 
@@ -94,7 +94,7 @@ export function CommunitySection() {
               <h3 className="text-sm font-heading font-bold text-gold-400 mb-3">Server IP</h3>
               <div className="bg-stone-950/50 rounded-lg p-3 mb-4">
                 <p className="font-heading font-bold text-base sm:text-lg text-green-400">
-                  play.bhukkadsmp.com
+                  play.bhukkadsmp.fun
                 </p>
               </div>
               <div className="flex items-center justify-center gap-2">
@@ -115,33 +115,13 @@ export function CommunitySection() {
                   <DiscordIcon className="w-5 h-5" />
                 </a>
                 <a
-                  href="https://twitter.com/bhukkadsmp"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-3 rounded-xl bg-white/5 hover:bg-white/10 text-gray-400 transition-all hover:scale-105"
-                >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                  </svg>
-                </a>
-                <a
-                  href="https://youtube.com/@bhukkadsmp"
+                  href="https://www.youtube.com/@Bhukkaddsmp"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-3 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-500 transition-all hover:scale-105"
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
-                  </svg>
-                </a>
-                <a
-                  href="https://twitch.tv/bhukkadsmp"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-3 rounded-xl bg-purple-500/10 hover:bg-purple-500/20 text-purple-500 transition-all hover:scale-105"
-                >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.428l-3 3v-3H6.857V1.714h13.714Z" />
                   </svg>
                 </a>
               </div>
