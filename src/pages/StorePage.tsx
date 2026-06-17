@@ -1,14 +1,15 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { useRequireAuth } from '@/hooks/useRequireAuth'
-import { Search, ShoppingCart, X, Plus, Minus, Trash2, Star, Shield, Crown, Zap, Package, Key, Gift, ChevronRight, Check, ArrowUpRight } from 'lucide-react'
+import { useCart } from '@/contexts/CartContext'
+import { useToast } from '@/contexts/ToastContext'
+import { ShoppingCart, Plus, Package, Check } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'
 import { SearchBar } from '@/components/ui/SearchBar'
 import { Modal } from '@/components/ui/Modal'
-import { PRODUCTS, CATEGORY_ICONS } from '@/lib/mock-data'
-import type { Product, CartItem, ProductCategory } from '@/types'
+import { PRODUCTS } from '@/lib/mock-data'
+import type { Product, ProductCategory } from '@/types'
 
 const CATEGORIES: { label: string; value: ProductCategory | 'all' }[] = [
   { label: 'All', value: 'all' },
@@ -33,24 +34,12 @@ const categoryGradient: Record<ProductCategory, string> = {
   tokens: 'from-stone-600/20 to-stone-900/20 border-stone-500/20',
 }
 
-const categoryIconMap: Record<ProductCategory, typeof Star> = {
-  ranks: Crown,
-  keys: Key,
-  crates: Package,
-  coins: Star,
-  bundles: Gift,
-  cosmetics: Zap,
-  boosters: Zap,
-  tokens: Star,
-}
-
 export function StorePage() {
   const [search, setSearch] = useState('')
   const [activeCategory, setActiveCategory] = useState<ProductCategory | 'all'>('all')
-  const [cart, setCart] = useState<CartItem[]>([])
-  const [cartOpen, setCartOpen] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
-  const { requireAuth, AuthModal } = useRequireAuth()
+  const { addItem, itemCount, openCart, itemExists } = useCart()
+  const { addToast } = useToast()
 
   const filtered = PRODUCTS.filter(p => {
     const matchesSearch = p.name.toLowerCase().includes(search.toLowerCase()) || p.description.toLowerCase().includes(search.toLowerCase())
@@ -58,35 +47,15 @@ export function StorePage() {
     return matchesSearch && matchesCategory
   })
 
-  const addToCart = (product: Product) => {
-    requireAuth(() => {
-      setCart(prev => {
-        const existing = prev.find(item => item.product.id === product.id)
-        if (existing) {
-          return prev.map(item =>
-            item.product.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-          )
-        }
-        return [...prev, { product, quantity: 1 }]
-      })
-    })
+  const handleAddToCart = (product: Product) => {
+    addItem(product)
+    addToast('success', `${product.name} added to cart`)
   }
 
-  const removeFromCart = (productId: string) => {
-    setCart(prev => prev.filter(item => item.product.id !== productId))
+  const handleQuickAdd = (e: React.MouseEvent, product: Product) => {
+    e.stopPropagation()
+    handleAddToCart(product)
   }
-
-  const updateQuantity = (productId: string, delta: number) => {
-    setCart(prev => prev.map(item => {
-      if (item.product.id !== productId) return item
-      const newQty = item.quantity + delta
-      if (newQty <= 0) return null
-      return { ...item, quantity: newQty }
-    }).filter(Boolean) as CartItem[])
-  }
-
-  const cartTotal = cart.reduce((sum, item) => sum + (item.product.salePrice ?? item.product.price) * item.quantity, 0)
-  const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0)
 
   const formatPrice = (p: Product) => `$${(p.salePrice ?? p.price).toFixed(2)}`
 
@@ -98,11 +67,11 @@ export function StorePage() {
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-heading font-bold text-white">Store</h1>
             <p className="text-xs sm:text-sm text-gray-400 mt-0.5 sm:mt-1 truncate">Premium perks, keys, crates and more</p>
           </div>
-          <Button variant="primary" size="md" icon={<ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5" />} onClick={() => setCartOpen(true)} className="relative shrink-0 sm:size-lg">
+          <Button variant="primary" size="md" icon={<ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5" />} onClick={openCart} className="relative shrink-0">
             <span className="hidden sm:inline">Cart</span>
-            {cartCount > 0 && (
+            {itemCount > 0 && (
               <span className="absolute -top-2 -right-2 bg-gold-500 text-stone-950 text-[10px] sm:text-xs font-bold rounded-full w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center">
-                {cartCount}
+                {itemCount > 99 ? '99+' : itemCount}
               </span>
             )}
           </Button>
@@ -179,11 +148,11 @@ export function StorePage() {
                 </div>
                 <Button
                   size="sm"
-                  variant="primary"
+                  variant={itemExists(product.id) ? 'secondary' : 'primary'}
                   icon={<Plus className="w-4 h-4" />}
-                  onClick={e => { e.stopPropagation(); addToCart(product) }}
+                  onClick={e => handleQuickAdd(e, product)}
                 >
-                  Add
+                  {itemExists(product.id) ? 'Add More' : 'Add'}
                 </Button>
               </div>
             </Card>
@@ -222,9 +191,24 @@ export function StorePage() {
                     <span className="text-2xl font-bold text-green-400">${selectedProduct.price.toFixed(2)}</span>
                   )}
                 </div>
-                <Button variant="primary" size="lg" fullWidth onClick={() => { addToCart(selectedProduct); setSelectedProduct(null) }}>
-                  Add to Cart — {formatPrice(selectedProduct)}
-                </Button>
+                <div className="flex gap-3">
+                  <Button
+                    variant="primary"
+                    size="lg"
+                    fullWidth
+                    onClick={() => { handleAddToCart(selectedProduct); setSelectedProduct(null) }}
+                  >
+                    Add to Cart — {formatPrice(selectedProduct)}
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    size="lg"
+                    icon={<ShoppingCart className="w-5 h-5" />}
+                    onClick={() => { handleAddToCart(selectedProduct); setSelectedProduct(null); openCart() }}
+                  >
+                    Buy Now
+                  </Button>
+                </div>
               </div>
             </div>
             {selectedProduct.features.length > 0 && (
@@ -243,82 +227,6 @@ export function StorePage() {
           </div>
         )}
       </Modal>
-
-      <div
-        className={`fixed inset-0 z-50 transition-opacity duration-300 ${cartOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
-        onClick={() => setCartOpen(false)}
-      >
-        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
-      </div>
-
-      <div
-        className={`fixed top-0 right-0 z-50 h-full w-full max-w-md bg-stone-950 border-l border-stone-800 shadow-2xl transition-transform duration-300 ${cartOpen ? 'translate-x-0' : 'translate-x-full'}`}
-      >
-        <div className="flex flex-col h-full">
-          <div className="flex items-center justify-between p-4 sm:p-6 border-b border-stone-800">
-            <div className="flex items-center gap-2">
-              <ShoppingCart className="w-5 h-5 text-green-400" />
-              <h2 className="text-lg font-heading font-bold text-white">Cart ({cartCount})</h2>
-            </div>
-            <button onClick={() => setCartOpen(false)} className="p-1 hover:bg-stone-800 rounded-lg transition-colors cursor-pointer">
-              <X className="w-5 h-5 text-gray-400" />
-            </button>
-          </div>
-
-          <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4">
-            {cart.length === 0 ? (
-              <div className="text-center py-12">
-                <ShoppingCart className="w-12 h-12 mx-auto text-gray-600 mb-3" />
-                <p className="text-gray-500">Your cart is empty</p>
-              </div>
-            ) : (
-              cart.map(item => (
-                <div key={item.product.id} className="flex items-center gap-4 bg-stone-900/50 rounded-xl p-3 sm:p-4 border border-stone-800">
-                  <div className="text-2xl">{item.product.image}</div>
-                  <div className="flex-1 min-w-0">
-                    <h4 className="text-sm font-medium text-white truncate">{item.product.name}</h4>
-                    <p className="text-sm text-green-400">${((item.product.salePrice ?? item.product.price) * item.quantity).toFixed(2)}</p>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <button
-                      onClick={() => updateQuantity(item.product.id, -1)}
-                      className="p-1 hover:bg-stone-800 rounded-md transition-colors cursor-pointer"
-                    >
-                      <Minus className="w-4 h-4 text-gray-400" />
-                    </button>
-                    <span className="w-8 text-center text-sm text-white font-medium">{item.quantity}</span>
-                    <button
-                      onClick={() => updateQuantity(item.product.id, 1)}
-                      className="p-1 hover:bg-stone-800 rounded-md transition-colors cursor-pointer"
-                    >
-                      <Plus className="w-4 h-4 text-gray-400" />
-                    </button>
-                    <button
-                      onClick={() => removeFromCart(item.product.id)}
-                      className="p-1 hover:bg-red-900/30 rounded-md transition-colors ml-1 cursor-pointer"
-                    >
-                      <Trash2 className="w-4 h-4 text-red-400" />
-                    </button>
-                  </div>
-                </div>
-              ))
-            )}
-          </div>
-
-          {cart.length > 0 && (
-            <div className="border-t border-stone-800 p-4 sm:p-6 space-y-4">
-              <div className="flex items-center justify-between">
-                <span className="text-gray-400">Total</span>
-                <span className="text-xl font-bold text-green-400">${cartTotal.toFixed(2)}</span>
-              </div>
-               <Button variant="gold" size="lg" fullWidth icon={<ShoppingCart className="w-5 h-5" />} onClick={() => requireAuth(() => setCartOpen(false))}>
-                Checkout
-              </Button>
-            </div>
-          )}
-        </div>
-      </div>
-      {AuthModal}
     </div>
   )
 }

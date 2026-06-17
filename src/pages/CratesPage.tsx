@@ -1,11 +1,13 @@
 import { useState } from 'react'
-import { useRequireAuth } from '@/hooks/useRequireAuth'
-import { Search, ShoppingCart, X, Plus, Minus, Trash2, Star, Shield, Crown, Zap, Package, Key, Gift, ChevronRight, Check, ArrowUpRight } from 'lucide-react'
+import { useCart } from '@/contexts/CartContext'
+import { useToast } from '@/contexts/ToastContext'
+import { ShoppingCart, Crown, Package, Key, Gift, Zap } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'
 import { CRATES, KEY_BUNDLES } from '@/lib/mock-data'
 import { getRarityColor, getRarityBg } from '@/lib/utils'
+import type { ProductCategory } from '@/types'
 
 const rarityBorderAnimations: Record<string, string> = {
   common: 'before:animate-pulse before:border-gray-500',
@@ -33,20 +35,48 @@ function RarityBadge({ rarity }: { rarity: string }) {
 export function CratesPage() {
   const [openingCrate, setOpeningCrate] = useState<string | null>(null)
   const [showRewards, setShowRewards] = useState<string | null>(null)
-  const { requireAuth, AuthModal } = useRequireAuth()
+  const { addItem } = useCart()
+  const { addToast } = useToast()
 
   const featuredCrate = CRATES.find(c => c.id === 'crate-mythic') || CRATES[0]
   const otherCrates = CRATES.filter(c => c.id !== featuredCrate.id)
 
   const handleOpen = (crateId: string) => {
-    requireAuth(() => {
-      setOpeningCrate(crateId)
-      setTimeout(() => {
-        setOpeningCrate(null)
-        setShowRewards(crateId)
-        setTimeout(() => setShowRewards(null), 4000)
-      }, 1500)
+    setOpeningCrate(crateId)
+    setTimeout(() => {
+      setOpeningCrate(null)
+      setShowRewards(crateId)
+      setTimeout(() => setShowRewards(null), 4000)
+    }, 1500)
+  }
+
+  const handleAddCrate = (crate: typeof CRATES[number]) => {
+    addItem({
+      id: crate.id,
+      name: crate.name,
+      description: crate.description,
+      category: 'crates' as ProductCategory,
+      price: crate.price,
+      image: crate.image,
+      features: [],
+      inStock: true,
     })
+    addToast('success', `${crate.name} added to cart`)
+  }
+
+  const handleAddBundle = (bundle: typeof KEY_BUNDLES[number]) => {
+    addItem({
+      id: bundle.id,
+      name: bundle.name,
+      description: `${bundle.keys} Keys`,
+      category: 'keys' as ProductCategory,
+      price: bundle.price,
+      image: bundle.image,
+      features: [],
+      inStock: true,
+      discount: bundle.discount,
+    })
+    addToast('success', `${bundle.name} added to cart`)
   }
 
   return (
@@ -84,15 +114,25 @@ export function CratesPage() {
                 <p className="text-gray-400 mb-4 max-w-lg">{featuredCrate.description}</p>
                 <div className="flex items-center justify-center lg:justify-start gap-4 mb-6">
                   <span className="text-3xl font-bold text-green-400">${featuredCrate.price.toFixed(2)}</span>
-                  <Button
-                    variant="gold"
-                    size="lg"
-                    icon={<Zap className="w-5 h-5" />}
-                    onClick={() => handleOpen(featuredCrate.id)}
-                    loading={openingCrate === featuredCrate.id}
-                  >
-                    {openingCrate === featuredCrate.id ? 'Opening...' : 'Open Crate'}
-                  </Button>
+                  <div className="flex gap-3">
+                    <Button
+                      variant="gold"
+                      size="lg"
+                      icon={<Zap className="w-5 h-5" />}
+                      onClick={() => handleOpen(featuredCrate.id)}
+                      loading={openingCrate === featuredCrate.id}
+                    >
+                      {openingCrate === featuredCrate.id ? 'Opening...' : 'Open Crate'}
+                    </Button>
+                    <Button
+                      variant="secondary"
+                      size="lg"
+                      icon={<ShoppingCart className="w-5 h-5" />}
+                      onClick={() => handleAddCrate(featuredCrate)}
+                    >
+                      Add to Cart
+                    </Button>
+                  </div>
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
                   {featuredCrate.rewards.map(reward => (
@@ -168,16 +208,24 @@ export function CratesPage() {
                   )}
                 </div>
 
-                <Button
-                  variant="primary"
-                  size="md"
-                  fullWidth
-                  icon={openingCrate === crate.id ? undefined : <Key className="w-4 h-4" />}
-                  onClick={() => handleOpen(crate.id)}
-                  loading={openingCrate === crate.id}
-                >
-                  {openingCrate === crate.id ? 'Opening...' : `Open — $${crate.price.toFixed(2)}`}
-                </Button>
+                <div className="flex gap-2">
+                  <Button
+                    variant="primary"
+                    size="md"
+                    className="flex-1"
+                    icon={openingCrate === crate.id ? undefined : <Key className="w-4 h-4" />}
+                    onClick={() => handleOpen(crate.id)}
+                    loading={openingCrate === crate.id}
+                  >
+                    {openingCrate === crate.id ? 'Opening...' : 'Open'}
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    size="md"
+                    icon={<ShoppingCart className="w-4 h-4" />}
+                    onClick={() => handleAddCrate(crate)}
+                  />
+                </div>
               </Card>
             ))}
           </div>
@@ -206,8 +254,8 @@ export function CratesPage() {
                       ${(bundle.price / (1 - bundle.discount / 100)).toFixed(2)}
                     </span>
                   </div>
-                  <Button variant="gold" size="sm" fullWidth icon={<ShoppingCart className="w-4 h-4" />} onClick={() => requireAuth(() => {})}>
-                    Buy Bundle
+                  <Button variant="gold" size="sm" fullWidth icon={<ShoppingCart className="w-4 h-4" />} onClick={() => handleAddBundle(bundle)}>
+                    Add to Cart
                   </Button>
                 </div>
               </Card>
@@ -215,7 +263,6 @@ export function CratesPage() {
           </div>
         </div>
       </div>
-      {AuthModal}
     </div>
   )
 }

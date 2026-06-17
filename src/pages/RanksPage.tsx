@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { useRequireAuth } from '@/hooks/useRequireAuth'
-import { Check, ShoppingCart, Star, Shield, Crown, Zap, ArrowUpRight, Gem, Swords, Sparkles } from 'lucide-react'
+import { useCart } from '@/contexts/CartContext'
+import { useToast } from '@/contexts/ToastContext'
+import { Check, ShoppingCart, Crown, ArrowUpRight, Gem, Swords, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'
 import { RANKS } from '@/lib/mock-data'
-import { getRankColor, getRankGradient, cn } from '@/lib/utils'
+import { getRankGradient } from '@/lib/utils'
 import type { Rank } from '@/types'
 
 const CURRENT_RANK: Rank = RANKS[1]
@@ -62,10 +63,31 @@ function getNextRank(current: Rank): Rank | null {
   return null
 }
 
+function rankToProduct(rank: Rank) {
+  return {
+    id: rank.id,
+    name: `${rank.name} Rank`,
+    description: rank.description,
+    category: 'ranks' as const,
+    price: rank.price,
+    salePrice: undefined,
+    image: '👑',
+    features: rank.perks,
+    inStock: true,
+    popular: rank.popular,
+  } as const;
+}
+
 export function RanksPage() {
   const [selectedRank, setSelectedRank] = useState<Rank | null>(null)
   const nextRank = getNextRank(CURRENT_RANK)
-  const { requireAuth, AuthModal } = useRequireAuth()
+  const { addItem } = useCart()
+  const { addToast } = useToast()
+
+  const handleAddRank = (rank: Rank) => {
+    addItem(rankToProduct(rank))
+    addToast('success', `${rank.name} Rank added to cart`)
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-stone-950 via-stone-900 to-stone-950 relative overflow-hidden">
@@ -126,8 +148,8 @@ export function RanksPage() {
                   </p>
                 </div>
               </div>
-              <Button variant="gold" size="lg" icon={<Crown className="w-5 h-5" />} onClick={() => requireAuth(() => {})}>
-                Upgrade to {nextRank.name}
+              <Button variant="gold" size="lg" icon={<Crown className="w-5 h-5" />} onClick={() => handleAddRank(nextRank)}>
+                Add to Cart — ${nextRank.price.toFixed(2)}
               </Button>
             </div>
           </Card>
@@ -201,8 +223,8 @@ export function RanksPage() {
                 </ul>
 
                 {rankUpgradable ? (
-                  <Button variant="gold" size="md" fullWidth icon={<ArrowUpRight className="w-4 h-4" />} onClick={() => requireAuth(() => {})}>
-                    Upgrade to {nextRank?.name}
+                  <Button variant="gold" size="md" fullWidth icon={<ShoppingCart className="w-4 h-4" />} onClick={() => handleAddRank(nextRank!)}>
+                    Add to Cart
                   </Button>
                 ) : (
                   <Button
@@ -210,9 +232,9 @@ export function RanksPage() {
                     size="md"
                     fullWidth
                     icon={isCurrent ? <Check className="w-4 h-4" /> : <ShoppingCart className="w-4 h-4" />}
-                    onClick={isCurrent ? undefined : () => requireAuth(() => {})}
+                    onClick={isCurrent ? undefined : () => handleAddRank(rank)}
                   >
-                    {isCurrent ? 'Current Rank' : `Buy ${rank.name}`}
+                    {isCurrent ? 'Current Rank' : `Add to Cart — $${rank.price.toFixed(2)}`}
                   </Button>
                 )}
               </Card>
@@ -269,7 +291,6 @@ export function RanksPage() {
           </div>
         </Card>
       </div>
-      {AuthModal}
     </div>
   )
 }

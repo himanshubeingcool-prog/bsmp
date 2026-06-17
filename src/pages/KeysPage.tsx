@@ -1,15 +1,47 @@
 import { useState } from 'react'
-import { useRequireAuth } from '@/hooks/useRequireAuth'
-import { Search, ShoppingCart, X, Plus, Minus, Trash2, Star, Shield, Crown, Zap, Package, Key, Gift, ChevronRight, Check, ArrowUpRight } from 'lucide-react'
+import { useCart } from '@/contexts/CartContext'
+import { useToast } from '@/contexts/ToastContext'
+import { ShoppingCart, Package, Key } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'
 import { KEY_BUNDLES, CRATES } from '@/lib/mock-data'
-import { getRarityColor, getRarityBg, formatNumber } from '@/lib/utils'
+import { getRarityColor, getRarityBg } from '@/lib/utils'
+import type { ProductCategory } from '@/types'
 
 export function KeysPage() {
   const [selectedCrate, setSelectedCrate] = useState<typeof CRATES[number] | null>(null)
-  const { requireAuth, AuthModal } = useRequireAuth()
+  const { addItem } = useCart()
+  const { addToast } = useToast()
+
+  const handleAddBundle = (bundle: typeof KEY_BUNDLES[number]) => {
+    addItem({
+      id: bundle.id,
+      name: bundle.name,
+      description: `${bundle.keys} Keys`,
+      category: 'keys' as ProductCategory,
+      price: bundle.price,
+      image: bundle.image,
+      features: [],
+      inStock: true,
+      discount: bundle.discount,
+    })
+    addToast('success', `${bundle.name} added to cart`)
+  }
+
+  const handleAddCrate = (crate: typeof CRATES[number]) => {
+    addItem({
+      id: crate.id,
+      name: crate.name,
+      description: crate.description,
+      category: 'crates' as ProductCategory,
+      price: crate.price,
+      image: crate.image,
+      features: [],
+      inStock: true,
+    })
+    addToast('success', `${crate.name} added to cart`)
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-stone-950 via-stone-900 to-stone-950">
@@ -55,8 +87,8 @@ export function KeysPage() {
                 <div className="text-center mb-4">
                   <span className="text-xs text-gray-500">${(bundle.price / bundle.keys).toFixed(2)} per key</span>
                 </div>
-                <Button variant="primary" size="sm" fullWidth icon={<ShoppingCart className="w-4 h-4" />} onClick={() => requireAuth(() => {})}>
-                  Buy Now
+                <Button variant="primary" size="sm" fullWidth icon={<ShoppingCart className="w-4 h-4" />} onClick={() => handleAddBundle(bundle)}>
+                  Add to Cart
                 </Button>
               </Card>
             ))}
@@ -115,17 +147,16 @@ export function KeysPage() {
                 </div>
 
                 <div className="flex gap-2">
-                  <Button variant="primary" size="sm" fullWidth icon={<Key className="w-4 h-4" />} onClick={() => requireAuth(() => {})}>
+                  <Button variant="primary" size="sm" fullWidth icon={<Key className="w-4 h-4" />} onClick={() => { addToast('info', 'Opening crates requires an owned crate key'); }}>
                     Open
                   </Button>
-                  <Button variant="secondary" size="sm" icon={<ShoppingCart className="w-4 h-4" />} className="!px-3" onClick={() => requireAuth(() => {})} />
+                  <Button variant="secondary" size="sm" icon={<ShoppingCart className="w-4 h-4" />} className="!px-3" onClick={() => handleAddCrate(crate)} />
                 </div>
               </Card>
             ))}
           </div>
         </div>
       </div>
-      {AuthModal}
     </div>
   )
 }

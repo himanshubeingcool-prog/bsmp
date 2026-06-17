@@ -6,6 +6,7 @@ import { Footer } from './Footer';
 import { CursorGlow } from '@/components/ui/CursorGlow';
 import { ScrollToTop } from '@/components/ui/ScrollToTop';
 import { ShaderBackground } from '@/components/ui/shader-background';
+import { CartDrawer } from '@/components/cart/CartDrawer';
 
 function ScrollToTopOnNav() {
   const { pathname } = useLocation();
@@ -42,6 +43,7 @@ export function Layout() {
         <ProgressBar key={`progress-${location.pathname}`} />
       </AnimatePresence>
       <Navbar />
+      <CartDrawer />
       <main className="flex-1 pt-16 sm:pt-18">
         <AnimatePresence mode="wait">
           <motion.div

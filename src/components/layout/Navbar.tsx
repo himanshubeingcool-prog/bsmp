@@ -5,6 +5,7 @@ import {
   Store, Trophy, Users, Swords, Key, Package, Shield, HeadphonesIcon, Settings, LayoutDashboard
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useCart } from '@/contexts/CartContext';
 import { Avatar } from '@/components/ui/Avatar';
 
 const NAV_ITEMS = [
@@ -20,6 +21,7 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const { supabaseUser, profile, isAuthenticated, logout } = useAuth();
+  const { itemCount, openCart } = useCart();
   const location = useLocation();
 
   const displayName = profile?.minecraft_username || profile?.display_name || supabaseUser?.user_metadata?.full_name || supabaseUser?.email || 'User';
@@ -65,10 +67,14 @@ export function Navbar() {
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3">
-            <Link to="/store" className="relative p-1.5 sm:p-2 text-gray-400 hover:text-green-400 transition-colors">
+            <button onClick={openCart} className="relative p-1.5 sm:p-2 text-gray-400 hover:text-green-400 transition-colors cursor-pointer">
               <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5" />
-              <span className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 sm:w-4 sm:h-4 bg-green-500 rounded-full text-[9px] sm:text-[10px] font-bold flex items-center justify-center text-stone-950">3</span>
-            </Link>
+              {itemCount > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 sm:w-4.5 sm:h-4.5 bg-green-500 rounded-full text-[9px] sm:text-[10px] font-bold flex items-center justify-center text-stone-950 transition-all duration-200 animate-scale-in">
+                  {itemCount > 99 ? '99+' : itemCount}
+                </span>
+              )}
+            </button>
 
             {isAuthenticated ? (
               <div className="relative">
