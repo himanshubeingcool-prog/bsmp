@@ -70,17 +70,51 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [supabaseUser, fetchProfile]);
 
   const login = useCallback(async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    return { error: error?.message ?? null };
+    try {
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) {
+        console.error('Login error:', error);
+        return { error: error.message || 'An unexpected error occurred during login' };
+      }
+      return { error: null };
+    } catch (err) {
+      console.error('Login error:', err);
+      return { error: err instanceof Error ? err.message : 'An unexpected error occurred' };
+    }
   }, []);
 
   const register = useCallback(async (email: string, password: string) => {
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: { emailRedirectTo: getRedirectUrl('/auth/callback') },
-    });
-    return { error: error?.message ?? null };
+    try {
+      const { data: existingProvider } = await supabase.rpc('check_email_exists', {
+        p_email: email,
+      });
+
+      if (existingProvider) {
+        if (existingProvider === 'google') {
+          return { error: 'This email is already linked with Google. Please continue with Google login.' };
+        }
+        if (existingProvider === 'email') {
+          return { error: 'This email is already registered. Please login with email.' };
+        }
+        return { error: 'This email is already linked with a different login method. Please use the original login method.' };
+      }
+
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: { emailRedirectTo: getRedirectUrl('/auth/callback') },
+      });
+
+      if (error) {
+        console.error('Signup error:', error);
+        return { error: error.message || 'An unexpected error occurred during signup' };
+      }
+
+      return { error: null };
+    } catch (err) {
+      console.error('Signup error:', err);
+      return { error: err instanceof Error ? err.message : 'An unexpected error occurred' };
+    }
   }, []);
 
   const loginWithGoogle = useCallback(async () => {

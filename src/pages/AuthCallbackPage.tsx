@@ -15,10 +15,30 @@ export function AuthCallbackPage() {
         return;
       }
       if (data?.session?.user) {
+        const user = data.session.user;
+
+        if (user.email) {
+          const { data: existingProvider } = await supabase.rpc('check_email_exists', {
+            p_email: user.email,
+            p_exclude_user_id: user.id,
+          });
+
+          if (existingProvider) {
+            await supabase.auth.signOut();
+            const method = existingProvider === 'google'
+              ? 'Google'
+              : existingProvider === 'email'
+              ? 'email'
+              : 'a different login method';
+            setError(`This email is already linked with ${method}. Please use the original login method.`);
+            return;
+          }
+        }
+
         const { data: profile } = await supabase
           .from('profiles')
           .select('minecraft_username')
-          .eq('id', data.session.user.id)
+          .eq('id', user.id)
           .single();
 
         const returnTo = localStorage.getItem('auth_redirect');

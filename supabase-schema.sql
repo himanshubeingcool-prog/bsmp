@@ -175,6 +175,32 @@ create index if not exists idx_profiles_minecraft_username on public.profiles (m
 create index if not exists idx_profiles_role on public.profiles (role);
 
 -- ============================================================================
+-- 8. Duplicate email prevention (unique lowercase index)
+-- ============================================================================
+
+create unique index if not exists idx_profiles_email_lower on public.profiles (lower(email));
+
+-- RPC that bypasses RLS so anon (unauthenticated) users can check email
+-- during registration, and authenticated users can check during OAuth callback.
+-- Returns the provider of the conflicting profile, or null if email is available.
+-- p_exclude_user_id: optional — excludes the current user's own profile so that
+-- OAuth logins for an already-linked provider don't falsely trigger a conflict.
+create or replace function public.check_email_exists(p_email text, p_exclude_user_id uuid default null)
+returns text
+language sql
+security definer
+set search_path = ''
+as $$
+  select provider
+  from public.profiles
+  where lower(email) = lower(p_email)
+    and (p_exclude_user_id is null or id != p_exclude_user_id)
+  limit 1;
+$$;
+
+grant execute on function public.check_email_exists to anon, authenticated;
+
+-- ============================================================================
 -- Important notes for developers
 -- ============================================================================
 
