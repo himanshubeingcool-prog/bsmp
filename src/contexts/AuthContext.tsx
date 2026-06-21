@@ -85,9 +85,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const register = useCallback(async (email: string, password: string) => {
     try {
-      const { data: existingProvider } = await supabase.rpc('check_email_exists', {
+      const { data: existingProvider } = await 
+      supabase.rpc("is_minecraft_username_taken" as any, {
         p_email: email,
-      });
+      } as any)
 
       if (existingProvider) {
         if (existingProvider === 'google') {

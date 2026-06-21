@@ -18,10 +18,10 @@ export function AuthCallbackPage() {
         const user = data.session.user;
 
         if (user.email) {
-          const { data: existingProvider } = await supabase.rpc('check_email_exists', {
+          const { data: existingProvider } = await supabase.rpc("is_minecraft_username_taken" as any, {
             p_email: user.email,
             p_exclude_user_id: user.id,
-          });
+          } as any);
 
           if (existingProvider) {
             await supabase.auth.signOut();
