@@ -85,7 +85,7 @@ export function TermsPage() {
     <div className="min-h-screen py-16 px-4">
       <div className="max-w-5xl mx-auto space-y-10">
         <div className="text-center space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-sm">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm">
             <FileText className="w-4 h-4" />
             Terms of Service
           </div>
@@ -101,8 +101,8 @@ export function TermsPage() {
             return (
               <Card key={section.id} variant="default" className="animate-slide-up" style={{ animationDelay: `${idx * 100}ms` }}>
                 <div className="flex items-center gap-3 mb-4 pb-3 border-b border-border">
-                  <div className="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center">
-                    <Icon className="w-5 h-5 text-green-400" />
+                  <div className="w-10 h-10 rounded-lg bg-cyan-500/10 flex items-center justify-center">
+                    <Icon className="w-5 h-5 text-cyan-400" />
                   </div>
                   <div>
                     <h2 className="font-heading text-lg font-semibold">{section.label}</h2>

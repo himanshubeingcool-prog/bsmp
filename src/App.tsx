@@ -1,4 +1,6 @@
+import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import Lenis from 'lenis';
 import { Layout } from '@/components/layout/Layout';
 import { ProtectedRoute, UsernameRequiredRoute } from '@/components/auth/ProtectedRoute';
 import { HomePage } from '@/pages/HomePage';
@@ -24,6 +26,13 @@ import { PrivacyPage } from '@/pages/PrivacyPage';
 import { TermsPage } from '@/pages/TermsPage';
 
 export function App() {
+  useEffect(() => {
+    const lenis = new Lenis({ duration: 1.1, smoothWheel: true })
+    const raf = (t: number) => { lenis.raf(t); requestAnimationFrame(raf) }
+    const id = requestAnimationFrame(raf)
+    return () => { lenis.destroy(); cancelAnimationFrame(id) }
+  }, [])
+
   return (
     <Routes>
       {/* Public routes */}

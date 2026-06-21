@@ -68,7 +68,7 @@ export function AuthCallbackPage() {
           <p className="text-gray-400 mb-6">{error}</p>
           <button
             onClick={() => navigate('/login')}
-            className="px-6 py-2.5 bg-green-600 hover:bg-green-500 text-white rounded-lg transition-colors"
+            className="px-6 py-2.5 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg transition-colors"
           >
             Back to Login
           </button>

@@ -22,8 +22,8 @@ import { Avatar } from '@/components/ui/Avatar';
 type ProfileTab = 'profile' | 'edit' | 'settings';
 
 const AVATAR_COLORS = [
-  '#22c55e', '#eab308', '#3b82f6', '#a855f7', '#ef4444',
-  '#ec4899', '#14b8a6', '#f97316', '#6366f1', '#84cc16',
+  '#06b6d4', '#eab308', '#3b82f6', '#a855f7', '#ef4444',
+  '#ec4899', '#14b8a6', '#f97316', '#6366f1', '#22d3ee',
 ];
 
 export function ProfilePage() {
@@ -35,7 +35,7 @@ export function ProfilePage() {
   const [activeTab, setActiveTab] = useState<ProfileTab>('profile');
   const [editUsername, setEditUsername] = useState('');
   const [editBio, setEditBio] = useState('');
-  const [avatarColor, setAvatarColor] = useState('#22c55e');
+  const [avatarColor, setAvatarColor] = useState('#06b6d4');
   const [showPasswordForm, setShowPasswordForm] = useState(false);
   const [passwords, setPasswords] = useState({ current: '', new: '', confirm: '' });
   const [privacy, setPrivacy] = useState({
@@ -98,7 +98,7 @@ export function ProfilePage() {
   if (isLoading) {
     return (
       <div className="min-h-screen pt-24 pb-16 px-4 flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-green-500 border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-cyan-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -131,7 +131,7 @@ export function ProfilePage() {
       {privacy.showStats && (
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           <Card variant="default" padding="md" className="text-center">
-            <Swords className="w-5 h-5 text-green-400 mx-auto mb-2" />
+            <Swords className="w-5 h-5 text-cyan-400 mx-auto mb-2" />
             <p className="text-xl font-bold font-heading">0</p>
             <p className="text-xs text-muted">Kills</p>
           </Card>
@@ -141,12 +141,12 @@ export function ProfilePage() {
             <p className="text-xs text-muted">Playtime</p>
           </Card>
           <Card variant="default" padding="md" className="text-center">
-            <Trophy className="w-5 h-5 text-blue-400 mx-auto mb-2" />
+            <Trophy className="w-5 h-5 text-cyan-400 mx-auto mb-2" />
             <p className="text-xl font-bold font-heading">0</p>
             <p className="text-xs text-muted">Wins</p>
           </Card>
           <Card variant="default" padding="md" className="text-center">
-            <Wallet className="w-5 h-5 text-purple-400 mx-auto mb-2" />
+            <Wallet className="w-5 h-5 text-cyan-400 mx-auto mb-2" />
             <p className="text-xl font-bold font-heading">${balance.toLocaleString()}</p>
             <p className="text-xs text-muted">Balance</p>
           </Card>
@@ -216,7 +216,7 @@ export function ProfilePage() {
               onChange={e => setEditBio(e.target.value)}
               placeholder="Tell us about yourself..."
               rows={3}
-              className="w-full bg-surface border border-border rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-green-500 resize-none"
+              className="w-full bg-surface border border-border rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 resize-none"
             />
           </div>
           <Button variant="primary" onClick={handleSaveProfile}>
@@ -252,7 +252,7 @@ export function ProfilePage() {
                 <button
                   onClick={() => togglePrivacy(key)}
                   className={`relative w-11 h-6 rounded-full transition-colors cursor-pointer ${
-                    privacy[key] ? 'bg-green-600' : 'bg-gray-700'
+                    privacy[key] ? 'bg-cyan-600' : 'bg-gray-700'
                   }`}
                 >
                   <span className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white transition-transform ${
@@ -285,7 +285,7 @@ export function ProfilePage() {
                 <button
                   onClick={() => toggleNotification(key)}
                   className={`relative w-11 h-6 rounded-full transition-colors cursor-pointer ${
-                    notifications[key] ? 'bg-green-600' : 'bg-gray-700'
+                    notifications[key] ? 'bg-cyan-600' : 'bg-gray-700'
                   }`}
                 >
                   <span className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white transition-transform ${
@@ -334,8 +334,8 @@ export function ProfilePage() {
           ) : (
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-green-900/30 flex items-center justify-center">
-                  <Key className="w-6 h-6 text-green-400" />
+                <div className="w-12 h-12 rounded-xl bg-cyan-900/30 flex items-center justify-center">
+                  <Key className="w-6 h-6 text-cyan-400" />
                 </div>
                 <div>
                   <h4 className="font-heading font-bold text-sm">Password</h4>
@@ -372,8 +372,8 @@ export function ProfilePage() {
     <div className="min-h-screen pt-24 pb-16 px-4">
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center gap-3 mb-8">
-          <User className="w-6 h-6 text-green-400" />
-          <h1 className="text-3xl font-heading font-bold bg-gradient-to-r from-green-400 to-gold-400 bg-clip-text text-transparent">
+          <User className="w-6 h-6 text-cyan-400" />
+          <h1 className="text-3xl font-heading font-bold bg-gradient-to-r from-cyan-400 to-gold-400 bg-clip-text text-transparent">
             {isOwner ? 'My Profile' : `${displayName}'s Profile`}
           </h1>
         </div>
@@ -386,7 +386,7 @@ export function ProfilePage() {
               className={cn(
                 'flex items-center gap-2 px-4 py-2.5 text-sm font-medium rounded-lg whitespace-nowrap transition-all cursor-pointer',
                 activeTab === key
-                  ? 'bg-green-600 text-white shadow-lg shadow-green-600/20'
+                  ? 'bg-cyan-600 text-white shadow-lg shadow-cyan-600/20'
                   : 'text-gray-400 hover:text-white hover:bg-white/5'
               )}
             >

@@ -22,7 +22,7 @@ export function Avatar({ src, alt = '', size = 'md', className = '', status }: A
   };
 
   const statusColors: Record<string, string> = {
-    online: 'bg-green-500',
+    online: 'bg-cyan-500',
     offline: 'bg-gray-500',
     away: 'bg-yellow-500',
   };
@@ -40,7 +40,7 @@ export function Avatar({ src, alt = '', size = 'md', className = '', status }: A
           }}
         />
       ) : null}
-      <div className={`${sizes[size]} rounded-full bg-gradient-to-br from-green-600 to-green-800 flex items-center justify-center font-bold text-white border-2 border-border ${src ? 'hidden' : ''}`}>
+      <div className={`${sizes[size]} rounded-full bg-gradient-to-br from-cyan-600 to-cyan-800 flex items-center justify-center font-bold text-white border-2 border-border ${src ? 'hidden' : ''}`}>
         {alt.charAt(0).toUpperCase()}
       </div>
       {status && (

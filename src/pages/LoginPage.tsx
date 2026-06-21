@@ -42,15 +42,15 @@ export function LoginPage() {
   return (
     <div className="min-h-screen bg-stone-950 flex items-center justify-center px-4 py-12">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-96 h-96 bg-green-500/5 rounded-full blur-3xl" />
+        <div className="absolute -top-40 -right-40 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl" />
         <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gold-500/5 rounded-full blur-3xl" />
       </div>
 
       <div className="relative w-full max-w-md">
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2 mb-6">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500 to-gold-500 flex items-center justify-center font-heading font-bold text-stone-950">B</div>
-            <span className="font-heading font-bold text-lg bg-gradient-to-r from-green-400 to-gold-400 bg-clip-text text-transparent">BhukkadSMP</span>
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-gold-500 flex items-center justify-center font-heading font-bold text-stone-950">B</div>
+            <span className="font-heading font-bold text-lg bg-gradient-to-r from-cyan-400 to-gold-400 bg-clip-text text-transparent">BhukkadSMP</span>
           </Link>
           <h1 className="text-2xl font-heading font-bold text-white mb-2">Welcome Back</h1>
           <p className="text-gray-400 text-sm">Sign in to your account</p>
@@ -76,7 +76,7 @@ export function LoginPage() {
                 icon={<Lock className="w-4 h-4" />}
               />
               <div className="flex justify-end mt-1">
-                <Link to="/forgot-password" className="text-xs text-green-400 hover:text-green-300 transition-colors">
+                <Link to="/forgot-password" className="text-xs text-cyan-400 hover:text-cyan-300 transition-colors">
                   Forgot password?
                 </Link>
               </div>
@@ -100,7 +100,7 @@ export function LoginPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Button variant="secondary" onClick={handleGoogleLogin} className="!border-gray-700">
               <svg className="w-4 h-4" viewBox="0 0 24 24">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4" />
@@ -119,7 +119,7 @@ export function LoginPage() {
 
         <p className="text-center text-sm text-muted mt-6">
           Don't have an account?{' '}
-          <Link to="/register" className="text-green-400 hover:text-green-300 font-medium transition-colors">
+          <Link to="/register" className="text-cyan-400 hover:text-cyan-300 font-medium transition-colors">
             Create one
           </Link>
         </p>

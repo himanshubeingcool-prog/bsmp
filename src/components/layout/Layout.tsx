@@ -19,7 +19,7 @@ function ProgressBar() {
   return (
     <motion.div
       key={location.pathname}
-      className="fixed top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-green-500 via-gold-500 to-green-500 z-[100]"
+      className="fixed top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-cyan-500 via-gold-500 to-cyan-500 z-[100]"
       initial={{ scaleX: 0, transformOrigin: '0% 50%' }}
       animate={{ scaleX: 1, transformOrigin: '0% 50%' }}
       exit={{ scaleX: 0, transformOrigin: '100% 50%' }}
@@ -36,6 +36,8 @@ export function Layout() {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <div className="noise-overlay" />
+      <div className="fixed inset-0 pointer-events-none z-[1]" style={{ background: 'radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.5) 100%)' }} />
       <ShaderBackground />
       <CursorGlow />
       <ScrollToTopOnNav />

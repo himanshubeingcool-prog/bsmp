@@ -117,7 +117,7 @@ export function SupportPage() {
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium transition-all ${
                     activeTab === tab.id
-                      ? 'text-green-400 bg-green-500/5 border-b-2 border-green-400'
+                      ? 'text-cyan-400 bg-cyan-500/5 border-b-2 border-cyan-400'
                       : 'text-muted hover:text-white hover:bg-white/5'
                   }`}
                 >
@@ -152,7 +152,7 @@ export function SupportPage() {
 
             {activeTab === 'contact' && (
               <form onSubmit={handleContactSubmit} className="space-y-4 max-w-lg mx-auto">
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <Input label="Name" placeholder="Your name" value={contactForm.name} onChange={e => setContactForm(f => ({ ...f, name: e.target.value }))} />
                   <Input label="Email" type="email" placeholder="you@example.com" value={contactForm.email} onChange={e => setContactForm(f => ({ ...f, email: e.target.value }))} />
                 </div>
@@ -160,7 +160,7 @@ export function SupportPage() {
                 <div className="w-full">
                   <label className="block text-sm font-medium text-gray-300 mb-1.5">Message</label>
                   <textarea
-                    className="w-full bg-surface border border-border rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-green-500 resize-y min-h-[120px]"
+                    className="w-full bg-surface border border-border rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 resize-y min-h-[120px]"
                     placeholder="Describe your issue in detail..."
                     value={contactForm.message}
                     onChange={e => setContactForm(f => ({ ...f, message: e.target.value }))}
@@ -183,7 +183,7 @@ export function SupportPage() {
                   <div className="w-full">
                     <label className="block text-sm font-medium text-gray-300 mb-1.5">Description (optional)</label>
                     <textarea
-                      className="w-full bg-surface border border-border rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-green-500 resize-y min-h-[100px]"
+                      className="w-full bg-surface border border-border rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 resize-y min-h-[100px]"
                       placeholder="Describe your issue..."
                       value={ticketDescription}
                       onChange={e => setTicketDescription(e.target.value)}
@@ -225,7 +225,7 @@ export function SupportPage() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   {CATEGORIES.map(cat => (
                     <Card key={cat} variant="default" padding="sm" className="space-y-2">
-                      <div className="flex items-center gap-2 text-sm font-semibold text-green-400">
+                      <div className="flex items-center gap-2 text-sm font-semibold text-cyan-400">
                         <Gavel className="w-4 h-4" />
                         {cat}
                       </div>

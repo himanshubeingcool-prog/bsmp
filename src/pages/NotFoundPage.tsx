@@ -6,7 +6,7 @@ export function NotFoundPage() {
   return (
     <div className="min-h-[80vh] flex items-center justify-center px-4">
       <div className="text-center max-w-md">
-        <div className="text-8xl sm:text-9xl font-heading font-black bg-gradient-to-r from-green-400 to-gold-400 bg-clip-text text-transparent mb-4">
+        <div className="text-8xl sm:text-9xl font-heading font-black bg-gradient-to-r from-cyan-400 to-gold-400 bg-clip-text text-transparent mb-4">
           404
         </div>
         <h1 className="text-2xl sm:text-3xl font-heading font-bold text-white mb-3">

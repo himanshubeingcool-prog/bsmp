@@ -1,17 +1,20 @@
 import { useDiscordStatus } from '@/hooks/useDiscordStatus'
+import { useMcServerStatus } from '@/hooks/useMcServerStatus'
 import { InfiniteRibbon } from '@/components/ui/infinite-ribbon'
 
 export function ServerRibbon() {
   const { onlineCount, loading } = useDiscordStatus()
-  const count = loading ? '...' : onlineCount.toLocaleString()
-  const text = ` BhukkadSMP — Asia's First CPvP Battle Royale — play.bhukkadsmp.fun — ${count} Online on Discord — Custom Arenas • Practice PvP • Ranks • Crates `
+  const { playersOnline, playersMax, loading: mcLoading } = useMcServerStatus()
+  const dcCount = loading ? '...' : onlineCount.toLocaleString()
+  const mcCount = mcLoading ? '...' : `${playersOnline}/${playersMax}`
+  const text = ` BhukkadSMP — ${mcCount} in-game • ${dcCount} on Discord — play.bhukkadsmp.fun — Custom Arenas • Practice PvP • Ranks • Crates `
 
   return (
     <div className="relative -mt-px">
       <InfiniteRibbon
         duration={52}
         rotation={0}
-        className="bg-gradient-to-r from-green-900/40 via-gold-900/20 to-green-900/40 border-y border-green-500/10 text-green-300 leading-relaxed"
+        className="bg-gradient-to-r from-cyan-950/60 via-transparent to-cyan-950/60 border-y border-white/5 text-cyan-300/70 leading-relaxed"
       >
         {text}
       </InfiniteRibbon>
@@ -19,7 +22,7 @@ export function ServerRibbon() {
         duration={52}
         reverse
         rotation={0}
-        className="bg-gradient-to-r from-gold-900/20 via-green-900/30 to-gold-900/20 border-b border-gold-500/10 text-gold-300/80 text-xs leading-relaxed"
+        className="bg-gradient-to-r from-gold-950/40 via-transparent to-gold-950/40 border-b border-white/5 text-gold-300/50 text-xs leading-relaxed"
       >
         {text}
       </InfiniteRibbon>

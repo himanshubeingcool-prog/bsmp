@@ -35,11 +35,11 @@ export function Button({
   };
 
   const variants: Record<string, string> = {
-    primary: 'bg-green-600 hover:bg-green-500 text-white shadow-lg shadow-green-600/20 hover:shadow-green-500/30 active:bg-green-700',
+    primary: 'bg-gradient-to-b from-cyan-600 to-cyan-700 hover:from-cyan-500 hover:to-cyan-600 text-white shadow-lg shadow-cyan-600/20 hover:shadow-cyan-500/30 active:from-cyan-700 active:to-cyan-800',
     secondary: 'bg-card hover:bg-card-hover text-gray-100 border border-border hover:border-border-light active:bg-card',
     ghost: 'bg-transparent hover:bg-white/5 text-gray-300 hover:text-white active:bg-white/10',
-    danger: 'bg-red-600 hover:bg-red-500 text-white shadow-lg shadow-red-600/20 active:bg-red-700',
-    gold: 'bg-gold-600 hover:bg-gold-500 text-stone-950 font-semibold shadow-lg shadow-gold-600/20 hover:shadow-gold-500/30 active:bg-gold-700',
+    danger: 'bg-gradient-to-b from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white shadow-lg shadow-red-600/20 active:from-red-700 active:to-red-800',
+    gold: 'bg-gradient-to-b from-gold-500 to-gold-600 hover:from-gold-400 hover:to-gold-500 text-stone-950 font-semibold shadow-lg shadow-gold-600/20 hover:shadow-gold-500/30 active:from-gold-600 active:to-gold-700',
   };
 
   const sizes: Record<string, string> = {
@@ -52,8 +52,8 @@ export function Button({
     <button
       ref={btnRef}
       className={`
-        relative overflow-hidden inline-flex items-center justify-center font-medium rounded-lg
-        transition-all duration-200 cursor-pointer select-none
+        relative overflow-hidden inline-flex items-center justify-center font-medium rounded-xl
+        transition-all duration-150 ease-out cursor-pointer select-none
         active:scale-[0.97]
         disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none disabled:active:scale-100
         ${variants[variant]} ${sizes[size]}

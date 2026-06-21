@@ -26,7 +26,7 @@ export function CursorGlow() {
         height: 400,
         transform: 'translate(-50%, -50%)',
         opacity: visible ? 0.6 : 0,
-        background: 'radial-gradient(circle, rgba(34, 197, 94, 0.08) 0%, rgba(234, 179, 8, 0.03) 40%, transparent 70%)',
+        background: 'radial-gradient(circle, rgba(34, 211, 238, 0.08) 0%, rgba(234, 179, 8, 0.03) 40%, transparent 70%)',
       }}
     />
   );

@@ -17,29 +17,30 @@ function FloatingOrb({ position, color }: { position: [number, number, number]; 
 function Scene({ mouseX, mouseY }: { mouseX: number; mouseY: number }) {
   return (
     <>
-      <ambientLight intensity={0.4} />
-      <directionalLight position={[5, 5, 5]} intensity={0.5} color="#22c55e" />
-      <directionalLight position={[-3, 2, -3]} intensity={0.25} color="#eab308" />
-      <pointLight position={[2, 3, 1]} intensity={0.3} color="#22c55e" />
-      <pointLight position={[1, -1, 2]} intensity={0.15} color="#eab308" />
-      <hemisphereLight args={['#22c55e', '#0a0a0f', 0.2]} />
+      {/* Moody End-realm lighting — dim, purple-tinted, rim-lit */}
+      <ambientLight intensity={0.35} color="#b39ddb" />
+      <directionalLight position={[4, 6, 5]} intensity={0.55} color="#cfd8ff" />
+      <directionalLight position={[-4, 3, -2]} intensity={0.5} color="#a855f7" />
+      <pointLight position={[3, 2, 2]} intensity={0.4} color="#e23bff" />
+      <pointLight position={[1.5, -1, 2]} intensity={0.3} color="#7c3aed" />
+      <hemisphereLight args={['#9b5de5', '#05050a', 0.3]} />
 
-      {/* Character positioned to the right */}
-      <group position={[1.8, 0, -0.3]}>
-        <Float speed={0.3} rotationIntensity={0.02} floatIntensity={0.04}>
+      {/* Enderman positioned to the right, sized to the hero */}
+      <group position={[1.9, -0.35, -0.2]}>
+        <Float speed={0.35} rotationIntensity={0.025} floatIntensity={0.05}>
           <MinecraftCharacter mouseX={mouseX} mouseY={mouseY} />
         </Float>
       </group>
 
-      {/* Floating orbs around character */}
-      <FloatingOrb position={[2.4, 0.5, -0.2]} color="#22c55e" />
-      <FloatingOrb position={[1.3, -0.3, 0.1]} color="#eab308" />
-      <FloatingOrb position={[2.1, -0.1, 0.5]} color="#22c55e" />
-      <FloatingOrb position={[1.6, 0.7, 0.3]} color="#eab308" />
+      {/* Floating End-portal motes around the Enderman */}
+      <FloatingOrb position={[2.4, 0.5, -0.2]} color="#e23bff" />
+      <FloatingOrb position={[1.3, -0.3, 0.1]} color="#a855f7" />
+      <FloatingOrb position={[2.1, -0.1, 0.5]} color="#c026d3" />
+      <FloatingOrb position={[1.6, 0.7, 0.3]} color="#7c3aed" />
 
-      {/* Sparkles on right side */}
-      <Sparkles count={30} scale={4} size={1.2} speed={0.15} color="#22c55e" opacity={0.2} noise={0.5} position={[2, 0, -0.5]} />
-      <Sparkles count={15} scale={3} size={0.8} speed={0.1} color="#eab308" opacity={0.12} noise={0.3} position={[2, 0, -0.5]} />
+      {/* Teleport-particle sparkles drifting on the right */}
+      <Sparkles count={40} scale={5} size={1.4} speed={0.2} color="#d946ef" opacity={0.35} noise={0.6} position={[2, 0.2, -0.5]} />
+      <Sparkles count={20} scale={3.5} size={0.9} speed={0.12} color="#a855f7" opacity={0.2} noise={0.4} position={[2, 0, -0.5]} />
     </>
   )
 }
@@ -72,7 +73,7 @@ export function MinecraftHero3D() {
   return (
     <div className="absolute inset-0 pointer-events-none z-0">
       <Canvas
-        camera={{ position: [0.3, 0.2, 3.5], fov: 45, near: 0.1, far: 20 }}
+        camera={{ position: [0.3, 0.65, 5.0], fov: 42, near: 0.1, far: 20 }}
         gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
         className="w-full h-full"
         style={{ background: 'transparent' }}

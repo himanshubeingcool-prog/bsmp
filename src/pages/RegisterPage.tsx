@@ -15,7 +15,7 @@ function getPasswordStrength(pw: string): { score: number; label: string; color:
   if (/[0-9]/.test(pw)) score++;
   if (/[^a-zA-Z0-9]/.test(pw)) score++;
   const labels = ['', 'Weak', 'Fair', 'Good', 'Strong', 'Very Strong'];
-  const colors = ['', 'bg-red-500', 'bg-orange-500', 'bg-yellow-500', 'bg-green-400', 'bg-green-500'];
+  const colors = ['', 'bg-red-500', 'bg-orange-500', 'bg-yellow-500', 'bg-cyan-400', 'bg-cyan-500'];
   return { score, label: labels[score], color: colors[score] };
 }
 
@@ -58,8 +58,8 @@ export function RegisterPage() {
     return (
       <div className="min-h-screen bg-stone-950 flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-md text-center">
-          <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-green-500/10 flex items-center justify-center">
-            <Check className="w-8 h-8 text-green-400" />
+          <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-cyan-500/10 flex items-center justify-center">
+            <Check className="w-8 h-8 text-cyan-400" />
           </div>
           <h1 className="text-2xl font-heading font-bold text-white mb-2">Check Your Email</h1>
           <p className="text-gray-400 mb-6">
@@ -77,15 +77,15 @@ export function RegisterPage() {
   return (
     <div className="min-h-screen bg-stone-950 flex items-center justify-center px-4 py-12">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-96 h-96 bg-green-500/5 rounded-full blur-3xl" />
+        <div className="absolute -top-40 -right-40 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl" />
         <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gold-500/5 rounded-full blur-3xl" />
       </div>
 
       <div className="relative w-full max-w-md">
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2 mb-6">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500 to-gold-500 flex items-center justify-center font-heading font-bold text-stone-950">B</div>
-            <span className="font-heading font-bold text-lg bg-gradient-to-r from-green-400 to-gold-400 bg-clip-text text-transparent">BhukkadSMP</span>
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-gold-500 flex items-center justify-center font-heading font-bold text-stone-950">B</div>
+            <span className="font-heading font-bold text-lg bg-gradient-to-r from-cyan-400 to-gold-400 bg-clip-text text-transparent">BhukkadSMP</span>
           </Link>
           <h1 className="text-2xl font-heading font-bold text-white mb-2">Create Account</h1>
           <p className="text-gray-400 text-sm">Join the BhukkadSMP community</p>
@@ -140,13 +140,13 @@ export function RegisterPage() {
                 type="checkbox"
                 checked={agreed}
                 onChange={e => setAgreed(e.target.checked)}
-                className="mt-0.5 w-4 h-4 rounded border-border bg-surface text-green-600 focus:ring-green-500"
+                className="mt-0.5 w-4 h-4 rounded border-border bg-surface text-cyan-600 focus:ring-cyan-500"
               />
               <span className="text-xs text-muted leading-relaxed">
                 I agree to the{' '}
-                <Link to="/terms" className="text-green-400 hover:text-green-300">Terms of Service</Link>
+                <Link to="/terms" className="text-cyan-400 hover:text-cyan-300">Terms of Service</Link>
                 {' '}and{' '}
-                <Link to="/privacy" className="text-green-400 hover:text-green-300">Privacy Policy</Link>
+                <Link to="/privacy" className="text-cyan-400 hover:text-cyan-300">Privacy Policy</Link>
               </span>
             </label>
 
@@ -168,7 +168,7 @@ export function RegisterPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Button variant="secondary" onClick={loginWithGoogle} className="!border-gray-700">
               <svg className="w-4 h-4" viewBox="0 0 24 24">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4" />
@@ -187,7 +187,7 @@ export function RegisterPage() {
 
         <p className="text-center text-sm text-muted mt-6">
           Already have an account?{' '}
-          <Link to="/login" className="text-green-400 hover:text-green-300 font-medium transition-colors">
+          <Link to="/login" className="text-cyan-400 hover:text-cyan-300 font-medium transition-colors">
             Sign in
           </Link>
         </p>

@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { Trophy, Swords, TrendingUp, Skull, Clock, Wallet, Star, Construction } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import { AmbientBackground } from '@/components/ui/AmbientBackground';
 
 type LeaderboardType = 'kills' | 'deaths' | 'kdr' | 'playtime' | 'balance' | 'wins';
 type Period = 'monthly' | 'alltime';
@@ -19,8 +21,9 @@ export function LeaderboardsPage() {
   const [period, setPeriod] = useState<Period>('alltime');
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-stone-950 via-stone-900 to-stone-950">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-screen bg-gradient-to-b from-stone-950 via-stone-900 to-stone-950 relative overflow-hidden">
+      <AmbientBackground accent="gold" voxels={8} />
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative">
         <div className="flex items-center gap-3 mb-8">
           <Trophy className="w-7 h-7 text-gold-400" />
           <div>
@@ -32,18 +35,26 @@ export function LeaderboardsPage() {
         <div className="flex flex-wrap gap-2 mb-6">
           {TAB_CONFIG.map(tab => {
             const Icon = tab.icon;
+            const active = activeType === tab.key;
             return (
               <button
                 key={tab.key}
                 onClick={() => setActiveType(tab.key)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all cursor-pointer ${
-                  activeType === tab.key
-                    ? 'bg-green-600 text-white shadow-lg shadow-green-600/20'
-                    : 'bg-stone-800/50 text-gray-400 hover:bg-stone-700/50 hover:text-white border border-stone-700/50'
+                className={`relative flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 cursor-pointer active:scale-95 ${
+                  active
+                    ? 'text-white'
+                    : 'bg-stone-800/50 text-gray-400 hover:bg-stone-700/50 hover:text-white hover:-translate-y-0.5 border border-stone-700/50'
                 }`}
               >
-                <Icon className="w-4 h-4" />
-                {tab.label}
+                {active && (
+                  <motion.span
+                    layoutId="leaderboard-tab-pill"
+                    className="absolute inset-0 rounded-lg bg-cyan-600 shadow-lg shadow-cyan-600/30"
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
+                )}
+                <Icon className="relative z-10 w-4 h-4" />
+                <span className="relative z-10">{tab.label}</span>
               </button>
             );
           })}
@@ -65,12 +76,14 @@ export function LeaderboardsPage() {
           ))}
         </div>
 
-        <div className="glass-card rounded-xl border border-border p-16 text-center">
-          <div className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-stone-800/50 flex items-center justify-center">
+        <div className="relative overflow-hidden glass-card rounded-xl border border-border p-16 text-center group hover:border-gold-500/30 transition-colors duration-300">
+          <div className="scanline-overlay" />
+          <div className="relative w-20 h-20 mx-auto mb-4 rounded-2xl bg-stone-800/50 flex items-center justify-center animate-voxel-float" style={{ ['--vx-rot' as string]: '-4deg' }}>
             <Construction className="w-10 h-10 text-gold-400" />
+            <span className="absolute inset-0 rounded-2xl ring-1 ring-gold-500/20 animate-tier-glow" />
           </div>
           <h2 className="text-2xl font-heading font-bold text-gray-300 mb-2">Leaderboard Coming Soon</h2>
-          <p className="text-sm text-gray-500 max-w-md mx-auto mb-6">
+          <p className="relative text-sm text-gray-500 max-w-md mx-auto mb-6">
             The leaderboard will be populated with real player stats once the Minecraft plugin is connected.
             Compete for the top spot across kills, wins, KDR, and more!
           </p>

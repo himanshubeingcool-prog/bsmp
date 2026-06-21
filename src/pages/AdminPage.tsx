@@ -46,12 +46,12 @@ function StatCard({ title, value, change, icon: Icon }: { title: string; value: 
     <div className="bg-card border border-border rounded-xl p-4 sm:p-6">
       <div className="flex items-center justify-between mb-3">
         <span className="text-sm text-muted">{title}</span>
-        <div className="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center">
-          <Icon className="w-5 h-5 text-green-400" />
+        <div className="w-10 h-10 rounded-lg bg-cyan-500/10 flex items-center justify-center">
+          <Icon className="w-5 h-5 text-cyan-400" />
         </div>
       </div>
       <p className="text-2xl font-heading font-bold text-white">{value}</p>
-      <p className="text-xs text-green-400 mt-1">{change}</p>
+      <p className="text-xs text-cyan-400 mt-1">{change}</p>
     </div>
   );
 }
@@ -104,8 +104,8 @@ export function AdminPage() {
               <div className="h-48 flex items-end gap-2">
                 {[40, 65, 45, 80, 55, 70, 90, 75, 85, 60, 95, 100].map((h, i) => (
                   <div key={i} className="flex-1 flex flex-col items-center gap-1">
-                    <div className="w-full bg-green-500/20 rounded-t" style={{ height: `${h}%` }}>
-                      <div className="w-full h-full bg-gradient-to-t from-green-500 to-green-400 rounded-t opacity-80" style={{ height: `${h}%` }} />
+                    <div className="w-full bg-cyan-500/20 rounded-t" style={{ height: `${h}%` }}>
+                      <div className="w-full h-full bg-gradient-to-t from-cyan-500 to-cyan-400 rounded-t opacity-80" style={{ height: `${h}%` }} />
                     </div>
                     <span className="text-[10px] text-muted">W{i + 1}</span>
                   </div>
@@ -122,7 +122,7 @@ export function AdminPage() {
               <h3 className="text-sm font-heading font-bold text-white">User Management</h3>
               <div className="relative">
                 <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
-                <input className="bg-surface border border-border rounded-lg pl-9 pr-3 py-1.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-green-500" placeholder="Search users..." />
+                <input className="bg-surface border border-border rounded-lg pl-9 pr-3 py-1.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-cyan-500" placeholder="Search users..." />
               </div>
             </div>
             <DataTable
@@ -132,7 +132,7 @@ export function AdminPage() {
                 <>
                   <td className="py-3 px-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-green-800 flex items-center justify-center text-xs font-bold">{u.username[0]}</div>
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-600 to-cyan-800 flex items-center justify-center text-xs font-bold">{u.username[0]}</div>
                       <span className="font-medium text-white">{u.username}</span>
                     </div>
                   </td>
@@ -143,11 +143,11 @@ export function AdminPage() {
                   <td className="py-3 px-3 text-muted">${u.balance.toLocaleString()}</td>
                   <td className="py-3 px-3">
                     <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium ${
-                      u.status === 'active' ? 'bg-green-900/40 text-green-400' :
+                      u.status === 'active' ? 'bg-cyan-900/40 text-cyan-400' :
                       u.status === 'banned' ? 'bg-red-900/40 text-red-400' :
                       'bg-yellow-900/40 text-yellow-400'
                     }`}>
-                      <span className={`w-1.5 h-1.5 rounded-full ${u.status === 'active' ? 'bg-green-400' : u.status === 'banned' ? 'bg-red-400' : 'bg-yellow-400'}`} />
+                      <span className={`w-1.5 h-1.5 rounded-full ${u.status === 'active' ? 'bg-cyan-400' : u.status === 'banned' ? 'bg-red-400' : 'bg-yellow-400'}`} />
                       {u.status}
                     </span>
                   </td>
@@ -163,7 +163,7 @@ export function AdminPage() {
           <div className="bg-card border border-border rounded-xl overflow-hidden">
             <div className="p-4 border-b border-border flex items-center justify-between">
               <h3 className="text-sm font-heading font-bold text-white">Product Management</h3>
-              <button className="px-3 py-1.5 bg-green-600 hover:bg-green-500 text-white text-xs rounded-lg transition-colors cursor-pointer">+ Add Product</button>
+              <button className="px-3 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white text-xs rounded-lg transition-colors cursor-pointer">+ Add Product</button>
             </div>
             <DataTable
               headers={['Product', 'Category', 'Price', 'Sales', 'Revenue', 'Stock']}
@@ -174,9 +174,9 @@ export function AdminPage() {
                   <td className="py-3 px-3"><span className="text-xs capitalize text-muted">{p.category}</span></td>
                   <td className="py-3 px-3 text-muted">${p.price.toFixed(2)}</td>
                   <td className="py-3 px-3 text-muted">{p.sales.toLocaleString()}</td>
-                  <td className="py-3 px-3 text-green-400">${p.revenue.toLocaleString()}</td>
+                  <td className="py-3 px-3 text-cyan-400">${p.revenue.toLocaleString()}</td>
                   <td className="py-3 px-3">
-                    <span className={`text-xs ${p.stock ? 'text-green-400' : 'text-red-400'}`}>{p.stock ? 'In Stock' : 'Out'}</span>
+                    <span className={`text-xs ${p.stock ? 'text-cyan-400' : 'text-red-400'}`}>{p.stock ? 'In Stock' : 'Out'}</span>
                   </td>
                 </>
               )}
@@ -202,7 +202,7 @@ export function AdminPage() {
                   <td className="py-3 px-3 text-muted">{o.date}</td>
                   <td className="py-3 px-3">
                     <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium ${
-                      o.status === 'completed' ? 'bg-green-900/40 text-green-400' :
+                      o.status === 'completed' ? 'bg-cyan-900/40 text-cyan-400' :
                       o.status === 'pending' ? 'bg-yellow-900/40 text-yellow-400' :
                       'bg-red-900/40 text-red-400'
                     }`}>
@@ -259,7 +259,7 @@ export function AdminPage() {
               <h3 className="text-sm font-heading font-bold text-white mb-4">Top Purchased Categories</h3>
               <div className="space-y-3">
                 {[
-                  { category: 'Ranks', percentage: 35, color: 'bg-green-500' },
+                  { category: 'Ranks', percentage: 35, color: 'bg-cyan-500' },
                   { category: 'Coins', percentage: 28, color: 'bg-gold-500' },
                   { category: 'Keys & Crates', percentage: 22, color: 'bg-purple-500' },
                   { category: 'Cosmetics', percentage: 10, color: 'bg-blue-500' },
@@ -297,7 +297,7 @@ export function AdminPage() {
                 </div>
                 <label className="relative inline-flex items-center cursor-pointer">
                   <input type="checkbox" className="sr-only peer" defaultChecked />
-                  <div className="w-10 h-5 bg-surface border border-border rounded-full peer peer-checked:bg-green-600 peer-checked:border-green-500 transition-all after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:w-4 after:h-4 after:bg-white after:rounded-full after:transition-all peer-checked:after:translate-x-5" />
+                  <div className="w-10 h-5 bg-surface border border-border rounded-full peer peer-checked:bg-cyan-600 peer-checked:border-cyan-500 transition-all after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:w-4 after:h-4 after:bg-white after:rounded-full after:transition-all peer-checked:after:translate-x-5" />
                 </label>
               </div>
             ))}
@@ -315,7 +315,7 @@ export function AdminPage() {
         <div className="p-4 border-b border-border">
           <Link to="/" className="flex items-center gap-2">
             <ChevronLeft className="w-4 h-4 text-gray-400" />
-            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-green-500 to-gold-500 flex items-center justify-center font-heading font-bold text-xs text-stone-950">B</div>
+            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-cyan-500 to-gold-500 flex items-center justify-center font-heading font-bold text-xs text-stone-950">B</div>
             <span className="font-heading font-bold text-sm">Admin Panel</span>
           </Link>
         </div>
@@ -328,7 +328,7 @@ export function AdminPage() {
                 onClick={() => setActiveTab(item.id)}
                 className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
                   activeTab === item.id
-                    ? 'bg-green-500/10 text-green-400'
+                    ? 'bg-cyan-500/10 text-cyan-400'
                     : 'text-gray-400 hover:text-white hover:bg-white/5'
                 }`}
               >
@@ -353,10 +353,10 @@ export function AdminPage() {
           </button>
           <div className="flex items-center gap-4">
             <div className="relative">
-              <span className="w-2 h-2 rounded-full bg-green-500 absolute -top-0.5 -right-0.5" />
+              <span className="w-2 h-2 rounded-full bg-cyan-500 absolute -top-0.5 -right-0.5" />
               <Shield className="w-5 h-5 text-gray-400" />
             </div>
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center text-xs font-bold">A</div>
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500 to-cyan-700 flex items-center justify-center text-xs font-bold">A</div>
           </div>
         </header>
         <div className="flex-1 p-4 sm:p-6 overflow-y-auto">

@@ -27,15 +27,26 @@ export function TopPlayers() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
         viewport={{ once: true }}
-        className="glass-card rounded-xl border border-border p-12 text-center"
+        className="relative overflow-hidden glass-card rounded-xl border border-border p-12 text-center group hover:border-gold-500/30 transition-colors duration-300"
       >
-        <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-stone-800/50 flex items-center justify-center">
+        <div className="scanline-overlay" />
+        <div className="relative w-16 h-16 mx-auto mb-4 rounded-2xl bg-stone-800/50 flex items-center justify-center animate-voxel-float" style={{ ['--vx-rot' as string]: '-4deg' }}>
           <Construction className="w-8 h-8 text-gold-400" />
+          <span className="absolute inset-0 rounded-2xl ring-1 ring-gold-500/20 animate-tier-glow" />
         </div>
-        <h3 className="text-lg font-heading font-bold text-gray-300 mb-2">Leaderboard Coming Soon</h3>
-        <p className="text-sm text-gray-500 max-w-md mx-auto">
+        <h3 className="relative text-lg font-heading font-bold text-gray-300 mb-2">Leaderboard Coming Soon</h3>
+        <p className="relative text-sm text-gray-500 max-w-md mx-auto">
           The leaderboard will be populated with real player stats once the Minecraft plugin is connected.
         </p>
+        <div className="relative mt-5 flex items-center justify-center gap-1.5">
+          {[0, 1, 2].map(d => (
+            <span
+              key={d}
+              className="w-1.5 h-1.5 rounded-full bg-gold-400/60 animate-pulse-glow"
+              style={{ animationDelay: `${d * 0.25}s` }}
+            />
+          ))}
+        </div>
       </motion.div>
     </section>
   );

@@ -28,8 +28,8 @@ export function ForgotPasswordPage() {
     return (
       <div className="min-h-screen bg-stone-950 flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-md text-center">
-          <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-green-500/10 flex items-center justify-center">
-            <CheckCircle className="w-8 h-8 text-green-400" />
+          <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-cyan-500/10 flex items-center justify-center">
+            <CheckCircle className="w-8 h-8 text-cyan-400" />
           </div>
           <h1 className="text-2xl font-heading font-bold text-white mb-2">Check Your Email</h1>
           <p className="text-gray-400 mb-2">
@@ -37,7 +37,7 @@ export function ForgotPasswordPage() {
           </p>
           <p className="text-sm text-muted mb-6">
             Didn't receive it?{' '}
-            <button onClick={() => setSent(false)} className="text-green-400 hover:text-green-300 transition-colors">
+            <button onClick={() => setSent(false)} className="text-cyan-400 hover:text-cyan-300 transition-colors">
               Try a different email
             </button>
           </p>
@@ -54,15 +54,15 @@ export function ForgotPasswordPage() {
   return (
     <div className="min-h-screen bg-stone-950 flex items-center justify-center px-4 py-12">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-96 h-96 bg-green-500/5 rounded-full blur-3xl" />
+        <div className="absolute -top-40 -right-40 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl" />
         <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gold-500/5 rounded-full blur-3xl" />
       </div>
 
       <div className="relative w-full max-w-md">
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2 mb-6">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500 to-gold-500 flex items-center justify-center font-heading font-bold text-stone-950">B</div>
-            <span className="font-heading font-bold text-lg bg-gradient-to-r from-green-400 to-gold-400 bg-clip-text text-transparent">BhukkadSMP</span>
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-gold-500 flex items-center justify-center font-heading font-bold text-stone-950">B</div>
+            <span className="font-heading font-bold text-lg bg-gradient-to-r from-cyan-400 to-gold-400 bg-clip-text text-transparent">BhukkadSMP</span>
           </Link>
           <h1 className="text-2xl font-heading font-bold text-white mb-2">Reset Password</h1>
           <p className="text-gray-400 text-sm">We'll send you a reset link</p>
@@ -90,7 +90,7 @@ export function ForgotPasswordPage() {
         </Card>
 
         <p className="text-center mt-6">
-          <Link to="/login" className="inline-flex items-center gap-1.5 text-sm text-green-400 hover:text-green-300 transition-colors">
+          <Link to="/login" className="inline-flex items-center gap-1.5 text-sm text-cyan-400 hover:text-cyan-300 transition-colors">
             <ArrowLeft className="w-4 h-4" />
             Back to login
           </Link>

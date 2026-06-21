@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useCart } from '@/contexts/CartContext'
 import { useToast } from '@/contexts/ToastContext'
+import { StaggerGroup, StaggerItem } from '@/components/ui/Stagger'
 import { Check, ShoppingCart, Crown, ArrowUpRight, Gem, Swords, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
@@ -92,15 +93,15 @@ export function RanksPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-stone-950 via-stone-900 to-stone-950 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute -top-20 -left-20 w-72 h-72 bg-green-500/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '0s', animationDuration: '8s' }} />
+        <div className="absolute -top-20 -left-20 w-72 h-72 bg-cyan-500/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '0s', animationDuration: '8s' }} />
         <div className="absolute top-1/3 -right-32 w-96 h-96 bg-gold-500/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s', animationDuration: '10s' }} />
-        <div className="absolute -bottom-40 left-1/3 w-80 h-80 bg-green-500/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '4s', animationDuration: '12s' }} />
+        <div className="absolute -bottom-40 left-1/3 w-80 h-80 bg-cyan-500/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '4s', animationDuration: '12s' }} />
         <motion.div
           className="absolute top-20 left-[15%] opacity-10"
           animate={{ rotate: 360, scale: [1, 1.1, 1] }}
           transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
         >
-          <Gem className="w-12 h-12 text-green-400" />
+          <Gem className="w-12 h-12 text-cyan-400" />
         </motion.div>
         <motion.div
           className="absolute top-40 right-[20%] opacity-10"
@@ -114,7 +115,7 @@ export function RanksPage() {
           animate={{ y: [-10, 10, -10], opacity: [0.05, 0.15, 0.05] }}
           transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
         >
-          <Sparkles className="w-8 h-8 text-green-400" />
+          <Sparkles className="w-8 h-8 text-cyan-400" />
         </motion.div>
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative">
@@ -124,12 +125,12 @@ export function RanksPage() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-green-500/10 border border-green-500/20 mb-4">
-            <Crown className="w-4 h-4 text-green-400" />
-            <span className="text-xs sm:text-sm font-medium text-green-400">Premium Ranks</span>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 mb-4">
+            <Crown className="w-4 h-4 text-cyan-400" />
+            <span className="text-xs sm:text-sm font-medium text-cyan-400">Premium Ranks</span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-bold text-white mb-3">
-            Server <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-gold-400">Ranks</span>
+            Server <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-gold-400">Ranks</span>
           </h1>
           <p className="text-gray-400 max-w-2xl mx-auto">
             Unlock exclusive perks, commands, and status. Each rank builds upon the last.
@@ -142,7 +143,7 @@ export function RanksPage() {
               <div className="flex items-center gap-4">
                 <ArrowUpRight className="w-8 h-8 text-gold-400" />
                 <div>
-                  <p className="text-sm text-gray-400">Your Rank: <span className="text-emerald-400 font-semibold">{CURRENT_RANK.name}</span></p>
+                  <p className="text-sm text-gray-400">Your Rank: <span className="text-cyan-400 font-semibold">{CURRENT_RANK.name}</span></p>
                   <p className="text-lg font-heading font-bold text-white">
                     Upgrade to <span style={{ color: nextRank.color }}>{nextRank.name}</span> — ${nextRank.price.toFixed(2)}
                   </p>
@@ -155,34 +156,37 @@ export function RanksPage() {
           </Card>
         )}
 
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
+        <StaggerGroup
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 mb-12"
         >
-          {RANKS.filter(r => r.price > 0).map((rank, i) => {
+          {RANKS.filter(r => r.price > 0).map((rank) => {
             const isFeatured = rank.id === 'rank-mvpp'
             const isCurrent = rank.id === CURRENT_RANK.id
             const rankUpgradable = nextRank && rank.id === CURRENT_RANK.id
 
             return (
-              <motion.div
-                key={rank.id}
-                variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}
-                transition={{ duration: 0.4, ease: 'easeOut' }}
+              <StaggerItem key={rank.id}
               >
               <Card
                 variant={isFeatured ? 'highlight' : 'default'}
                 hover
                 tilt
-                className={`relative overflow-hidden group transition-all duration-300 ${
+                className={`relative overflow-hidden group tier-border transition-all duration-300 ${
                   isFeatured ? 'ring-2 ring-gold-500/50 shadow-lg shadow-gold-500/10' : ''
                 }`}
+                style={{
+                  ['--tier-from' as string]: rank.color,
+                  ['--tier-to' as string]: isFeatured ? '#eab308' : rank.color,
+                }}
                 onClick={() => setSelectedRank(rank)}
               >
+                <div
+                  className="absolute -inset-px rounded-[inherit] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{ background: `radial-gradient(120% 90% at 50% -10%, ${rank.color}22 0%, transparent 60%)` }}
+                />
+                <span className="shine-layer rounded-[inherit]" />
                 {isFeatured && (
-                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-green-500 via-gold-500 to-green-500" />
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-500 via-gold-500 to-cyan-500 animate-gradient" />
                 )}
                 {rank.popular && (
                   <div className="absolute top-3 right-3 z-10">
@@ -195,25 +199,28 @@ export function RanksPage() {
                   </div>
                 )}
 
-                <div className="text-center mb-4">
-                  <div className={`w-16 h-16 mx-auto mb-3 rounded-2xl bg-gradient-to-br ${getRankGradient(rank.name)} flex items-center justify-center shadow-lg`}>
-                    <Crown className="w-8 h-8 text-white" />
+                <div className="relative text-center mb-4">
+                  <div
+                    className={`w-16 h-16 mx-auto mb-3 rounded-2xl bg-gradient-to-br ${getRankGradient(rank.name)} flex items-center justify-center shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:-rotate-3`}
+                    style={{ boxShadow: `0 8px 30px -8px ${rank.color}66` }}
+                  >
+                    <Crown className="w-8 h-8 text-white drop-shadow" />
                   </div>
                   <h3 className="text-xl font-heading font-bold" style={{ color: rank.color }}>{rank.name}</h3>
                   <p className="text-sm text-gray-400 mt-1">{rank.description}</p>
                 </div>
 
-                <div className="flex items-baseline justify-center gap-1 mb-4">
+                <div className="relative z-10 flex items-baseline justify-center gap-1 mb-4">
                   <span className="text-3xl font-bold text-white">${rank.price.toFixed(2)}</span>
                   {rank.monthlyPrice && (
                     <span className="text-sm text-gray-500">or ${rank.monthlyPrice.toFixed(2)}/mo</span>
                   )}
                 </div>
 
-                <ul className="space-y-2 mb-6">
+                <ul className="relative z-10 space-y-2 mb-6">
                   {rank.perks.slice(0, 5).map((perk, pi) => (
                     <li key={pi} className="flex items-start gap-2 text-sm text-gray-400">
-                      <Check className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
+                      <Check className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" />
                       <span>{perk}</span>
                     </li>
                   ))}
@@ -222,6 +229,7 @@ export function RanksPage() {
                   )}
                 </ul>
 
+                <div className="relative z-10">
                 {rankUpgradable ? (
                   <Button variant="gold" size="md" fullWidth icon={<ShoppingCart className="w-4 h-4" />} onClick={() => handleAddRank(nextRank!)}>
                     Add to Cart
@@ -237,24 +245,25 @@ export function RanksPage() {
                     {isCurrent ? 'Current Rank' : `Add to Cart — $${rank.price.toFixed(2)}`}
                   </Button>
                 )}
+                </div>
               </Card>
-              </motion.div>
+              </StaggerItem>
             )
           })}
-        </motion.div>
+        </StaggerGroup>
 
-        <Card variant="default" className="overflow-hidden" padding="none">
+        <Card variant="default" padding="none">
           <div className="p-4 sm:p-6 border-b border-stone-800">
             <h2 className="text-xl font-heading font-bold text-white">Rank Comparison</h2>
             <p className="text-sm text-gray-400 mt-1">Compare features across all ranks</p>
           </div>
           <div className="overflow-x-auto -mx-4 sm:-mx-6 px-4 sm:px-6">
-            <table className="w-full text-sm min-w-[600px]">
+            <table className="w-full text-sm min-w-[480px] sm:min-w-[600px]">
               <thead>
                 <tr className="border-b border-stone-800">
-                  <th className="text-left p-3 sm:p-4 text-gray-500 font-medium sticky left-0 bg-stone-950 z-10 min-w-[140px] sm:min-w-[160px]">Feature</th>
+                  <th className="text-left p-2 sm:p-4 text-gray-500 font-medium sticky left-0 bg-stone-950 z-10 min-w-[100px] sm:min-w-[140px]">Feature</th>
                   {RANKS.filter(r => r.price > 0).map(rank => (
-                    <th key={rank.id} className="p-2 sm:p-4 text-center min-w-[80px] sm:min-w-[100px]">
+                    <th key={rank.id} className="p-1.5 sm:p-4 text-center min-w-[60px] sm:min-w-[90px]">
                       <span className="font-heading font-bold text-xs sm:text-sm" style={{ color: rank.color }}>{rank.name}</span>
                       <div className="text-[10px] sm:text-xs text-gray-500 mt-0.5">${rank.price.toFixed(2)}</div>
                     </th>
@@ -264,19 +273,19 @@ export function RanksPage() {
               <tbody>
                 {COMPARE_FEATURES.map((feature, fi) => (
                   <tr key={fi} className="border-b border-stone-800/50 hover:bg-stone-900/30 transition-colors">
-                    <td className="p-3 sm:p-4 text-gray-400 sticky left-0 bg-stone-950 z-10 text-xs sm:text-sm">{feature}</td>
+                    <td className="p-2 sm:p-4 text-gray-400 sticky left-0 bg-stone-950 z-10 text-xs sm:text-sm">{feature}</td>
                     {RANKS.filter(r => r.price > 0).map(rank => {
                       const value = getPerkValue(rank.name, feature)
                       const hasIt = hasPerk(rank.name, feature)
                       const isCurrent = CURRENT_RANK.name === rank.name
 
                       return (
-                        <td key={rank.id} className={`p-2 sm:p-4 text-center ${isCurrent ? 'bg-green-900/10' : ''}`}>
+                        <td key={rank.id} className={`p-2 sm:p-4 text-center ${isCurrent ? 'bg-cyan-900/10' : ''}`}>
                           {hasIt ? (
                             value === 'true' || value === '' ? (
-                              <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-green-400 mx-auto" />
+                              <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 mx-auto" />
                             ) : (
-                              <span className="text-green-400 font-medium text-xs sm:text-sm">{value}</span>
+                              <span className="text-cyan-400 font-medium text-xs sm:text-sm">{value}</span>
                             )
                           ) : (
                             <span className="text-gray-600 text-xs sm:text-sm">—</span>

@@ -48,13 +48,13 @@ export function truncate(str: string, length: number): string {
 export function getRankColor(tier: string): string {
   const colors: Record<string, string> = {
     Player: 'text-gray-400',
-    Voter: 'text-green-400',
-    VIP: 'text-emerald-400',
+    Voter: 'text-cyan-400',
+    VIP: 'text-cyan-500',
     MVP: 'text-cyan-400',
-    'MVP+': 'text-purple-400',
-    Elite: 'text-yellow-400',
-    Immortal: 'text-orange-400',
-    Legend: 'text-red-400',
+    'MVP+': 'text-cyan-300',
+    Elite: 'text-gold-400',
+    Immortal: 'text-gold-500',
+    Legend: 'text-gold-300',
   };
   return colors[tier] || 'text-gray-400';
 }
@@ -62,13 +62,13 @@ export function getRankColor(tier: string): string {
 export function getRankGradient(tier: string): string {
   const gradients: Record<string, string> = {
     Player: 'from-gray-500 to-gray-400',
-    Voter: 'from-green-500 to-emerald-400',
-    VIP: 'from-emerald-500 to-teal-400',
-    MVP: 'from-cyan-500 to-blue-400',
-    'MVP+': 'from-purple-500 to-violet-400',
-    Elite: 'from-yellow-500 to-amber-400',
-    Immortal: 'from-orange-500 to-red-400',
-    Legend: 'from-red-500 to-rose-400',
+    Voter: 'from-cyan-500 to-cyan-400',
+    VIP: 'from-cyan-400 to-gold-400',
+    MVP: 'from-cyan-500 to-cyan-300',
+    'MVP+': 'from-cyan-400 to-cyan-200',
+    Elite: 'from-gold-600 to-gold-400',
+    Immortal: 'from-gold-500 to-cyan-400',
+    Legend: 'from-gold-400 to-cyan-400',
   };
   return gradients[tier] || 'from-gray-500 to-gray-400';
 }

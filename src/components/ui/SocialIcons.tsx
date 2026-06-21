@@ -32,16 +32,16 @@ export function MinecraftIcon({ className = 'w-5 h-5' }: IconProps) {
 export function MinecraftLogo({ className = '' }: IconProps) {
   return (
     <svg className={className} viewBox="0 0 64 64" fill="none">
-      <rect x="4" y="4" width="56" height="56" rx="8" fill="currentColor" className="text-green-600" />
-      <rect x="12" y="12" width="40" height="40" rx="4" fill="currentColor" className="text-green-500" />
+      <rect x="4" y="4" width="56" height="56" rx="8" fill="currentColor" className="text-cyan-600" />
+      <rect x="12" y="12" width="40" height="40" rx="4" fill="currentColor" className="text-cyan-500" />
       <rect x="16" y="16" width="8" height="8" rx="1" fill="currentColor" className="text-gold-400" />
-      <rect x="28" y="16" width="8" height="8" rx="1" fill="currentColor" className="text-green-300" />
-      <rect x="40" y="16" width="8" height="8" rx="1" fill="currentColor" className="text-green-400" />
-      <rect x="16" y="28" width="8" height="8" rx="1" fill="currentColor" className="text-green-300" />
+      <rect x="28" y="16" width="8" height="8" rx="1" fill="currentColor" className="text-cyan-300" />
+      <rect x="40" y="16" width="8" height="8" rx="1" fill="currentColor" className="text-cyan-400" />
+      <rect x="16" y="28" width="8" height="8" rx="1" fill="currentColor" className="text-cyan-300" />
       <rect x="28" y="28" width="8" height="8" rx="1" fill="currentColor" className="text-gold-500" />
-      <rect x="40" y="28" width="8" height="8" rx="1" fill="currentColor" className="text-green-300" />
-      <rect x="16" y="40" width="8" height="8" rx="1" fill="currentColor" className="text-green-400" />
-      <rect x="28" y="40" width="8" height="8" rx="1" fill="currentColor" className="text-green-300" />
+      <rect x="40" y="28" width="8" height="8" rx="1" fill="currentColor" className="text-cyan-300" />
+      <rect x="16" y="40" width="8" height="8" rx="1" fill="currentColor" className="text-cyan-400" />
+      <rect x="28" y="40" width="8" height="8" rx="1" fill="currentColor" className="text-cyan-300" />
       <rect x="40" y="40" width="8" height="8" rx="1" fill="currentColor" className="text-gold-400" />
     </svg>
   );

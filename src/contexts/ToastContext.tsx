@@ -31,7 +31,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const icons = { success: CheckCircle, error: AlertCircle, warning: AlertTriangle, info: Info };
-  const colors = { success: 'border-l-green-500', error: 'border-l-red-500', warning: 'border-l-yellow-500', info: 'border-l-blue-500' };
+  const colors = { success: 'border-l-cyan-500', error: 'border-l-red-500', warning: 'border-l-yellow-500', info: 'border-l-blue-500' };
 
   return (
     <ToastContext.Provider value={{ toasts, addToast, removeToast }}>
@@ -41,7 +41,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
           const Icon = icons[toast.type];
           return (
             <div key={toast.id} className={`animate-slide-in-right pointer-events-auto glass-card border-l-4 ${colors[toast.type]} rounded-lg p-4 flex items-start gap-3 shadow-xl`}>
-              <Icon className={`w-5 h-5 mt-0.5 shrink-0 ${toast.type === 'success' ? 'text-green-400' : toast.type === 'error' ? 'text-red-400' : toast.type === 'warning' ? 'text-yellow-400' : 'text-blue-400'}`} />
+              <Icon className={`w-5 h-5 mt-0.5 shrink-0 ${toast.type === 'success' ? 'text-cyan-400' : toast.type === 'error' ? 'text-red-400' : toast.type === 'warning' ? 'text-yellow-400' : 'text-blue-400'}`} />
               <p className="text-sm flex-1">{toast.message}</p>
               <button onClick={() => removeToast(toast.id)} className="text-gray-500 hover:text-white transition-colors">
                 <X className="w-4 h-4" />

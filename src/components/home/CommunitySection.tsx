@@ -1,17 +1,19 @@
 import { motion } from 'framer-motion';
-import { MessageCircle, ExternalLink, Users, Signal } from 'lucide-react';
+import { MessageCircle, ExternalLink, Users, Signal, Wifi } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { DiscordIcon } from '@/components/ui/SocialIcons';
 import { useDiscordStatus } from '@/hooks/useDiscordStatus';
+import { useMcServerStatus } from '@/hooks/useMcServerStatus';
 
 export function CommunitySection() {
   const { memberCount, onlineCount, loading } = useDiscordStatus();
+  const { playersOnline, playersMax, loading: mcLoading } = useMcServerStatus();
   return (
-    <section className="relative py-16 sm:py-24 overflow-hidden">
+    <section className="relative py-24 sm:py-32 overflow-hidden">
       <div
         className="absolute inset-0"
         style={{
-          background: 'radial-gradient(ellipse at 50% 50%, rgba(34,197,94,0.08) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse at 50% 50%, rgba(34, 211, 238,0.05) 0%, transparent 70%)',
         }}
       />
 
@@ -21,12 +23,13 @@ export function CommunitySection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-heading font-bold mb-4">
+          <p className="text-xs uppercase tracking-[0.2em] text-cyan-400/70 font-medium mb-3">Community</p>
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-heading font-bold mb-4 tracking-tight">
             <span className="text-gradient">Join Our Community</span>
           </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto text-sm sm:text-base">
+          <p className="text-gray-400 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed" style={{ maxWidth: '65ch' }}>
             Join Asia's first CPvP Battle Royale community
           </p>
         </motion.div>
@@ -39,7 +42,7 @@ export function CommunitySection() {
             viewport={{ once: true }}
             className="lg:col-span-2"
           >
-            <div className="glass-card rounded-xl p-6 sm:p-8 border border-border hover:border-green-500/20 transition-colors h-full">
+            <div className="glass-card rounded-xl p-6 sm:p-8 border border-border hover:border-cyan-500/20 transition-colors h-full">
               <div className="flex items-start gap-4 sm:gap-5 mb-6">
                 <img
                   src="https://cdn.discordapp.com/icons/1376377359359410337/4dac34d8e38eb1aca70117a3602f6a7b.png?size=128"
@@ -54,11 +57,11 @@ export function CommunitySection() {
 
               <div className="flex flex-wrap gap-4 sm:gap-6 mb-6">
                 <div className="flex items-center gap-2">
-                  <Users className="w-4 h-4 text-green-400" />
+                  <Users className="w-4 h-4 text-cyan-400" />
                   <span className="text-sm text-gray-300">{loading ? '-' : `${memberCount.toLocaleString()} Members`}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Signal className="w-4 h-4 text-green-400" />
+                  <Signal className="w-4 h-4 text-cyan-400" />
                   <span className="text-sm text-gray-300">{loading ? '-' : `${onlineCount.toLocaleString()} Online`}</span>
                 </div>
               </div>
@@ -70,7 +73,7 @@ export function CommunitySection() {
                   { label: '#support', desc: 'Get help from staff' },
                 ].map(channel => (
                   <div key={channel.label} className="flex items-center gap-3 px-3 py-2 rounded-lg bg-white/5">
-                    <span className="w-2 h-2 rounded-full bg-green-500" />
+                    <span className="w-2 h-2 rounded-full bg-cyan-500" />
                     <div>
                       <span className="text-sm font-medium text-gray-200">{channel.label}</span>
                       <span className="text-xs text-muted ml-2">{channel.desc}</span>
@@ -95,18 +98,24 @@ export function CommunitySection() {
             <div className="glass-card rounded-xl p-6 sm:p-8 border border-border hover:border-gold-500/20 transition-colors text-center">
               <h3 className="text-sm font-heading font-bold text-gold-400 mb-3">Server IP</h3>
               <div className="bg-stone-950/50 rounded-lg p-3 mb-4">
-                <p className="font-heading font-bold text-base sm:text-lg text-green-400">
+                <p className="font-heading font-bold text-base sm:text-lg text-cyan-400">
                   play.bhukkadsmp.fun
                 </p>
               </div>
+              <div className="flex items-center justify-center gap-3 mb-2">
+                <div className="flex items-center gap-1.5">
+                  <Wifi className="w-3.5 h-3.5 text-cyan-400" />
+                  <span className="text-xs sm:text-sm text-cyan-400">{mcLoading ? '-' : `${playersOnline}/${playersMax} in-game`}</span>
+                </div>
+              </div>
               <div className="flex items-center justify-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse-glow" />
-                <span className="text-xs sm:text-sm text-green-400">{loading ? '-' : `${onlineCount.toLocaleString()} online on Discord`}</span>
+                <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse-glow shrink-0" />
+                <span className="text-xs sm:text-sm text-cyan-400">{loading ? '-' : `${onlineCount.toLocaleString()} on Discord`}</span>
               </div>
             </div>
 
-            <div className="glass-card rounded-xl p-6 sm:p-8 border border-border hover:border-green-500/20 transition-colors text-center">
-              <h3 className="text-sm font-heading font-bold text-green-400 mb-4">Follow Us</h3>
+            <div className="glass-card rounded-xl p-6 sm:p-8 border border-border hover:border-cyan-500/20 transition-colors text-center">
+              <h3 className="text-sm font-heading font-bold text-cyan-400 mb-4">Follow Us</h3>
               <div className="flex items-center justify-center gap-3">
                 <a
                   href="https://discord.gg/s7CETJXYhf"

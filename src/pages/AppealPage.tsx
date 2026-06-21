@@ -37,8 +37,8 @@ export function AppealPage() {
     return (
       <div className="min-h-screen flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-md text-center space-y-6">
-          <div className="mx-auto w-16 h-16 rounded-full bg-green-500/10 flex items-center justify-center">
-            <CheckCircle className="w-8 h-8 text-green-400" />
+          <div className="mx-auto w-16 h-16 rounded-full bg-cyan-500/10 flex items-center justify-center">
+            <CheckCircle className="w-8 h-8 text-cyan-400" />
           </div>
           <h1 className="font-heading text-2xl font-bold text-gradient">Appeal Submitted</h1>
           <p className="text-muted">
@@ -70,7 +70,7 @@ export function AppealPage() {
     <div className="min-h-screen py-16 px-4">
       <div className="max-w-2xl mx-auto space-y-8">
         <div className="text-center space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-sm">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm">
             <Gavel className="w-4 h-4" />
             Punishment Appeal
           </div>
@@ -94,7 +94,7 @@ export function AppealPage() {
               <select
                 value={form.punishmentType}
                 onChange={e => setForm(f => ({ ...f, punishmentType: e.target.value }))}
-                className="w-full bg-surface border border-border rounded-lg px-4 py-2.5 text-sm text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-green-500"
+                className="w-full bg-surface border border-border rounded-lg px-4 py-2.5 text-sm text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500"
               >
                 <option value="" disabled>Select punishment type</option>
                 {PUNISHMENT_TYPES.map(type => (
@@ -106,7 +106,7 @@ export function AppealPage() {
             <div className="w-full">
               <label className="block text-sm font-medium text-gray-300 mb-1.5">Reason for Appeal *</label>
               <textarea
-                className="w-full bg-surface border border-border rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-green-500 resize-y min-h-[120px]"
+                className="w-full bg-surface border border-border rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 resize-y min-h-[120px]"
                 placeholder="Explain why you believe the punishment should be removed or reduced..."
                 value={form.reason}
                 onChange={e => setForm(f => ({ ...f, reason: e.target.value }))}
@@ -116,7 +116,7 @@ export function AppealPage() {
             <div className="w-full">
               <label className="block text-sm font-medium text-gray-300 mb-1.5">Evidence</label>
               <textarea
-                className="w-full bg-surface border border-border rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-green-500 resize-y min-h-[80px]"
+                className="w-full bg-surface border border-border rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 resize-y min-h-[80px]"
                 placeholder="Provide any evidence that supports your appeal (screenshots, video links, etc.)"
                 value={form.evidence}
                 onChange={e => setForm(f => ({ ...f, evidence: e.target.value }))}
@@ -150,7 +150,7 @@ export function AppealPage() {
         </Card>
 
         <div className="text-center">
-          <Link to="/support" className="inline-flex items-center gap-1.5 text-sm text-muted hover:text-green-400 transition-colors">
+          <Link to="/support" className="inline-flex items-center gap-1.5 text-sm text-muted hover:text-cyan-400 transition-colors">
             <ArrowLeft className="w-4 h-4" />
             Back to Support Center
           </Link>

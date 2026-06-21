@@ -84,7 +84,7 @@ export function CratesPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="text-center mb-12">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-bold text-white mb-3">
-            <Package className="w-8 h-8 inline-block text-green-400 mr-2" />
+            <Package className="w-8 h-8 inline-block text-cyan-400 mr-2" />
             Crates
           </h1>
           <p className="text-gray-400 max-w-2xl mx-auto">
@@ -113,7 +113,7 @@ export function CratesPage() {
                 </div>
                 <p className="text-gray-400 mb-4 max-w-lg">{featuredCrate.description}</p>
                 <div className="flex items-center justify-center lg:justify-start gap-4 mb-6">
-                  <span className="text-3xl font-bold text-green-400">${featuredCrate.price.toFixed(2)}</span>
+                  <span className="text-3xl font-bold text-cyan-400">${featuredCrate.price.toFixed(2)}</span>
                   <div className="flex gap-3">
                     <Button
                       variant="gold"
@@ -155,7 +155,7 @@ export function CratesPage() {
 
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-6">
-            <Package className="w-6 h-6 text-green-400" />
+            <Package className="w-6 h-6 text-cyan-400" />
             <h2 className="text-2xl font-heading font-bold text-white">All Crates</h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
@@ -176,7 +176,7 @@ export function CratesPage() {
                 </div>
 
                 <div className="flex items-baseline justify-center gap-2 mb-4">
-                  <span className="text-2xl font-bold text-green-400">${crate.price.toFixed(2)}</span>
+                  <span className="text-2xl font-bold text-cyan-400">${crate.price.toFixed(2)}</span>
                 </div>
 
                 <div className="space-y-2 mb-4">

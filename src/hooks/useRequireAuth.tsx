@@ -37,8 +37,8 @@ export function useRequireAuth() {
   const AuthModal = (
     <Modal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} size="sm">
       <div className="text-center py-2">
-        <div className="w-14 h-14 rounded-2xl bg-green-500/10 flex items-center justify-center mx-auto mb-4">
-          <LogIn className="w-7 h-7 text-green-400" />
+        <div className="w-14 h-14 rounded-2xl bg-cyan-500/10 flex items-center justify-center mx-auto mb-4">
+          <LogIn className="w-7 h-7 text-cyan-400" />
         </div>
         <h3 className="text-lg font-heading font-bold text-white mb-2">Login Required</h3>
         <p className="text-sm text-gray-400 mb-6">
@@ -48,7 +48,7 @@ export function useRequireAuth() {
           <Link
             to="/login"
             onClick={handleLogin}
-            className="w-full py-2.5 bg-green-600 hover:bg-green-500 text-white font-medium rounded-lg text-sm transition-colors text-center"
+            className="w-full py-2.5 bg-cyan-600 hover:bg-cyan-500 text-white font-medium rounded-lg text-sm transition-colors text-center"
           >
             Log In
           </Link>

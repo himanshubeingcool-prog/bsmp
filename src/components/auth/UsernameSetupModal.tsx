@@ -75,7 +75,7 @@ export function UsernameSetupModal() {
   return (
     <Modal isOpen={!!needsUsername} onClose={() => {}} size="md">
       <div className="text-center mb-6">
-        <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-green-500 to-gold-500 flex items-center justify-center">
+        <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-cyan-500 to-gold-500 flex items-center justify-center">
           <User className="w-8 h-8 text-stone-950" />
         </div>
         <h2 className="text-2xl font-heading font-bold text-white mb-2">Welcome!</h2>
@@ -100,15 +100,15 @@ export function UsernameSetupModal() {
               className={`
                 w-full bg-surface border rounded-lg px-4 py-3 text-sm text-white
                 placeholder-gray-500 transition-all duration-200
-                focus:outline-none focus:ring-2 focus:ring-green-500/50
-                ${error ? 'border-red-500 focus:ring-red-500/50' : isAvailable ? 'border-green-500' : 'border-border'}
+                focus:outline-none focus:ring-2 focus:ring-cyan-500/50
+                ${error ? 'border-red-500 focus:ring-red-500/50' : isAvailable ? 'border-cyan-500' : 'border-border'}
               `}
             />
             <div className="absolute right-3 top-1/2 -translate-y-1/2">
               {checking ? (
-                <div className="w-4 h-4 border-2 border-green-500 border-t-transparent rounded-full animate-spin" />
+                <div className="w-4 h-4 border-2 border-cyan-500 border-t-transparent rounded-full animate-spin" />
               ) : isAvailable ? (
-                <Check className="w-4 h-4 text-green-400" />
+                <Check className="w-4 h-4 text-cyan-400" />
               ) : null}
             </div>
           </div>
@@ -119,7 +119,7 @@ export function UsernameSetupModal() {
             </p>
           )}
           {isAvailable && !error && (
-            <p className="flex items-center gap-1.5 mt-1.5 text-xs text-green-400">
+            <p className="flex items-center gap-1.5 mt-1.5 text-xs text-cyan-400">
               <Check className="w-3 h-3" />
               Username available
             </p>

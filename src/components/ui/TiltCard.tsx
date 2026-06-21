@@ -1,57 +1,45 @@
-import { useRef, type ReactNode, type MouseEvent, useState } from 'react';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
+import type { ReactNode } from 'react'
+import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
 
 interface TiltCardProps {
-  children: ReactNode;
-  className?: string;
-  tiltDegree?: number;
-  perspective?: number;
-  disabled?: boolean;
+  children: ReactNode
+  className?: string
+  max?: number
 }
 
-export function TiltCard({
-  children, className = '', tiltDegree = 5, perspective = 800, disabled
-}: TiltCardProps) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [glow, setGlow] = useState({ x: 50, y: 50 });
+export function TiltCard({ children, className = '', max = 10 }: TiltCardProps) {
+  const reduced = usePrefersReducedMotion()
+  const x = useMotionValue(0.5)
+  const y = useMotionValue(0.5)
+  const sx = useSpring(x, { stiffness: 150, damping: 20 })
+  const sy = useSpring(y, { stiffness: 150, damping: 20 })
+  const rotateX = useTransform(sy, [0, 1], [max, -max])
+  const rotateY = useTransform(sx, [0, 1], [-max, max])
+  const glareX = useTransform(sx, v => `${v * 100}%`)
+  const glareY = useTransform(sy, v => `${v * 100}%`)
 
-  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-    if (disabled) return;
-    const card = cardRef.current;
-    if (!card) return;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const rotateX = ((y - centerY) / centerY) * -tiltDegree;
-    const rotateY = ((x - centerX) / centerX) * tiltDegree;
-    card.style.transform = `perspective(${perspective}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
-    setGlow({ x: (x / rect.width) * 100, y: (y / rect.height) * 100 });
-  };
-
-  const handleMouseLeave = () => {
-    if (disabled) return;
-    const card = cardRef.current;
-    if (!card) return;
-    card.style.transform = `perspective(${perspective}px) rotateX(0deg) rotateY(0deg) scale(1)`;
-    setGlow({ x: 50, y: 50 });
-  };
+  if (reduced) return <div className={className}>{children}</div>
 
   return (
-    <div
-      ref={cardRef}
-      className={`relative transition-transform duration-200 ease-out ${className}`}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{ transformStyle: 'preserve-3d' }}
+    <motion.div
+      className={`relative ${className}`}
+      style={{ rotateX, rotateY, transformPerspective: 800 }}
+      onMouseMove={e => {
+        const r = e.currentTarget.getBoundingClientRect()
+        x.set((e.clientX - r.left) / r.width)
+        y.set((e.clientY - r.top) / r.height)
+      }}
+      onMouseLeave={() => { x.set(0.5); y.set(0.5) }}
     >
       {children}
-      <div
-        className="absolute inset-0 pointer-events-none rounded-[inherit] opacity-0 hover:opacity-100 transition-opacity duration-300"
+      <motion.div
+        className="pointer-events-none absolute inset-0 rounded-[inherit]"
         style={{
-          background: `radial-gradient(circle at ${glow.x}% ${glow.y}%, rgba(34, 197, 94, 0.12) 0%, transparent 60%)`,
+          background: useTransform([glareX, glareY], ([gx, gy]) =>
+            `radial-gradient(circle at ${gx} ${gy}, rgba(255,255,255,0.12), transparent 40%)`),
         }}
       />
-    </div>
-  );
+    </motion.div>
+  )
 }

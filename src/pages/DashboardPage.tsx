@@ -76,7 +76,7 @@ export function DashboardPage() {
   if (isLoading) {
     return (
       <div className="min-h-screen pt-24 pb-16 px-4 flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-green-500 border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-cyan-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -148,8 +148,8 @@ export function DashboardPage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card variant="default" padding="md" className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-green-900/30 flex items-center justify-center">
-            <Swords className="w-6 h-6 text-green-400" />
+          <div className="w-12 h-12 rounded-xl bg-cyan-900/30 flex items-center justify-center">
+            <Swords className="w-6 h-6 text-cyan-400" />
           </div>
           <div>
             <p className="text-2xl font-bold font-heading">0</p>
@@ -166,8 +166,8 @@ export function DashboardPage() {
           </div>
         </Card>
         <Card variant="default" padding="md" className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-blue-900/30 flex items-center justify-center">
-            <Wallet className="w-6 h-6 text-blue-400" />
+          <div className="w-12 h-12 rounded-xl bg-cyan-900/30 flex items-center justify-center">
+            <Wallet className="w-6 h-6 text-cyan-400" />
           </div>
           <div>
             <p className="text-2xl font-bold font-heading">${balance.toLocaleString()}</p>
@@ -175,8 +175,8 @@ export function DashboardPage() {
           </div>
         </Card>
         <Card variant="default" padding="md" className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-purple-900/30 flex items-center justify-center">
-            <Users className="w-6 h-6 text-purple-400" />
+          <div className="w-12 h-12 rounded-xl bg-cyan-900/30 flex items-center justify-center">
+            <Users className="w-6 h-6 text-cyan-400" />
           </div>
           <div>
             <p className="text-2xl font-bold font-heading">—</p>
@@ -195,7 +195,7 @@ export function DashboardPage() {
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-muted">KDR</span>
-              <span className="text-green-400">0.00</span>
+              <span className="text-cyan-400">0.00</span>
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-muted">Wins / Losses</span>
@@ -275,8 +275,8 @@ export function DashboardPage() {
       <Card variant="default" padding="md">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-indigo-900/30 flex items-center justify-center">
-              <Disc3 className="w-6 h-6 text-indigo-400" />
+            <div className="w-12 h-12 rounded-xl bg-cyan-900/30 flex items-center justify-center">
+              <Disc3 className="w-6 h-6 text-cyan-400" />
             </div>
             <div>
               <h3 className="font-heading font-bold text-sm">Discord</h3>
@@ -290,8 +290,8 @@ export function DashboardPage() {
       <Card variant="default" padding="md">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-red-900/30 flex items-center justify-center">
-              <Globe className="w-6 h-6 text-red-400" />
+            <div className="w-12 h-12 rounded-xl bg-cyan-900/30 flex items-center justify-center">
+              <Globe className="w-6 h-6 text-cyan-400" />
             </div>
             <div>
               <h3 className="font-heading font-bold text-sm">Google</h3>
@@ -329,7 +329,7 @@ export function DashboardPage() {
                 <button
                   onClick={() => togglePrivacy(key)}
                   className={`relative w-11 h-6 rounded-full transition-colors cursor-pointer ${
-                    privacy[key] ? 'bg-green-600' : 'bg-gray-700'
+                    privacy[key] ? 'bg-cyan-600' : 'bg-gray-700'
                   }`}
                 >
                   <span className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white transition-transform ${
@@ -362,7 +362,7 @@ export function DashboardPage() {
                 <button
                   onClick={() => toggleNotification(key)}
                   className={`relative w-11 h-6 rounded-full transition-colors cursor-pointer ${
-                    notifications[key] ? 'bg-green-600' : 'bg-gray-700'
+                    notifications[key] ? 'bg-cyan-600' : 'bg-gray-700'
                   }`}
                 >
                   <span className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white transition-transform ${
@@ -411,8 +411,8 @@ export function DashboardPage() {
           ) : (
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-green-900/30 flex items-center justify-center">
-                  <Key className="w-6 h-6 text-green-400" />
+                <div className="w-12 h-12 rounded-xl bg-cyan-900/30 flex items-center justify-center">
+                  <Key className="w-6 h-6 text-cyan-400" />
                 </div>
                 <div>
                   <h4 className="font-heading font-bold text-sm">Password</h4>
@@ -450,8 +450,8 @@ export function DashboardPage() {
     <div className="min-h-screen pt-24 pb-16 px-4">
       <div className="max-w-7xl mx-auto">
         <div className="flex items-center gap-3 mb-8">
-          <LayoutDashboard className="w-6 h-6 text-green-400" />
-          <h1 className="text-3xl font-heading font-bold bg-gradient-to-r from-green-400 to-gold-400 bg-clip-text text-transparent">
+          <LayoutDashboard className="w-6 h-6 text-cyan-400" />
+          <h1 className="text-3xl font-heading font-bold bg-gradient-to-r from-cyan-400 to-gold-400 bg-clip-text text-transparent">
             Dashboard
           </h1>
         </div>
@@ -466,7 +466,7 @@ export function DashboardPage() {
                   className={cn(
                     'flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg whitespace-nowrap transition-all cursor-pointer',
                     activeTab === key
-                      ? 'bg-green-600 text-white shadow-lg shadow-green-600/20'
+                      ? 'bg-cyan-600 text-white shadow-lg shadow-cyan-600/20'
                       : 'text-gray-400 hover:text-white hover:bg-white/5'
                   )}
                 >
@@ -498,7 +498,7 @@ export function DashboardPage() {
               onChange={e => setEditBio(e.target.value)}
               placeholder="Tell us about yourself..."
               rows={3}
-              className="w-full bg-surface border border-border rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-green-500 resize-none"
+              className="w-full bg-surface border border-border rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 resize-none"
             />
           </div>
           <div className="flex gap-2 pt-2">

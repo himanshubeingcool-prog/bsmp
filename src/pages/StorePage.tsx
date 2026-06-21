@@ -2,12 +2,14 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useCart } from '@/contexts/CartContext'
 import { useToast } from '@/contexts/ToastContext'
+import { StaggerGroup, StaggerItem } from '@/components/ui/Stagger'
 import { ShoppingCart, Plus, Package, Check } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'
 import { SearchBar } from '@/components/ui/SearchBar'
 import { Modal } from '@/components/ui/Modal'
+import { AmbientBackground } from '@/components/ui/AmbientBackground'
 import { PRODUCTS } from '@/lib/mock-data'
 import type { Product, ProductCategory } from '@/types'
 
@@ -23,15 +25,15 @@ const CATEGORIES: { label: string; value: ProductCategory | 'all' }[] = [
   { label: 'Tokens', value: 'tokens' },
 ]
 
-const categoryGradient: Record<ProductCategory, string> = {
-  ranks: 'from-purple-600/20 to-purple-900/20 border-purple-500/20',
-  keys: 'from-amber-600/20 to-amber-900/20 border-amber-500/20',
-  crates: 'from-blue-600/20 to-blue-900/20 border-blue-500/20',
-  coins: 'from-yellow-600/20 to-yellow-900/20 border-yellow-500/20',
-  bundles: 'from-green-600/20 to-green-900/20 border-green-500/20',
-  cosmetics: 'from-pink-600/20 to-pink-900/20 border-pink-500/20',
-  boosters: 'from-cyan-600/20 to-cyan-900/20 border-cyan-500/20',
-  tokens: 'from-stone-600/20 to-stone-900/20 border-stone-500/20',
+const categoryBorder: Record<ProductCategory, string> = {
+  ranks: 'border-cyan-500/20',
+  keys: 'border-cyan-500/20',
+  crates: 'border-cyan-500/20',
+  coins: 'border-gold-500/20',
+  bundles: 'border-cyan-500/20',
+  cosmetics: 'border-cyan-500/20',
+  boosters: 'border-gold-500/20',
+  tokens: 'border-cyan-500/20',
 }
 
 export function StorePage() {
@@ -60,19 +62,27 @@ export function StorePage() {
   const formatPrice = (p: Product) => `$${(p.salePrice ?? p.price).toFixed(2)}`
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-stone-950 via-stone-900 to-stone-950">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex items-start sm:items-center justify-between gap-3 mb-6 sm:mb-8">
+    <div className="min-h-screen bg-gradient-to-b from-stone-950 via-stone-900 to-stone-950 relative overflow-hidden">
+      <AmbientBackground accent="mixed" voxels={9} />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative">
+        <div className="flex items-start sm:items-center justify-between gap-3 mb-8 sm:mb-10">
           <div className="min-w-0">
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-heading font-bold text-white">Store</h1>
+            <p className="text-xs uppercase tracking-[0.2em] text-cyan-400/70 font-medium mb-1">Shop</p>
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-heading font-bold text-white tracking-tight">Store</h1>
             <p className="text-xs sm:text-sm text-gray-400 mt-0.5 sm:mt-1 truncate">Premium perks, keys, crates and more</p>
           </div>
           <Button variant="primary" size="md" icon={<ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5" />} onClick={openCart} className="relative shrink-0">
             <span className="hidden sm:inline">Cart</span>
             {itemCount > 0 && (
-              <span className="absolute -top-2 -right-2 bg-gold-500 text-stone-950 text-[10px] sm:text-xs font-bold rounded-full w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center">
+              <motion.span
+                key={itemCount}
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: 'spring', stiffness: 500, damping: 18 }}
+                className="absolute -top-2 -right-2 bg-gold-500 text-stone-950 text-[10px] sm:text-xs font-bold rounded-full w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center"
+              >
                 {itemCount > 99 ? '99+' : itemCount}
-              </span>
+              </motion.span>
             )}
           </Button>
         </div>
@@ -84,39 +94,44 @@ export function StorePage() {
         </div>
 
         <div className="flex flex-wrap gap-2 mb-8">
-          {CATEGORIES.map(cat => (
-            <button
-              key={cat.value}
-              onClick={() => setActiveCategory(cat.value)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all cursor-pointer ${
-                activeCategory === cat.value
-                  ? 'bg-green-600 text-white shadow-lg shadow-green-600/20'
-                  : 'bg-stone-800/50 text-gray-400 hover:bg-stone-700/50 hover:text-white border border-stone-700/50'
-              }`}
-            >
-              {cat.label}
-            </button>
-          ))}
+          {CATEGORIES.map(cat => {
+            const active = activeCategory === cat.value
+            return (
+              <button
+                key={cat.value}
+                onClick={() => setActiveCategory(cat.value)}
+                className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-colors cursor-pointer active:scale-95 ${
+                  active
+                    ? 'text-white'
+                    : 'bg-stone-800/50 text-gray-400 hover:bg-stone-700/50 hover:text-white border border-stone-700/50'
+                }`}
+              >
+                {active && (
+                  <motion.span
+                    layoutId="store-category-pill"
+                    className="absolute inset-0 rounded-lg bg-cyan-600 shadow-lg shadow-cyan-600/30"
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10">{cat.label}</span>
+              </button>
+            )
+          })}
         </div>
 
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={{ visible: { transition: { staggerChildren: 0.05 } } }}
+        <StaggerGroup
+          key={activeCategory + search}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6"
         >
           {filtered.map(product => (
-            <motion.div
-              key={product.id}
-              variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-              transition={{ duration: 0.35, ease: 'easeOut' }}
+            <StaggerItem key={product.id}
             >
             <Card
               variant="default"
               hover
               tilt
               glowOnHover
-              className={`group relative overflow-hidden border ${categoryGradient[product.category]} transition-all duration-300`}
+              className={`group relative overflow-hidden border ${categoryBorder[product.category]} transition-all duration-300`}
               onClick={() => setSelectedProduct(product)}
             >
               {product.discount && (
@@ -129,21 +144,22 @@ export function StorePage() {
                   <Badge variant="gold">Popular</Badge>
                 </div>
               )}
-              <div className="text-4xl mb-4">{product.image}</div>
-              <h3 className="text-lg font-heading font-bold text-white mb-1">{product.name}</h3>
-              <Badge variant="default" size="sm" className="mb-3">
+              <span className="shine-layer rounded-[inherit]" />
+              <div className="relative z-10 text-4xl mb-4 inline-block transition-transform duration-300 group-hover:scale-125 group-hover:-rotate-6">{product.image}</div>
+              <h3 className="relative z-10 text-lg font-heading font-bold text-white mb-1 group-hover:text-cyan-50 transition-colors">{product.name}</h3>
+              <Badge variant="default" size="sm" className="relative z-10 mb-3">
                 {product.category.charAt(0).toUpperCase() + product.category.slice(1)}
               </Badge>
-              <p className="text-sm text-gray-400 mb-4 line-clamp-2">{product.description}</p>
-              <div className="flex items-center justify-between mt-auto">
+              <p className="relative z-10 text-sm text-gray-400 mb-4 line-clamp-2">{product.description}</p>
+              <div className="relative z-10 flex items-center justify-between mt-auto">
                 <div className="flex items-baseline gap-2">
                   {product.salePrice ? (
                     <>
-                      <span className="text-lg font-bold text-green-400">${product.salePrice.toFixed(2)}</span>
+                      <span className="text-lg font-bold text-cyan-400">${product.salePrice.toFixed(2)}</span>
                       <span className="text-sm text-gray-500 line-through">${product.price.toFixed(2)}</span>
                     </>
                   ) : (
-                    <span className="text-lg font-bold text-green-400">${product.price.toFixed(2)}</span>
+                    <span className="text-lg font-bold text-cyan-400">${product.price.toFixed(2)}</span>
                   )}
                 </div>
                 <Button
@@ -156,16 +172,20 @@ export function StorePage() {
                 </Button>
               </div>
             </Card>
-            </motion.div>
+            </StaggerItem>
           ))}
-        </motion.div>
+        </StaggerGroup>
 
         {filtered.length === 0 && (
-          <div className="text-center py-16">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="text-center py-16"
+          >
             <Package className="w-16 h-16 mx-auto text-gray-600 mb-4" />
             <h3 className="text-xl font-heading font-bold text-gray-400 mb-2">No products found</h3>
             <p className="text-gray-500">Try adjusting your search or filter</p>
-          </div>
+          </motion.div>
         )}
       </div>
 
@@ -184,11 +204,11 @@ export function StorePage() {
                 <div className="flex items-baseline gap-2 mb-4">
                   {selectedProduct.salePrice ? (
                     <>
-                      <span className="text-2xl font-bold text-green-400">${selectedProduct.salePrice.toFixed(2)}</span>
+                      <span className="text-2xl font-bold text-cyan-400">${selectedProduct.salePrice.toFixed(2)}</span>
                       <span className="text-lg text-gray-500 line-through">${selectedProduct.price.toFixed(2)}</span>
                     </>
                   ) : (
-                    <span className="text-2xl font-bold text-green-400">${selectedProduct.price.toFixed(2)}</span>
+                    <span className="text-2xl font-bold text-cyan-400">${selectedProduct.price.toFixed(2)}</span>
                   )}
                 </div>
                 <div className="flex gap-3">
@@ -217,7 +237,7 @@ export function StorePage() {
                 <ul className="space-y-2">
                   {selectedProduct.features.map((f, i) => (
                     <li key={i} className="flex items-center gap-2 text-sm text-gray-400">
-                      <Check className="w-4 h-4 text-green-400 flex-shrink-0" />
+                      <Check className="w-4 h-4 text-cyan-400 flex-shrink-0" />
                       {f}
                     </li>
                   ))}

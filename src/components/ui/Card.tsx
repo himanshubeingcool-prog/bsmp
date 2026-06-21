@@ -45,10 +45,10 @@ export function Card({
   };
 
   const variants: Record<string, string> = {
-    default: 'bg-card border border-border',
+    default: 'bg-card border border-border stacked-shadow top-highlight',
     glass: 'glass-card',
-    gradient: 'bg-gradient-to-br from-green-900/20 to-gold-900/20 border border-green-500/10',
-    highlight: 'bg-card border border-green-500/20 shadow-lg shadow-green-500/5',
+    gradient: 'bg-gradient-to-br from-cyan-900/20 to-gold-900/20 border border-cyan-500/10',
+    highlight: 'bg-card border border-cyan-500/20',
   };
 
   const paddings: Record<string, string> = {
@@ -62,7 +62,7 @@ export function Card({
     <div
       ref={cardRef}
       className={`
-        relative rounded-xl transition-all duration-200
+        relative rounded-2xl transition-all duration-200
         ${variants[variant]}
         ${paddings[padding]}
         ${hover ? 'hover-lift hover-glow cursor-pointer active:scale-[0.98]' : ''}
@@ -81,7 +81,7 @@ export function Card({
           className="absolute inset-0 pointer-events-none rounded-[inherit] transition-opacity duration-300"
           style={{
             opacity: isHovered ? 1 : 0,
-            background: `radial-gradient(circle at ${glow.x}% ${glow.y}%, rgba(34, 197, 94, 0.08) 0%, transparent 60%)`,
+            background: `radial-gradient(circle at ${glow.x}% ${glow.y}%, rgba(34, 211, 238, 0.06) 0%, transparent 60%)`,
           }}
         />
       )}

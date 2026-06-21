@@ -5,22 +5,22 @@ import { WhyChooseUs } from '@/components/home/WhyChooseUs';
 import { CommunitySection } from '@/components/home/CommunitySection';
 import { RecentPurchases } from '@/components/home/RecentPurchases';
 import { TopPlayers } from '@/components/home/TopPlayers';
-import { ScrollReveal } from '@/components/ui/ScrollReveal';
+import { Reveal } from '@/components/ui/Reveal';
 import { ServerRibbon } from '@/components/home/ServerRibbon';
 
 export function HomePage() {
   return (
     <div>
       <HeroSection />
-      <ScrollReveal direction="up"><ServerStats /></ScrollReveal>
+      <Reveal><ServerStats /></Reveal>
       <ServerRibbon />
-      <ScrollReveal direction="up" delay={0.1}><FeatureShowcase /></ScrollReveal>
-      <ScrollReveal direction="left"><WhyChooseUs /></ScrollReveal>
-      <div className="grid lg:grid-cols-2 gap-6 max-w-7xl mx-auto px-4 sm:px-6">
-        <ScrollReveal direction="left"><TopPlayers /></ScrollReveal>
-        <ScrollReveal direction="right"><RecentPurchases /></ScrollReveal>
+      <Reveal delay={0.1}><FeatureShowcase /></Reveal>
+      <Reveal><WhyChooseUs /></Reveal>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-7xl mx-auto px-4 sm:px-6">
+        <Reveal><TopPlayers /></Reveal>
+        <Reveal delay={0.15}><RecentPurchases /></Reveal>
       </div>
-      <ScrollReveal direction="up"><CommunitySection /></ScrollReveal>
+      <Reveal delay={0.1}><CommunitySection /></Reveal>
     </div>
   );
 }

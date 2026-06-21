@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Menu, X, ShoppingCart, ChevronDown, User, LogOut,
   Store, Trophy, Users, Swords, Key, Package, Shield, HeadphonesIcon, Settings, LayoutDashboard
@@ -20,24 +21,42 @@ const NAV_ITEMS = [
 export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { supabaseUser, profile, isAuthenticated, logout } = useAuth();
   const { itemCount, openCart } = useCart();
   const location = useLocation();
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   const displayName = profile?.minecraft_username || profile?.display_name || supabaseUser?.user_metadata?.full_name || supabaseUser?.email || 'User';
   const avatarUrl = profile?.avatar_url || supabaseUser?.user_metadata?.avatar_url || supabaseUser?.user_metadata?.picture || undefined;
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50">
-      <div className="absolute inset-0 bg-stone-950/90 backdrop-blur-xl border-b border-border" />
+      <motion.div
+        className="absolute inset-0 backdrop-blur-xl border-b border-border"
+        animate={{
+          background: scrolled
+            ? 'rgba(10, 10, 15, 0.95)'
+            : 'rgba(10, 10, 15, 0.7)',
+          borderColor: scrolled
+            ? 'rgba(42, 42, 62, 0.8)'
+            : 'rgba(42, 42, 62, 0.3)',
+        }}
+        transition={{ duration: 0.3 }}
+      />
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16 sm:h-18">
           <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br from-green-500 to-gold-500 flex items-center justify-center font-heading font-bold text-xs sm:text-sm text-stone-950 group-hover:scale-105 transition-transform">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br from-cyan-500 to-gold-500 flex items-center justify-center font-heading font-bold text-xs sm:text-sm text-stone-950 group-hover:scale-105 transition-transform">
               B
             </div>
             <div>
-              <span className="font-heading font-bold text-sm sm:text-base bg-gradient-to-r from-green-400 to-gold-400 bg-clip-text text-transparent">BhukkadSMP</span>
+              <span className="font-heading font-bold text-sm sm:text-base bg-gradient-to-r from-cyan-400 to-gold-400 bg-clip-text text-transparent">BhukkadSMP</span>
               <span className="hidden sm:block text-[10px] text-muted -mt-0.5">Premium Survival</span>
             </div>
           </Link>
@@ -56,23 +75,29 @@ export function Navbar() {
                   to={item.path}
                   className="relative group px-3 py-2"
                 >
-                  <span className={`relative z-10 flex items-center gap-1.5 text-sm font-medium transition-colors duration-200 ${isActive ? 'text-green-400' : 'text-gray-300 group-hover:text-white'}`}>
+                  <span className={`relative z-10 flex items-center gap-1.5 text-sm font-medium transition-colors duration-200 ${isActive ? 'text-cyan-400' : 'text-gray-300 group-hover:text-white'}`}>
                     {Icon && <Icon className="w-4 h-4" />}
                     {item.label}
                   </span>
-                  <span className={`absolute bottom-0 left-1/2 h-0.5 bg-green-400 rounded-full transition-all duration-300 -translate-x-1/2 ${isActive ? 'w-4/5' : 'w-0 group-hover:w-3/5'}`} />
+                  <span className={`absolute bottom-0 left-1/2 h-0.5 bg-cyan-400 rounded-full transition-all duration-300 -translate-x-1/2 ${isActive ? 'w-4/5' : 'w-0 group-hover:w-3/5'}`} />
                 </Link>
               );
             })}
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3">
-            <button onClick={openCart} className="relative p-1.5 sm:p-2 text-gray-400 hover:text-green-400 transition-colors cursor-pointer">
+            <button onClick={openCart} className="relative p-1.5 sm:p-2 text-gray-400 hover:text-cyan-400 transition-colors cursor-pointer">
               <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5" />
               {itemCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 sm:w-4.5 sm:h-4.5 bg-green-500 rounded-full text-[9px] sm:text-[10px] font-bold flex items-center justify-center text-stone-950 transition-all duration-200 animate-scale-in">
+                <motion.span
+                  key={itemCount}
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+                  className="absolute -top-0.5 -right-0.5 w-4 h-4 sm:w-4.5 sm:h-4.5 bg-cyan-500 rounded-full text-[9px] sm:text-[10px] font-bold flex items-center justify-center text-stone-950"
+                >
                   {itemCount > 99 ? '99+' : itemCount}
-                </span>
+                </motion.span>
               )}
             </button>
 
@@ -90,7 +115,7 @@ export function Navbar() {
                 {userMenuOpen && (
                   <>
                     <div className="fixed inset-0 z-10" onClick={() => setUserMenuOpen(false)} />
-                    <div className="absolute right-0 top-full mt-2 w-56 bg-surface border border-border rounded-xl shadow-2xl z-20 overflow-hidden animate-scale-in">
+                    <div className="absolute right-0 sm:right-auto sm:left-1/2 sm:-translate-x-1/2 top-full mt-2 w-48 sm:w-56 bg-surface border border-border rounded-xl shadow-2xl z-20 overflow-hidden animate-scale-in">
                       <div className="p-3 border-b border-border">
                         <p className="text-sm font-medium truncate">{displayName}</p>
                         <p className="text-xs text-muted truncate">{supabaseUser?.email}</p>
@@ -118,7 +143,7 @@ export function Navbar() {
                 )}
               </div>
             ) : (
-              <Link to="/login" className="bg-green-600 hover:bg-green-500 text-white text-xs sm:text-sm font-medium px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg transition-all shadow-lg shadow-green-600/20">
+              <Link to="/login" className="bg-cyan-600 hover:bg-cyan-500 text-white text-xs sm:text-sm font-medium px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg transition-all shadow-lg shadow-cyan-600/20">
                 Login
               </Link>
             )}
@@ -169,7 +194,7 @@ export function Navbar() {
             ) : (
               <>
                 <hr className="border-border my-2" />
-                <Link to="/login" onClick={() => setMobileOpen(false)} className="block px-3 py-2.5 rounded-lg text-sm font-medium text-green-400 hover:bg-green-500/10 transition-colors">Login / Register</Link>
+                <Link to="/login" onClick={() => setMobileOpen(false)} className="block px-3 py-2.5 rounded-lg text-sm font-medium text-cyan-400 hover:bg-cyan-500/10 transition-colors">Login / Register</Link>
               </>
             )}
           </div>
